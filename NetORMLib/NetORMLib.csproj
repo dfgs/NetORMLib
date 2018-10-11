@@ -45,8 +45,10 @@
     <Compile Include="Columns\IColumn.cs" />
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
+    <Compile Include="Filters\OrFilter.cs" />
     <Compile Include="Filters\BooleanFilter.cs" />
     <Compile Include="Filters\AndFilter.cs" />
+    <Compile Include="Filters\IOrFilter.cs" />
     <Compile Include="Filters\IAndFilter.cs" />
     <Compile Include="Filters\IBooleanFilter.cs" />
     <Compile Include="Filters\IIsNotNullFilter.cs" />
