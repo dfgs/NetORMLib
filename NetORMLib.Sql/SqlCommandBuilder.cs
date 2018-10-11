@@ -21,20 +21,37 @@ namespace NetORMLib.Sql
 		{
 			return $"[{Column}]";
 		}
-		protected override string OnFormatParameterName(string Column, int Index)
+		protected override string OnFormatParameterName(string Column,ref int Index)
 		{
-			return $"@{Column}{Index}";
+			return $"@{Column}{Index++}";
 		}
-		protected override string OnFormatFilter(IFilter Filter, int Index)
+		protected override string OnFormatFilter(IFilter Filter,ref int Index)
 		{
 			
-			if (Filter is IColumnFilter columnFilter) return columnFilter.Format(OnFormatColumnName(columnFilter.Column.Name), OnFormatParameterName(columnFilter.Column.Name, Index));
+			if (Filter is IColumnFilter columnFilter) return columnFilter.Format(OnFormatColumnName(columnFilter.Column.Name), OnFormatParameterName(columnFilter.Column.Name,ref Index));
 			if (Filter is IIsNullFilter nullFilter) return nullFilter.Format(OnFormatColumnName(nullFilter.Column.Name));
 			if (Filter is IIsNotNullFilter notNullFilter) return notNullFilter.Format(OnFormatColumnName(notNullFilter.Column.Name));
+			if (Filter is IBooleanFilter booleanFilter)
+			{
+				List<string> formattedMembers = new List<string>();
+				foreach (IFilter filter in booleanFilter.Members) formattedMembers.Add(OnFormatFilter(filter, ref Index));
+				return booleanFilter.Format(formattedMembers);
+			}
 
 			throw new NotImplementedException($"Filter type {Filter.GetType().Name} is not implemented");
 		}
 
+		private void OnBuildParameters(SqlCommand Command,IEnumerable<IFilter> Filters,ref int Index)
+		{
+			foreach (IFilter filter in Filters)
+			{
+				if (filter is IColumnFilter columnFilter)
+				{
+					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value);
+				}
+				else if (filter is IBooleanFilter booleanFilter) OnBuildParameters(Command, booleanFilter.Members, ref Index);
+			}
+		}
 
 		protected override DbCommand OnBuildSelectCommand(ISelect Query)
 		{
@@ -52,20 +69,13 @@ namespace NetORMLib.Sql
 			{
 				index = 0;
 				sql.Append(" WHERE ");
-				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item,index++)  )));
+				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item,ref index)  )));
 			}
 
 			command = new SqlCommand(sql.ToString());
-
-			foreach (IFilter filter in Query.Filters)
-			{
-				index = 0;
-				if (filter is IColumnFilter columnFilter)
-				{
-					command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, index), columnFilter.Value );
-				}
-				index++;
-			}
+			index = 0;
+			OnBuildParameters(command, Query.Filters,ref index);
+			
 
 			return command;
 		}

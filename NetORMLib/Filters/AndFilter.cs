@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class AndFilter<T> : IFilter<T>
+	public class AndFilter<T> : BooleanFilter<T>, IAndFilter<T>
 	{
-		private IFilter<T>[] members;
-		public IEnumerable<IFilter<T>> Members
+		
+		public AndFilter(params IFilter<T>[] Members):base(Members)
 		{
-			get { return members; }
 		}
-		public AndFilter(params IFilter<T>[] Members)
+
+
+		public override string Format(IEnumerable<string> FormattedMembers)
 		{
-			if (Members.Length < 2) throw new ArgumentException("And filter must constain at least 2 members");
-			this.members = Members;
+			return $"({String.Join(" AND ", FormattedMembers)})";
 		}
+
 
 	}
 }

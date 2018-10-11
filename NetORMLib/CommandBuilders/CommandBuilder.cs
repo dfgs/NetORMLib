@@ -13,8 +13,8 @@ namespace NetORMLib.CommandBuilders
 	{
 		protected abstract string OnFormatTableName(string Table);
 		protected abstract string OnFormatColumnName(string Column);
-		protected abstract string OnFormatParameterName(string Column, int Index);
-		protected abstract string OnFormatFilter(IFilter Filter,int Index);
+		protected abstract string OnFormatParameterName(string Column,ref int Index);
+		protected abstract string OnFormatFilter(IFilter Filter,ref int Index);
 
 		protected abstract DbCommand OnBuildSelectCommand(ISelect Query);
 		
