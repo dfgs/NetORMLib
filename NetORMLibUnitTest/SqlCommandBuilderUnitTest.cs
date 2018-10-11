@@ -133,5 +133,34 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual("John", command.Parameters[0].Value);
 		}
 
+		[TestMethod]
+		public void ShouldBuildIsNullFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsNull());
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName] IS NULL", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
+
+		[TestMethod]
+		public void ShouldBuildIsNotNullFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsNotNull());
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName] IS NOT NULL", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
+
+
 	}
 }

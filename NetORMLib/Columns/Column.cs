@@ -77,6 +77,14 @@ namespace NetORMLib.Columns
 		{
 			return new IsLowerOrEqualToFilter<T, TVal>(this, Value);
 		}
+		public IIsNullFilter<T> IsNull()
+		{
+			return new IsNullFilter<T>(this);
+		}
+		public IIsNotNullFilter<T> IsNotNull()
+		{
+			return new IsNotNullFilter<T>(this);
+		}
 
 		public override string ToString()
 		{

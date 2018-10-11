@@ -28,14 +28,11 @@ namespace NetORMLib.Sql
 		protected override string OnFormatFilter(IFilter Filter, int Index)
 		{
 			
-			if (Filter is IColumnFilter columnFilter)
-			{
-				return columnFilter.Format(OnFormatColumnName(columnFilter.Column.Name), OnFormatParameterName(columnFilter.Column.Name, Index));
-			}
-			else
-			{
-				return Filter.ToString();
-			}
+			if (Filter is IColumnFilter columnFilter) return columnFilter.Format(OnFormatColumnName(columnFilter.Column.Name), OnFormatParameterName(columnFilter.Column.Name, Index));
+			if (Filter is IIsNullFilter nullFilter) return nullFilter.Format(OnFormatColumnName(nullFilter.Column.Name));
+			if (Filter is IIsNotNullFilter notNullFilter) return notNullFilter.Format(OnFormatColumnName(notNullFilter.Column.Name));
+
+			throw new NotImplementedException($"Filter type {Filter.GetType().Name} is not implemented");
 		}
 
 

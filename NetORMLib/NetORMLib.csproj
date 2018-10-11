@@ -46,7 +46,11 @@
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
     <Compile Include="Filters\AndFilter.cs" />
+    <Compile Include="Filters\IIsNotNullFilter.cs" />
+    <Compile Include="Filters\IsNotNullFilter.cs" />
+    <Compile Include="Filters\IsNullFilter.cs" />
     <Compile Include="Filters\ColumnFilter.cs" />
+    <Compile Include="Filters\IIsNullFilter.cs" />
     <Compile Include="Filters\IIsGreaterOrEqualToFilter.cs" />
     <Compile Include="Filters\IIsLowerOrEqualToFilter.cs" />
     <Compile Include="Filters\IIsNotEqualToFilter.cs" />

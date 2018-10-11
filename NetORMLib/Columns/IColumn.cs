@@ -32,6 +32,8 @@ namespace NetORMLib.Columns
 		IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value);
 		IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value);
 		IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value);
+		IIsNullFilter<T> IsNull();
+		IIsNotNullFilter<T> IsNotNull();
 	}
 
 }
