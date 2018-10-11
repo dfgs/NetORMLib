@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetORMLib</RootNamespace>
-    <AssemblyName>NetORMLib</AssemblyName>
+    <ProjectGuid>{AE2FF3BD-87DB-46B2-920F-3FA1B389D175}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Test</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,21 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Columns\Column.cs" />
-    <Compile Include="Columns\IColumn.cs" />
-    <Compile Include="CommandBuilders\CommandBuilder.cs" />
-    <Compile Include="CommandBuilders\ICommandBuilder.cs" />
-    <Compile Include="Filters\AndFilter.cs" />
-    <Compile Include="Filters\EqualsFilter.cs" />
-    <Compile Include="Filters\IEqualsFilter.cs" />
-    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Personn.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\IFilterableQuery.cs" />
-    <Compile Include="Queries\IOrderableQuery.cs" />
-    <Compile Include="Queries\IQuery.cs" />
-    <Compile Include="Queries\ISelect.cs" />
-    <Compile Include="Queries\Select.cs" />
-    <Compile Include="Table.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetORMLib\NetORMLib.csproj">
+      <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
+      <Name>NetORMLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
