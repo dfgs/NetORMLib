@@ -53,10 +53,31 @@ namespace NetORMLib.Columns
 			return value;
 		}
 
-		public IEqualsFilter<T, TVal> Equals(TVal Value)
+		public IIsEqualToFilter<T, TVal> IsEqualTo(TVal Value)
 		{
-			return new EqualsFilter<T,TVal>(this, Value);
+			return new IsEqualToFilter<T, TVal>(this, Value);
 		}
+		public IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value)
+		{
+			return new IsNotEqualToFilter<T, TVal>(this, Value);
+		}
+		public IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value)
+		{
+			return new IsGreaterThanFilter<T, TVal>(this, Value);
+		}
+		public IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value)
+		{
+			return new IsLowerThanFilter<T, TVal>(this, Value);
+		}
+		public IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value)
+		{
+			return new IsGreaterOrEqualToFilter<T, TVal>(this, Value);
+		}
+		public IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value)
+		{
+			return new IsLowerOrEqualToFilter<T, TVal>(this, Value);
+		}
+
 		public override string ToString()
 		{
 			return Name;

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class EqualsFilter<T,TVal>: ColumnFilter<T,TVal>, IEqualsFilter<T,TVal>
+	public class IsEqualToFilter<T,TVal>: ColumnFilter<T,TVal>, IIsEqualToFilter<T,TVal>
 	{
 		
 
 
-		public EqualsFilter(IColumn<T, TVal> Column,TVal Value):base(Column,Value)
+		public IsEqualToFilter(IColumn<T, TVal> Column,TVal Value):base(Column,Value)
 		{
 		}
 

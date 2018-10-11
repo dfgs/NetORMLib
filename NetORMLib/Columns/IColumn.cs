@@ -26,7 +26,12 @@ namespace NetORMLib.Columns
 	{
 		new TVal GetValue(T Row);
 
-		IEqualsFilter<T, TVal> Equals(TVal Value);
+		IIsEqualToFilter<T, TVal> IsEqualTo(TVal Value);
+		IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value);
+		IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value);
+		IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value);
+		IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value);
+		IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value);
 	}
 
 }

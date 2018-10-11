@@ -47,7 +47,7 @@ namespace NetORMLibUnitTest
 		{
 			ISelect<Personn> query;
 
-			query = new Select<Personn>(Personn.FirstNameColumn).Where(Personn.FirstNameColumn.Equals("John"));
+			query = new Select<Personn>(Personn.FirstNameColumn).Where(Personn.FirstNameColumn.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 

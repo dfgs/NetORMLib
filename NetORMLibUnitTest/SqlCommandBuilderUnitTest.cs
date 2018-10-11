@@ -44,7 +44,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>().Where(Personn.FirstNameColumn.Equals("John"));
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]=@FirstName0", command.CommandText);
@@ -53,7 +53,85 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual("John", command.Parameters[0].Value);
 		}
 
+		[TestMethod]
+		public void ShouldBuildNotEqualsFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
 
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsNotEqualTo("John"));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]<>@FirstName0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+		}
+
+		[TestMethod]
+		public void ShouldBuildGreaterFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsGreaterThan("John"));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]>@FirstName0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+		}
+
+		[TestMethod]
+		public void ShouldBuildLowerFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsLowerThan("John"));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]<@FirstName0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+		}
+
+		[TestMethod]
+		public void ShouldBuildGreaterOrEqualFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsGreaterOrEqualTo("John"));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]>=@FirstName0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+		}
+
+		[TestMethod]
+		public void ShouldBuildLowerOrEqualFilter()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<Personn>().Where(Personn.FirstNameColumn.IsLowerOrEqualTo("John"));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [FirstName], [LastName] FROM [Personn] WHERE [FirstName]<=@FirstName0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+		}
 
 	}
 }
