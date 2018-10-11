@@ -7,22 +7,20 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class EqualsFilter<T,TVal>:IEqualsFilter<T,TVal>
+	public class EqualsFilter<T,TVal>: ColumnFilter<T,TVal>, IEqualsFilter<T,TVal>
 	{
-		public IColumn<T,TVal> Column
+		
+
+
+		public EqualsFilter(IColumn<T, TVal> Column,TVal Value):base(Column,Value)
 		{
-			get;
-			private set;
 		}
 
-		public TVal Value
+		public override string Format(string FormattedColumn, string FormattedParameter)
 		{
-			get;
-			private set;
+			return $"{FormattedColumn}={FormattedParameter}";
 		}
-		public EqualsFilter(IColumn<T, TVal> Column,TVal Value)
-		{
-			this.Column = Column;this.Value = Value;
-		}
+
+		
 	}
 }

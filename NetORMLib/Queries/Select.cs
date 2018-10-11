@@ -10,24 +10,26 @@ namespace NetORMLib.Queries
 {
 	public class Select<T> : ISelect<T>
 	{
-		private List<IColumn<T>> columns;
-		public IEnumerable<IColumn<T>> Columns
+		public string Table
 		{
-			get { return columns; }
+			get { return Table<T>.Name; }
 		}
+
+		private List<IColumn<T>> columns;
+		public IEnumerable<IColumn<T>> Columns => columns;
+		IEnumerable<IColumn> ISelect.Columns => columns;
 
 		private List<IColumn<T>> orders;
-		public IEnumerable<IColumn<T>> Orders
-		{
-			get { return orders; }
-		}
+		public IEnumerable<IColumn<T>> Orders => orders;
+		IEnumerable<IColumn> ISelect.Orders => orders;
 
 		private List<IFilter<T>> filters;
-		public IEnumerable<IFilter<T>> Filters
-		{
-			get { return filters; }
-		}
+		public IEnumerable<IFilter<T>> Filters => filters;
+		IEnumerable<IFilter> ISelect.Filters => filters;
 
+
+
+	
 		public Select(params IColumn<T>[] Columns)
 		{
 			columns = new List<IColumn<T>>();

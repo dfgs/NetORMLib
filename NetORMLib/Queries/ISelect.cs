@@ -8,23 +8,36 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface ISelect
+	public interface ISelect:IQuery
 	{
+		IEnumerable<IColumn> Columns
+		{
+			get;
+		}
 
+		IEnumerable<IColumn> Orders
+		{
+			get;
+		}
+
+		IEnumerable<IFilter> Filters
+		{
+			get;
+		}
 	}
 	public interface ISelect<T> : ISelect, IQuery<T>, IFilterableQuery<T>, IOrderableQuery<T>
 	{
-		IEnumerable<IColumn<T>> Columns
+		new IEnumerable<IColumn<T>> Columns
 		{
 			get;
 		}
 
-		IEnumerable<IColumn<T>> Orders
+		new IEnumerable<IColumn<T>> Orders
 		{
 			get;
 		}
 
-		IEnumerable<IFilter<T>> Filters
+		new IEnumerable<IFilter<T>> Filters
 		{
 			get;
 		}

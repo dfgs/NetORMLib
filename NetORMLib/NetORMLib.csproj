@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TableAttribute.cs" />
     <Compile Include="Columns\Column.cs" />
     <Compile Include="Columns\IColumn.cs" />
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
     <Compile Include="Filters\AndFilter.cs" />
+    <Compile Include="Filters\ColumnFilter.cs" />
     <Compile Include="Filters\EqualsFilter.cs" />
+    <Compile Include="Filters\IColumnFilter.cs" />
     <Compile Include="Filters\IEqualsFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

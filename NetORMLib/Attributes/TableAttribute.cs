@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetORMLib.Queries
+namespace NetORMLib.Attributes
 {
-	public interface IQuery
+	[AttributeUsage(AttributeTargets.Class)]
+	public class TableAttribute:Attribute
 	{
-		string Table
+		public string Name
 		{
 			get;
+			set;
 		}
-	}
-	public interface IQuery<T>:IQuery
-	{
 	}
 }
