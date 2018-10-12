@@ -12,8 +12,8 @@ namespace NetORMLib
 {
 	public static class Table<T>
 	{
-		private static List<IColumn<T>> columns;
-		public static IEnumerable<IColumn<T>> Columns
+		private static List<IColumn> columns;
+		public static IEnumerable<IColumn> Columns
 		{
 			get { return columns; }
 		}
@@ -31,7 +31,7 @@ namespace NetORMLib
 			object value;
 			TableAttribute tableAttribute;
 
-			columns = new List<IColumn<T>>();
+			columns = new List<IColumn>();
 			type = typeof(T);
 			tableAttribute = type.GetCustomAttribute<TableAttribute>();
 
@@ -41,9 +41,9 @@ namespace NetORMLib
 			fis=type.GetFields(BindingFlags.Public | BindingFlags.Static);
 			foreach(FieldInfo fi in fis)
 			{
-				if (!typeof(IColumn<T>).IsAssignableFrom(fi.FieldType)) continue;
+				if (!typeof(IColumn).IsAssignableFrom(fi.FieldType)) continue;
 				value = fi.GetValue(null);
-				columns.Add((IColumn<T>)value);
+				columns.Add((IColumn)value);
 
 			}
 		}

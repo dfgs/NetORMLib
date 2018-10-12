@@ -45,6 +45,8 @@
     <Compile Include="Columns\IColumn.cs" />
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
+    <Compile Include="Databases\Database.cs" />
+    <Compile Include="Databases\IDatabase.cs" />
     <Compile Include="Filters\OrFilter.cs" />
     <Compile Include="Filters\BooleanFilter.cs" />
     <Compile Include="Filters\AndFilter.cs" />
@@ -76,10 +78,9 @@
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\ISelect.cs" />
     <Compile Include="Queries\Select.cs" />
+    <Compile Include="Row.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Databases\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

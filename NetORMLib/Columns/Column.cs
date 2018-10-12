@@ -11,9 +11,18 @@ namespace NetORMLib.Columns
 {
 	public class Column<T,TVal>:IColumn<T,TVal>
 	{
-		private Dictionary<T, TVal> values;
+		object IColumn.DefaultValue
+		{
+			get { return DefaultValue; }
+			set { DefaultValue = (TVal)value; }
+		}
 
-		private static Regex nameRegex = new Regex("(.+)Column");
+		public TVal DefaultValue
+		{
+			get;
+			set;
+		}
+
 		public string Name
 		{
 			get;
@@ -27,33 +36,11 @@ namespace NetORMLib.Columns
 
 		public Column([CallerMemberName]string Name=null)
 		{
-			Match match;
-			match = nameRegex.Match(Name);
-			if (match.Success)
-			{
-				this.Name = match.Groups[1].Value;
-			}
-			else
-			{
-				this.Name = Name;
-			}
-
-			values = new Dictionary<T, TVal>();
+			this.Name = Name;
 		}
 
 
-		object IColumn.GetValue(object Row)
-		{
-			return GetValue((T)Row);
-		}
 		
-		public TVal GetValue(T Row)
-		{
-			TVal value;
-
-			values.TryGetValue(Row, out value);
-			return value;
-		}
 
 		public IIsEqualToFilter<TVal> IsEqualTo(TVal Value)
 		{

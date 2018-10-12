@@ -11,8 +11,8 @@ namespace NetORMLibUnitTest.Models
 	[Table(Name ="Personn")]
 	public class PersonnExplicit
 	{
-		public static readonly IColumn<PersonnExplicit, string> FirstNameExplicitColumn = new Column<PersonnExplicit, string>("FirstName");
-		public static readonly IColumn<PersonnExplicit, string> LastNameExplicitColumn = new Column<PersonnExplicit, string>("LastName");
+		public static readonly IColumn<PersonnExplicit, string> FirstNameExplicit = new Column<PersonnExplicit, string>("FirstName");
+		public static readonly IColumn<PersonnExplicit, string> LastNameExplicit = new Column<PersonnExplicit, string>("LastName");
 
 	}
 }

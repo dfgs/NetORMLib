@@ -18,17 +18,25 @@ namespace NetORMLib.Columns
 		{
 			get;
 		}
-		object GetValue(object Row);
+		
+		object DefaultValue
+		{
+			get;
+			set;
+		}
 	}
 
 	public interface IColumn<TVal>:IColumn
 	{
-
+		new TVal DefaultValue
+		{
+			get;
+			set;
+		}
 	}
 
 	public interface IColumn<T,TVal> : IColumn<TVal>
 	{
-		TVal GetValue(T Row);
 
 		IIsEqualToFilter<TVal> IsEqualTo(TVal Value);
 		IIsNotEqualToFilter<TVal> IsNotEqualTo(TVal Value);
