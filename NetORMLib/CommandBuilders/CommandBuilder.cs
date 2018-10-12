@@ -23,6 +23,7 @@ namespace NetORMLib.CommandBuilders
 		public DbCommand BuildCommand(IQuery Query)
 		{
 			if (Query == null) throw new ArgumentNullException("Query");
+			if (Query.Table == null) throw new InvalidOperationException("No table specified in query");
 
 			if (Query is ISelect) return OnBuildSelectCommand((ISelect)Query);
 			else throw new NotSupportedException($"Query of type {Query.GetType().Name} is not supported");

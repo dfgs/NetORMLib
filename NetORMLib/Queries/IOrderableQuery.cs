@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface IOrderableQuery<T> : IQuery<T>
+	public interface IOrderableQuery : IQuery
 	{
-		IQuery<T> OrderBy(params IColumn<T>[] Columns);
+		IOrderableQuery OrderBy(params IColumn[] Columns);
 	}
 }

@@ -78,5 +78,8 @@
     <Compile Include="Queries\Select.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Databases\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

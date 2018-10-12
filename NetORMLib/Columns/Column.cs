@@ -46,10 +46,7 @@ namespace NetORMLib.Columns
 		{
 			return GetValue((T)Row);
 		}
-		object IColumn<T>.GetValue(T Row)
-		{
-			return GetValue((T)Row);
-		}
+		
 		public TVal GetValue(T Row)
 		{
 			TVal value;
@@ -58,37 +55,37 @@ namespace NetORMLib.Columns
 			return value;
 		}
 
-		public IIsEqualToFilter<T, TVal> IsEqualTo(TVal Value)
+		public IIsEqualToFilter<TVal> IsEqualTo(TVal Value)
 		{
-			return new IsEqualToFilter<T, TVal>(this, Value);
+			return new IsEqualToFilter<TVal>(this, Value);
 		}
-		public IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value)
+		public IIsNotEqualToFilter<TVal> IsNotEqualTo(TVal Value)
 		{
-			return new IsNotEqualToFilter<T, TVal>(this, Value);
+			return new IsNotEqualToFilter<TVal>(this, Value);
 		}
-		public IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value)
+		public IIsGreaterThanFilter<TVal> IsGreaterThan(TVal Value)
 		{
-			return new IsGreaterThanFilter<T, TVal>(this, Value);
+			return new IsGreaterThanFilter<TVal>(this, Value);
 		}
-		public IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value)
+		public IIsLowerThanFilter<TVal> IsLowerThan(TVal Value)
 		{
-			return new IsLowerThanFilter<T, TVal>(this, Value);
+			return new IsLowerThanFilter<TVal>(this, Value);
 		}
-		public IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value)
+		public IIsGreaterOrEqualToFilter<TVal> IsGreaterOrEqualTo(TVal Value)
 		{
-			return new IsGreaterOrEqualToFilter<T, TVal>(this, Value);
+			return new IsGreaterOrEqualToFilter<TVal>(this, Value);
 		}
-		public IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value)
+		public IIsLowerOrEqualToFilter<TVal> IsLowerOrEqualTo(TVal Value)
 		{
-			return new IsLowerOrEqualToFilter<T, TVal>(this, Value);
+			return new IsLowerOrEqualToFilter<TVal>(this, Value);
 		}
-		public IIsNullFilter<T> IsNull()
+		public IIsNullFilter IsNull()
 		{
-			return new IsNullFilter<T>(this);
+			return new IsNullFilter(this);
 		}
-		public IIsNotNullFilter<T> IsNotNull()
+		public IIsNotNullFilter IsNotNull()
 		{
-			return new IsNotNullFilter<T>(this);
+			return new IsNotNullFilter(this);
 		}
 
 		public override string ToString()

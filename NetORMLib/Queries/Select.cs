@@ -8,56 +8,52 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
-	public class Select<T> : ISelect<T>
+	public class Select : ISelect
 	{
-		public string Table
-		{
-			get { return Table<T>.Name; }
-		}
+		private string table;
+		public string Table => table;
 
-		private List<IColumn<T>> columns;
-		public IEnumerable<IColumn<T>> Columns => columns;
-		IEnumerable<IColumn> ISelect.Columns => columns;
+		private List<IColumn> columns;
+		public IEnumerable<IColumn> Columns => columns;
 
-		private List<IColumn<T>> orders;
-		public IEnumerable<IColumn<T>> Orders => orders;
-		IEnumerable<IColumn> ISelect.Orders => orders;
+		private List<IColumn> orders;
+		public IEnumerable<IColumn> Orders => orders;
 
-		private List<IFilter<T>> filters;
-		public IEnumerable<IFilter<T>> Filters => filters;
-		IEnumerable<IFilter> ISelect.Filters => filters;
-
-
+		private List<IFilter> filters;
+		public IEnumerable<IFilter> Filters => filters;
 
 	
-		public Select(params IColumn<T>[] Columns)
+		public Select(params IColumn[] Columns)
 		{
-			columns = new List<IColumn<T>>();
-			filters = new List<IFilter<T>>();
-			orders = new List<IColumn<T>>();
+			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Must must specify at least one column");
+			columns = new List<IColumn>();
+			filters = new List<IFilter>();
+			orders = new List<IColumn>();
 
-			if ((Columns == null) || (Columns.Length == 0)) columns.AddRange(Table<T>.Columns);
-			else columns.AddRange(Columns);
+			columns.AddRange(Columns);
 		}
 
-		#region ISelect
-		IQuery<T> IFilterableQuery<T>.Where(params IFilter<T>[] Filters)
+		public ISelect From<T>()
+		{
+			this.table = Table<T>.Name;
+			return this;
+		}
+
+		IFilterableQuery IFilterableQuery.Where(params IFilter[] Filters)
 		{
 			return Where(Filters);
 		}
-
-		IQuery<T> IOrderableQuery<T>.OrderBy(params IColumn<T>[] Columns)
-		{
-			return OrderBy(Columns);
-		}
-		#endregion
-
-		public ISelect<T> Where(params IFilter<T>[] Filters)
+		public ISelect Where(params IFilter[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;
 		}
-		public ISelect<T> OrderBy(params IColumn<T>[] Columns)
+
+		IOrderableQuery IOrderableQuery.OrderBy(params IColumn[] Columns)
+		{
+			return OrderBy(Columns);
+		}
+		public ISelect OrderBy(params IColumn[] Columns)
 		{
 			orders.AddRange(Columns);
 			return this;

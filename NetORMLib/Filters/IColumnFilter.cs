@@ -22,17 +22,10 @@ namespace NetORMLib.Filters
 		string Format(string FormattedColumn, string FormattedParameter);
 	}
 
-	public interface IColumnFilter<T> : IColumnFilter,IFilter<T>
+	
+	public interface IColumnFilter<TVal> : IColumnFilter
 	{
-		new IColumn<T> Column
-		{
-			get;
-		}
-	}
-
-	public interface IColumnFilter<T, TVal> : IColumnFilter<T>
-	{
-		new IColumn<T, TVal> Column
+		new IColumn<TVal> Column
 		{
 			get;
 		}

@@ -9,7 +9,5 @@ namespace NetORMLib.Filters
 	public interface IOrFilter:IBooleanFilter
 	{
 	}
-	public interface IOrFilter<T>:IBooleanFilter<T>,IOrFilter
-	{
-	}
+	
 }

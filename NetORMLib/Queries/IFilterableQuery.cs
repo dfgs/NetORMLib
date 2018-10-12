@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface IFilterableQuery<T>:IQuery<T>
+	public interface IFilterableQuery:IQuery
 	{
-		IQuery<T> Where(params IFilter<T>[] Filters);
+		IFilterableQuery Where(params IFilter[] Filters);
 	}
 }

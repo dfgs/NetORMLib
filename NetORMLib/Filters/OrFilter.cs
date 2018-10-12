@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class OrFilter<T> : BooleanFilter<T>, IOrFilter<T>
+	public class OrFilter : BooleanFilter, IOrFilter
 	{
 		
-		public OrFilter(params IFilter<T>[] Members):base(Members)
+		public OrFilter(params IFilter[] Members):base(Members)
 		{
 		}
 

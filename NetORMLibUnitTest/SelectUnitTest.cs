@@ -9,22 +9,13 @@ namespace NetORMLibUnitTest
 	[TestClass]
 	public class SelectUnitTest
 	{
-		[TestMethod]
-		public void ShouldSelectAllColumnsUsingDefaultParameters()
-		{
-			ISelect<Personn> query;
-
-			query=new Select<Personn>();
-			Assert.AreEqual(2, query.Columns.Count());
-			Assert.AreEqual(Personn.FirstNameColumn, query.Columns.ElementAt(0));
-			Assert.AreEqual(Personn.LastNameColumn, query.Columns.ElementAt(1));
-		}
+		
 		[TestMethod]
 		public void ShouldSelectColumnsUsingExplicitParameters()
 		{
-			ISelect<Personn> query;
+			ISelect query;
 
-			query = new Select<Personn>(Personn.LastNameColumn, Personn.FirstNameColumn);
+			query = new Select(Personn.LastNameColumn, Personn.FirstNameColumn).From<Personn>();
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(Personn.LastNameColumn, query.Columns.ElementAt(0));
 			Assert.AreEqual(Personn.FirstNameColumn, query.Columns.ElementAt(1));
@@ -33,9 +24,9 @@ namespace NetORMLibUnitTest
 		[TestMethod]
 		public void ShouldOrderByColumns()
 		{
-			ISelect<Personn> query;
+			ISelect query;
 
-			query = new Select<Personn>(Personn.FirstNameColumn).OrderBy(Personn.LastNameColumn,Personn.FirstNameColumn);
+			query = new Select(Personn.FirstNameColumn).From<Personn>().OrderBy(Personn.LastNameColumn,Personn.FirstNameColumn);
 			Assert.AreEqual(2, query.Orders.Count());
 			Assert.AreEqual(Personn.LastNameColumn, query.Orders.ElementAt(0));
 			Assert.AreEqual(Personn.FirstNameColumn, query.Orders.ElementAt(1));
@@ -45,9 +36,9 @@ namespace NetORMLibUnitTest
 		[TestMethod]
 		public void ShouldFilterByColumns()
 		{
-			ISelect<Personn> query;
+			ISelect query;
 
-			query = new Select<Personn>(Personn.FirstNameColumn).Where(Personn.FirstNameColumn.IsEqualTo("John"));
+			query = new Select(Personn.FirstNameColumn).From<Personn>().Where(Personn.FirstNameColumn.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 
