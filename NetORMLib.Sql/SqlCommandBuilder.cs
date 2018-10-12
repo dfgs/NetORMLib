@@ -1,4 +1,5 @@
-﻿using NetORMLib.CommandBuilders;
+﻿using NetORMLib.Columns;
+using NetORMLib.CommandBuilders;
 using NetORMLib.Filters;
 using NetORMLib.Queries;
 using System;
@@ -17,9 +18,9 @@ namespace NetORMLib.Sql
 		{
 			return $"[{Table}]";
 		}
-		protected override string OnFormatColumnName(string Column)
+		protected override string OnFormatColumnName(IColumn Column)
 		{
-			return $"[{Column}]";
+			return $"[{Column.Table}].[{Column.Name}]";
 		}
 		protected override string OnFormatParameterName(string Column,ref int Index)
 		{
@@ -28,9 +29,9 @@ namespace NetORMLib.Sql
 		protected override string OnFormatFilter(IFilter Filter,ref int Index)
 		{
 			
-			if (Filter is IColumnFilter columnFilter) return columnFilter.Format(OnFormatColumnName(columnFilter.Column.Name), OnFormatParameterName(columnFilter.Column.Name,ref Index));
-			if (Filter is IIsNullFilter nullFilter) return nullFilter.Format(OnFormatColumnName(nullFilter.Column.Name));
-			if (Filter is IIsNotNullFilter notNullFilter) return notNullFilter.Format(OnFormatColumnName(notNullFilter.Column.Name));
+			if (Filter is IColumnFilter columnFilter) return columnFilter.Format(OnFormatColumnName(columnFilter.Column), OnFormatParameterName(columnFilter.Column.Name,ref Index));
+			if (Filter is IIsNullFilter nullFilter) return nullFilter.Format(OnFormatColumnName(nullFilter.Column));
+			if (Filter is IIsNotNullFilter notNullFilter) return notNullFilter.Format(OnFormatColumnName(notNullFilter.Column));
 			if (Filter is IBooleanFilter booleanFilter)
 			{
 				List<string> formattedMembers = new List<string>();
@@ -61,7 +62,7 @@ namespace NetORMLib.Sql
 
 			sql = new StringBuilder();
 			sql.Append("SELECT ");
-			sql.Append(String.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item.Name))));
+			sql.Append(String.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item))));
 			sql.Append(" FROM ");
 			sql.Append(OnFormatTableName(Query.Table));
 			

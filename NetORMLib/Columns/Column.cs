@@ -20,6 +20,11 @@ namespace NetORMLib.Columns
 			private set;
 		}
 
+		public string Table
+		{
+			get { return Table<T>.Name; }
+		}
+
 		public Column([CallerMemberName]string Name=null)
 		{
 			Match match;

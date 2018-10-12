@@ -13,6 +13,11 @@ namespace NetORMLib.Columns
 		{
 			get;
 		}
+
+		string Table
+		{
+			get;
+		}
 		object GetValue(object Row);
 	}
 
