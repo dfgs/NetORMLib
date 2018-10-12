@@ -80,8 +80,31 @@ namespace NetORMLib.Sql
 
 			return command;
 		}
+		protected override DbCommand OnBuildDeleteCommand(IDelete Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+			int index;
 
-		
+			sql = new StringBuilder();
+			sql.Append("DELETE FROM ");
+			sql.Append(OnFormatTableName(Query.Table));
+
+			if (Query.Filters.Any())
+			{
+				index = 0;
+				sql.Append(" WHERE ");
+				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item, ref index))));
+			}
+
+			command = new SqlCommand(sql.ToString());
+			index = 0;
+			OnBuildParameters(command, Query.Filters, ref index);
+
+
+			return command;
+		}
+
 
 	}
 }

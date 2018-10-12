@@ -25,14 +25,17 @@ namespace NetORMLib.Databases
 
 		public void BeginTransaction()
 		{
-			if (transaction != null) throw new NotSupportedException("A transaction is already running");
+			if (transaction != null) throw new InvalidOperationException("A transaction is already running");
+			connection.Open();
 			transaction = connection.BeginTransaction();
 		}
 		public void EndTransaction(bool Commit)
 		{
-			if (transaction == null) throw new NotSupportedException("There is no running transaction");
+			if (transaction == null) throw new InvalidOperationException("There is no running transaction");
 			if (Commit) transaction.Commit();
 			else transaction.Rollback();
+			transaction = null;
+			connection.Close();
 		}
 
 		public IEnumerable<Row> Execute(ISelect Query)
@@ -46,17 +49,38 @@ namespace NetORMLib.Databases
 
 			command = commandBuilder.BuildCommand(Query);
 			command.Connection = connection;
-			command.Transaction = transaction;
-			reader=command.ExecuteReader();
-			while(reader.Read())
+
+			if (transaction == null) connection.Open();
+			else command.Transaction = transaction;
+
+			using (reader = command.ExecuteReader())
 			{
-				row = new Row(columns);
-				for(int t=0;t<columns.Length;t++)
+				while (reader.Read())
 				{
-					row.TrySetMember(columns[t], reader[t]);
+					row = new Row(columns);
+					for (int t = 0; t < columns.Length; t++)
+					{
+						row.TrySetMember(columns[t], reader[t]);
+					}
+					yield return row;
 				}
-				yield return row;
 			}
+			if (transaction == null) connection.Close();
+		}
+
+		public void Execute(IDelete Query)
+		{
+			DbCommand command;
+
+			command = commandBuilder.BuildCommand(Query);
+			command.Connection = connection;
+
+			if (transaction == null) connection.Open();
+			else command.Transaction = transaction;
+
+			command.ExecuteNonQuery();
+
+			if (transaction == null) connection.Close();
 		}
 
 

@@ -76,7 +76,9 @@
     <Compile Include="Queries\IFilterableQuery.cs" />
     <Compile Include="Queries\IOrderableQuery.cs" />
     <Compile Include="Queries\IQuery.cs" />
+    <Compile Include="Queries\IDelete.cs" />
     <Compile Include="Queries\ISelect.cs" />
+    <Compile Include="Queries\Delete.cs" />
     <Compile Include="Queries\Select.cs" />
     <Compile Include="Row.cs" />
     <Compile Include="Table.cs" />
