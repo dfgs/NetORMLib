@@ -15,10 +15,12 @@ namespace NetORMLib.CommandBuilders
 		protected abstract string OnFormatTableName(string Table);
 		protected abstract string OnFormatColumnName(IColumn Column);
 		protected abstract string OnFormatParameterName(string Column,ref int Index);
-		protected abstract string OnFormatFilter(IFilter Filter,ref int Index);
+		protected abstract string OnFormatFilter(IFilter Filter, ref int Index);
+		protected abstract string OnFormatSetter(ISetter Setter, ref int Index);
 
 		protected abstract DbCommand OnBuildSelectCommand(ISelect Query);
 		protected abstract DbCommand OnBuildDeleteCommand(IDelete Query);
+		protected abstract DbCommand OnBuildUpdateCommand(IUpdate Query);
 
 
 		public DbCommand BuildCommand(IQuery Query)
@@ -28,6 +30,7 @@ namespace NetORMLib.CommandBuilders
 
 			if (Query is ISelect select) return OnBuildSelectCommand(select);
 			if (Query is IDelete delete) return OnBuildDeleteCommand(delete);
+			if (Query is IUpdate update) return OnBuildUpdateCommand(update);
 			else throw new NotSupportedException($"Query of type {Query.GetType().Name} is not supported");
 		}
 	}

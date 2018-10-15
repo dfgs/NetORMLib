@@ -41,8 +41,12 @@ namespace NetORMLib.Sql
 
 			throw new NotImplementedException($"Filter type {Filter.GetType().Name} is not implemented");
 		}
+		protected override string OnFormatSetter(ISetter Setter, ref int Index)
+		{
+			return $"{OnFormatColumnName(Setter.Column)}={OnFormatParameterName(Setter.Column.Name,ref Index)}";
+		}
 
-		private void OnBuildParameters(SqlCommand Command,IEnumerable<IFilter> Filters,ref int Index)
+		private void OnBuildParameters(SqlCommand Command, IEnumerable<IFilter> Filters, ref int Index)
 		{
 			foreach (IFilter filter in Filters)
 			{
@@ -51,6 +55,13 @@ namespace NetORMLib.Sql
 					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value);
 				}
 				else if (filter is IBooleanFilter booleanFilter) OnBuildParameters(Command, booleanFilter.Members, ref Index);
+			}
+		}
+		private void OnBuildParameters(SqlCommand Command, IEnumerable<ISetter> Setters, ref int Index)
+		{
+			foreach (ISetter setter in Setters)
+			{
+				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value);
 			}
 		}
 
@@ -80,6 +91,7 @@ namespace NetORMLib.Sql
 
 			return command;
 		}
+
 		protected override DbCommand OnBuildDeleteCommand(IDelete Query)
 		{
 			SqlCommand command;
@@ -104,6 +116,36 @@ namespace NetORMLib.Sql
 
 			return command;
 		}
+
+		protected override DbCommand OnBuildUpdateCommand(IUpdate Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+			int index;
+
+			sql = new StringBuilder();
+			sql.Append("UPDATE ");
+			sql.Append(OnFormatTableName(Query.Table));
+
+			sql.Append(" SET ");
+			index = 0;
+			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatSetter(item, ref index))));
+
+			if (Query.Filters.Any())
+			{
+				sql.Append(" WHERE ");
+				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item, ref index))));
+			}
+
+			command = new SqlCommand(sql.ToString());
+			index = 0;
+			OnBuildParameters(command, Query.Setters, ref index);
+			OnBuildParameters(command, Query.Filters, ref index);
+
+
+			return command;
+		}
+
 
 
 	}

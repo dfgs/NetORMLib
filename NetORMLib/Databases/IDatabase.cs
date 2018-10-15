@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetORMLib.Queries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ namespace NetORMLib.Databases
 
 		void BeginTransaction();
 		void EndTransaction(bool Commit);
+
+		IEnumerable<Row> Execute(ISelect Query);
+		void Execute(IDelete Query);
+		void Execute(IUpdate Query);
+
 
 	}
 }

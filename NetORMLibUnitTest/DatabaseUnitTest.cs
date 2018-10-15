@@ -208,16 +208,16 @@ namespace NetORMLibUnitTest
 		}
 
 		[TestMethod]
-		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldSelectWithinATransaction")]
-		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldSelectWithinATransaction")]
-		public void ShouldSelectWithinATransaction()
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldSelectWithinDeleteTransaction")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldSelectWithinDeleteTransaction")]
+		public void ShouldSelectWithinDeleteTransaction()
 		{
 			DbConnection connection;
 			ICommandBuilder commandBuilder;
 			Database database;
 			dynamic rows;
 
-			connection = OnCreateConnection("ShouldSelectWithinATransaction");
+			connection = OnCreateConnection("ShouldSelectWithinDeleteTransaction");
 			commandBuilder = new SqlCommandBuilder();
 			database = new Database(connection, commandBuilder);
 
@@ -229,6 +229,120 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual(1, rows.Length);
 			Assert.AreEqual("Simpson", rows[0].FirstName);
 			Assert.AreEqual("Homer", rows[0].LastName);
+
+			database.EndTransaction(false);
+
+		}
+
+
+
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldUpdateRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldUpdateRows")]
+		public void ShouldUpdateRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldUpdateRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.Execute(new Update().Set(Personn.LastName,"Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
+		}
+
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldCommitUpdateRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldCommitUpdateRows")]
+		public void ShouldCommitUpdateRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldCommitUpdateRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Update().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+			database.EndTransaction(true);
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
+		}
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldRevertUpdateRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldRevertUpdateRows")]
+		public void ShouldRevertUpdateRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldRevertUpdateRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Update().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+			database.EndTransaction(false);
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Ned", rows[2].LastName);
+		}
+
+		
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldSelectWithinUpdateTransaction")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldSelectWithinUpdateTransaction")]
+		public void ShouldSelectWithinUpdateTransaction()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldSelectWithinUpdateTransaction");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Update().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
 
 			database.EndTransaction(false);
 
