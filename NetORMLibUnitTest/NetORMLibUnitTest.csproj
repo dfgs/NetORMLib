@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="UpdateUnitTest.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\PersonnExplicit.cs" />

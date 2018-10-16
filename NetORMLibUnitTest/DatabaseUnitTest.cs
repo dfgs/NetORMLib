@@ -7,7 +7,7 @@ using NetORMLib;
 using NetORMLib.CommandBuilders;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using NetORMLib.Sql;
+using NetORMLib.Sql.CommandBuilders;
 using NetORMLibUnitTest.Models;
 
 namespace NetORMLibUnitTest

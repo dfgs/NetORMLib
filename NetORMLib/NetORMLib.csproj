@@ -46,7 +46,9 @@
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
     <Compile Include="Databases\Database.cs" />
+    <Compile Include="Databases\DatabaseCreator.cs" />
     <Compile Include="Databases\IDatabase.cs" />
+    <Compile Include="Databases\IDatabaseCreator.cs" />
     <Compile Include="Filters\OrFilter.cs" />
     <Compile Include="Filters\BooleanFilter.cs" />
     <Compile Include="Filters\AndFilter.cs" />

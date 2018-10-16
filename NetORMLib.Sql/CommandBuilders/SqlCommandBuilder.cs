@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetORMLib.Sql
+namespace NetORMLib.Sql.CommandBuilders
 {
 	public class SqlCommandBuilder : CommandBuilder
 	{
