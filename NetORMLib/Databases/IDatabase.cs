@@ -17,6 +17,7 @@ namespace NetORMLib.Databases
 		void Execute(IDelete Query);
 		void Execute(IUpdate Query);
 
+		IEnumerable<string> GetTables();
 
 	}
 }

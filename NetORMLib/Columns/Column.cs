@@ -17,6 +17,16 @@ namespace NetORMLib.Columns
 			set { DefaultValue = (TVal)value; }
 		}
 
+		public bool IsPrimaryKey
+		{
+			get;
+			set;
+		}
+		public bool IsIdentity
+		{
+			get;
+			set;
+		}
 		public TVal DefaultValue
 		{
 			get;

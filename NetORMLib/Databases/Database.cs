@@ -38,6 +38,16 @@ namespace NetORMLib.Databases
 			connection.Close();
 		}
 
+		public IEnumerable<string> GetTables()
+		{
+			if (transaction == null) connection.Open();
+			foreach(System.Data.DataRow row in connection.GetSchema("Tables").Rows)
+			{
+				yield return (string)row["TABLE_NAME"];
+			}
+			if (transaction == null) connection.Close();
+		}
+
 		public IEnumerable<Row> Execute(ISelect Query)
 		{
 			DbCommand command;
@@ -97,6 +107,27 @@ namespace NetORMLib.Databases
 
 			if (transaction == null) connection.Close();
 		}
+
+
+
+		/*public bool TableExists<T>()
+		{
+			command = new SqlCommand("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UpgradeLog'");
+
+			DbCommand command;
+
+			command = commandBuilder.BuildCommand(Query);
+			command.Connection = connection;
+
+			if (transaction == null) connection.Open();
+			else command.Transaction = transaction;
+
+			command.ExecuteNonQuery();
+
+			if (transaction == null) connection.Close();
+
+		}*/
+
 
 	}
 }

@@ -75,7 +75,9 @@
     <Compile Include="Filters\IIsEqualToFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\ICreateTable.cs" />
     <Compile Include="Queries\ISetter.cs" />
+    <Compile Include="Queries\CreateTable.cs" />
     <Compile Include="Queries\Setter.cs" />
     <Compile Include="Queries\Update.cs" />
     <Compile Include="Queries\IFilterableQuery.cs" />

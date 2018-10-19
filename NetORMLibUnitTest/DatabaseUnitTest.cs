@@ -347,6 +347,30 @@ namespace NetORMLibUnitTest
 			database.EndTransaction(false);
 
 		}
+
+
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldGetTables")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldGetTables")]
+		public void ShouldGetTables()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+			string[] tables;
+
+			connection = OnCreateConnection("ShouldGetTables");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			tables = database.GetTables().ToArray();
+
+			Assert.AreEqual(1, tables.Length);
+			Assert.AreEqual("Personn", tables[0]);
+		}
+
+
 		//*/
 
 
