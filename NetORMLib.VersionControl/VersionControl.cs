@@ -43,9 +43,7 @@ namespace NetORMLib.VersionControl
 			current = GetCurrentRevision();
 			if (current==-1)
 			{
-				database.BeginTransaction();
 				database.Execute(new CreateTable<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
-				database.EndTransaction(true);
 			}
 
 		}

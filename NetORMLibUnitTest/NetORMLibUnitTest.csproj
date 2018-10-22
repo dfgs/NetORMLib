@@ -58,6 +58,7 @@
     <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />
     <Compile Include="SqlInsertCommandBuilderUnitTest.cs" />
+    <Compile Include="SqlLocalConnectionFactoryUnitTest.cs" />
     <Compile Include="UpdateUnitTest.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\PersonnExplicit.cs" />

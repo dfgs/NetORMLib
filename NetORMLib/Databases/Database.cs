@@ -1,5 +1,6 @@
 ﻿using NetORMLib.Columns;
 using NetORMLib.CommandBuilders;
+using NetORMLib.ConnectionFactories;
 using NetORMLib.Queries;
 using System;
 using System.Collections.Generic;
@@ -12,22 +13,22 @@ namespace NetORMLib.Databases
 {
 	public class Database:IDatabase
 	{
-		private DbConnection connection;
+		private IConnectionFactory connectionFactory;
 		private ICommandBuilder commandBuilder;
 
-		private DbTransaction transaction;
+		//private DbTransaction transaction;
 
-		public Database(DbConnection Connection, ICommandBuilder CommandBuilder)
+		public Database(IConnectionFactory ConnectionFactory, ICommandBuilder CommandBuilder)
 		{
-			this.connection = Connection;
+			this.connectionFactory = ConnectionFactory;
 			this.commandBuilder = CommandBuilder;
 		}
 
-		public void BeginTransaction()
+		/*public void BeginTransaction()
 		{
 			if (transaction != null) throw new InvalidOperationException("A transaction is already running");
-			connection.Open();
-			transaction = connection.BeginTransaction();
+			connectionFactory.Open();
+			transaction = connectionFactory.BeginTransaction();
 		}
 		public void EndTransaction(bool Commit)
 		{
@@ -35,17 +36,20 @@ namespace NetORMLib.Databases
 			if (Commit) transaction.Commit();
 			else transaction.Rollback();
 			transaction = null;
-			connection.Close();
-		}
+			connectionFactory.Close();
+		}*/
 
 		public IEnumerable<string> GetTables()
 		{
-			if (transaction == null) connection.Open();
-			foreach(System.Data.DataRow row in connection.GetSchema("Tables").Rows)
+			using (DbConnection connection=connectionFactory.CreateConnection())
 			{
-				yield return (string)row["TABLE_NAME"];
+				connection.Open();
+				foreach (System.Data.DataRow row in connection.GetSchema("Tables").Rows)
+				{
+					yield return (string)row["TABLE_NAME"];
+				}
+				connection.Close();
 			}
-			if (transaction == null) connection.Close();
 		}
 
 		public IEnumerable<Row> Execute(ISelect Query)
@@ -56,105 +60,77 @@ namespace NetORMLib.Databases
 			IColumn[] columns;
 
 			columns = Query.Columns.ToArray();
-
 			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
 
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			using (reader = command.ExecuteReader())
+			using (DbConnection connection = connectionFactory.CreateConnection())
 			{
-				while (reader.Read())
+				connection.Open();
+				command.Connection = connection;
+				using (reader = command.ExecuteReader())
 				{
-					row = new Row(columns);
-					for (int t = 0; t < columns.Length; t++)
+					while (reader.Read())
 					{
-						row.TrySetMember(columns[t], reader[t]);
+						row = new Row(columns);
+						for (int t = 0; t < columns.Length; t++)
+						{
+							row.TrySetMember(columns[t], reader[t]);
+						}
+						yield return row;
 					}
-					yield return row;
 				}
+				connection.Close();
 			}
-			if (transaction == null) connection.Close();
 		}
 
-		public void Execute(IDelete Query)
+		public void Execute(IQuery Query)
 		{
 			DbCommand command;
 
 			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
-
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			command.ExecuteNonQuery();
-
-			if (transaction == null) connection.Close();
+			using (DbConnection connection = connectionFactory.CreateConnection())
+			{
+				connection.Open();
+				command.Connection = connection;
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
 		}
 
-		public void Execute(IUpdate Query)
+		public void Execute(params IQuery[] Queries)
+		{
+			Execute((IEnumerable<IQuery>)Queries);
+		}
+		public void Execute(IEnumerable<IQuery> Queries)
 		{
 			DbCommand command;
 
-			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
-
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			command.ExecuteNonQuery();
-
-			if (transaction == null) connection.Close();
-		}
-		public void Execute(IInsert Query)
-		{
-			DbCommand command;
-
-			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
-
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			command.ExecuteNonQuery();
-
-			if (transaction == null) connection.Close();
-		}
-
-		public void Execute(ICreateTable Query)
-		{
-			DbCommand command;
-
-			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
-
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			command.ExecuteNonQuery();
-
-			if (transaction == null) connection.Close();
+			using (DbConnection connection = connectionFactory.CreateConnection())
+			{
+				connection.Open();
+				using (DbTransaction transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						foreach (IQuery query in Queries)
+						{
+							command = commandBuilder.BuildCommand(query);
+							command.Connection = connection;
+							command.Transaction = transaction;
+							command.ExecuteNonQuery();
+						}
+					}
+					catch (Exception ex)
+					{
+						transaction.Rollback();
+						throw (ex);
+					}
+					transaction.Commit();
+				}
+				connection.Close();
+			}
 		}
 
 
-		/*public bool TableExists<T>()
-		{
-			command = new SqlCommand("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UpgradeLog'");
-
-			DbCommand command;
-
-			command = commandBuilder.BuildCommand(Query);
-			command.Connection = connection;
-
-			if (transaction == null) connection.Open();
-			else command.Transaction = transaction;
-
-			command.ExecuteNonQuery();
-
-			if (transaction == null) connection.Close();
-
-		}*/
 
 
 	}

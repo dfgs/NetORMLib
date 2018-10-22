@@ -10,14 +10,13 @@ namespace NetORMLib.Databases
 	public interface IDatabase
 	{
 
-		void BeginTransaction();
-		void EndTransaction(bool Commit);
+		/*void BeginTransaction();
+		void EndTransaction(bool Commit);*/
 
 		IEnumerable<Row> Execute(ISelect Query);
-		void Execute(IDelete Query);
-		void Execute(IUpdate Query);
-		void Execute(IInsert Query);
-		void Execute(ICreateTable Query);
+		void Execute(IQuery Query);
+		void Execute(params IQuery[] Queries);
+		void Execute(IEnumerable<IQuery> Queries);
 
 		IEnumerable<string> GetTables();
 
