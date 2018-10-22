@@ -16,6 +16,8 @@ namespace NetORMLib.Databases
 		IEnumerable<Row> Execute(ISelect Query);
 		void Execute(IDelete Query);
 		void Execute(IUpdate Query);
+		void Execute(IInsert Query);
+		void Execute(ICreateTable Query);
 
 		IEnumerable<string> GetTables();
 

@@ -21,6 +21,7 @@ namespace NetORMLib.CommandBuilders
 		protected abstract DbCommand OnBuildSelectCommand(ISelect Query);
 		protected abstract DbCommand OnBuildDeleteCommand(IDelete Query);
 		protected abstract DbCommand OnBuildUpdateCommand(IUpdate Query);
+		protected abstract DbCommand OnBuildInsertCommand(IInsert Query);
 		protected abstract DbCommand OnBuildCreateTableCommand(ICreateTable Query);
 
 
@@ -32,6 +33,7 @@ namespace NetORMLib.CommandBuilders
 			if (Query is ISelect select) return OnBuildSelectCommand(select);
 			if (Query is IDelete delete) return OnBuildDeleteCommand(delete);
 			if (Query is IUpdate update) return OnBuildUpdateCommand(update);
+			if (Query is IInsert insert) return OnBuildInsertCommand(insert);
 			if (Query is ICreateTable createTable) return OnBuildCreateTableCommand(createTable);
 			else throw new NotSupportedException($"Query of type {Query.GetType().Name} is not supported");
 		}

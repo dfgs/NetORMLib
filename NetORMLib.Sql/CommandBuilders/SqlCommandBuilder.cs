@@ -65,6 +65,49 @@ namespace NetORMLib.Sql.CommandBuilders
 			}
 		}
 
+		private string GetTypeName(IColumn Column)
+		{
+			string result;
+
+			if (Column.DataType.IsEnum) return "int";
+
+			switch (Column.DataType.Name)
+			{
+				case "String":
+					result = "nvarchar(MAX)";
+					break;
+				case "Byte":
+					result = "tinyint";
+					break;
+				case "Int32":
+					result = "int";
+					break;
+				case "UInt16":
+					result = "int";
+					break;
+				case "Int64":
+					result = "bigint";
+					break;
+				case "Boolean":
+					result = "bit";
+					break;
+				case "DateTime":
+					result = "DateTime";
+					break;
+				case "TimeSpan":
+					result = "Time(7)";
+					break;
+				case "Byte[]":
+					result = "varbinary(max)";
+					break;
+				default:
+					throw (new NotImplementedException("Cannot convert CLR type " + Column.DataType.Name));
+
+			}
+			if (Column.IsIdentity) result += " IDENTITY(1, 1)";
+			return result;
+		}
+
 		protected override DbCommand OnBuildSelectCommand(ISelect Query)
 		{
 			SqlCommand command;
@@ -146,6 +189,69 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
+		protected override DbCommand OnBuildInsertCommand(IInsert Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+			int index;
+
+			sql = new StringBuilder();
+			sql.Append("INSERT INTO ");
+			sql.Append(OnFormatTableName(Query.Table));
+
+			sql.Append(" (");
+			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatColumnName(item.Column))));
+			sql.Append(") VALUES (");
+
+			index = 0;
+			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatParameterName(item.Column.Name,ref index))));
+			sql.Append(")");
+
+
+			command = new SqlCommand(sql.ToString());
+			index = 0;
+			OnBuildParameters(command, Query.Setters, ref index);
+			
+			return command;
+		}
+
+		protected override DbCommand OnBuildCreateTableCommand(ICreateTable Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+			IColumn primaryKey;
+
+			sql = new StringBuilder();
+			sql.Append("CREATE TABLE ");
+			sql.Append(OnFormatTableName(Query.Table));
+
+			sql.Append(" (");
+			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}" )   ) );
+			sql.Append(")");
+			primaryKey = Query.Columns.FirstOrDefault(item => item.IsPrimaryKey);
+			if (primaryKey!=null) sql.Append($" CONSTRAINT [PK_{Query.Table}] PRIMARY KEY CLUSTERED ([{primaryKey.Name}] ASC)");
+
+			command = new SqlCommand(sql.ToString());
+
+			return command;
+		}
+
+		/*
+		 * 
+		 protected override SqlCommand OnCreateTableCreateCommand(ITable Table)
+		{
+			string sql;
+
+
+			sql = "create table [" + Table.Name + "] (";
+			foreach (IColumn column in Table.Columns.Where(item => (item.Revision == 0 ) && !item.IsVirtual))
+			{
+				sql += OnFormatColumnName(column) + " " + GetTypeName(column) + (column.IsNullable ? " NULL," : " NOT NULL,");
+			}
+			sql += "CONSTRAINT [PK_" + Table.Name + "]" + " PRIMARY KEY CLUSTERED ([" + Table.PrimaryKey.Name + "] ASC))";
+
+			return new SqlCommand(sql);
+		}*/
 
 
 	}

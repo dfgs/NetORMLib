@@ -27,6 +27,11 @@ namespace NetORMLib.Columns
 			get;
 			set;
 		}
+		public bool IsNullable
+		{
+			get;
+			set;
+		}
 		public TVal DefaultValue
 		{
 			get;
@@ -42,6 +47,11 @@ namespace NetORMLib.Columns
 		public string Table
 		{
 			get { return Table<T>.Name; }
+		}
+
+		public Type DataType
+		{
+			get { return typeof(TVal); }
 		}
 
 		public Column([CallerMemberName]string Name=null)

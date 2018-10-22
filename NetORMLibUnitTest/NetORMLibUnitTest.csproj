@@ -52,8 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateTableUnitTest.cs" />
+    <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\JobType.cs" />
+    <Compile Include="InsertUnitTest.cs" />
     <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />
+    <Compile Include="SqlInsertCommandBuilderUnitTest.cs" />
     <Compile Include="UpdateUnitTest.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\PersonnExplicit.cs" />

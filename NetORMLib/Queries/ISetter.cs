@@ -18,8 +18,11 @@ namespace NetORMLib.Queries
 			get;
 		}
 	}
+	public interface ISetter<T> : ISetter
+	{
 
-	public interface ISetter<T,TVal>:ISetter
+	}
+	public interface ISetter<T,TVal>:ISetter<T>
 	{
 		new IColumn<T,TVal> Column
 		{

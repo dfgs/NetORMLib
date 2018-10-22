@@ -24,6 +24,27 @@ namespace NetORMLib.Columns
 			get;
 			set;
 		}
+		bool IsPrimaryKey
+		{
+			get;
+			set;
+		}
+
+		bool IsNullable
+		{
+			get;
+		}
+
+		Type DataType
+		{
+			get;
+		}
+
+		bool IsIdentity
+		{
+			get;
+			set;
+		}
 	}
 
 	public interface IColumn<TVal>:IColumn

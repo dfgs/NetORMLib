@@ -107,7 +107,35 @@ namespace NetORMLib.Databases
 
 			if (transaction == null) connection.Close();
 		}
+		public void Execute(IInsert Query)
+		{
+			DbCommand command;
 
+			command = commandBuilder.BuildCommand(Query);
+			command.Connection = connection;
+
+			if (transaction == null) connection.Open();
+			else command.Transaction = transaction;
+
+			command.ExecuteNonQuery();
+
+			if (transaction == null) connection.Close();
+		}
+
+		public void Execute(ICreateTable Query)
+		{
+			DbCommand command;
+
+			command = commandBuilder.BuildCommand(Query);
+			command.Connection = connection;
+
+			if (transaction == null) connection.Open();
+			else command.Transaction = transaction;
+
+			command.ExecuteNonQuery();
+
+			if (transaction == null) connection.Close();
+		}
 
 
 		/*public bool TableExists<T>()

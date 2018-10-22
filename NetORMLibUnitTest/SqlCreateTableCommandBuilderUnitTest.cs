@@ -25,42 +25,49 @@ namespace NetORMLibUnitTest
 		}
 
 		[TestMethod]
-		public void ShouldBuildExplicitCreateTable()
+		public void ShouldBuildCreateTableWithPrimaryKeyAndIdentity()
 		{
 			IQuery query;
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateTable<Personn>(Personn.FirstName, Personn.LastName);
+			query = new CreateTable<Personn>(Personn.PersonnID, Personn.FirstName, Personn.LastName, Personn.Job);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("CREATE TABLE [Personn] ([Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1", command.CommandText);
-			Assert.AreEqual(2, command.Parameters.Count);
-			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
-			Assert.AreEqual("John", command.Parameters[0].Value);
-			Assert.AreEqual("@LastName1", command.Parameters[1].ParameterName);
-			Assert.AreEqual("Doe", command.Parameters[1].Value);
+			Assert.AreEqual("CREATE TABLE [Personn] ([Personn].[PersonnID] int IDENTITY(1, 1) NOT NULL, [Personn].[FirstName] nvarchar(MAX) NOT NULL, [Personn].[LastName] nvarchar(MAX) NOT NULL, [Personn].[Job] nvarchar(MAX) NULL) CONSTRAINT [PK_Personn] PRIMARY KEY CLUSTERED ([PersonnID] ASC)", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
 		}
-		/*
-		 * 
-		 protected override SqlCommand OnCreateTableCreateCommand(ITable Table)
+		[TestMethod]
+		public void ShouldBuildCreateTableWithoutPrimaryKey()
 		{
-			string sql;
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new CreateTable<Job>(Job.Description,Job.Company);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("CREATE TABLE [Job] ([Job].[Description] nvarchar(MAX) NOT NULL, [Job].[Company] nvarchar(MAX) NULL)", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
+
+		[TestMethod]
+		public void ShouldBuildCreateTableWithoutIdentity()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new CreateTable<JobType>(JobType.JobTypeID,JobType.Description);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("CREATE TABLE [JobType] ([JobType].[JobTypeID] int NOT NULL, [JobType].[Description] nvarchar(MAX) NOT NULL) CONSTRAINT [PK_JobType] PRIMARY KEY CLUSTERED ([JobTypeID] ASC)", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
 
 
-			sql = "create table [" + Table.Name + "] (";
-			foreach (IColumn column in Table.Columns.Where(item => (item.Revision == 0 ) && !item.IsVirtual))
-			{
-				sql += OnFormatColumnName(column) + " " + GetTypeName(column) + (column.IsNullable ? " NULL," : " NOT NULL,");
-			}
-			sql += "CONSTRAINT [PK_" + Table.Name + "]" + " PRIMARY KEY CLUSTERED ([" + Table.PrimaryKey.Name + "] ASC))";
-
-			return new SqlCommand(sql);
-		}*/
 
 
-	
-	
 
 	}
 }

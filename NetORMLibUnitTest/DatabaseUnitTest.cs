@@ -8,6 +8,7 @@ using NetORMLib.CommandBuilders;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
 using NetORMLib.Sql.CommandBuilders;
+using NetORMLib.Sql.Databases;
 using NetORMLibUnitTest.Models;
 
 namespace NetORMLibUnitTest
@@ -349,6 +350,127 @@ namespace NetORMLibUnitTest
 		}
 
 
+
+		/*
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldInsertRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldInsertRows")]
+		public void ShouldInsertRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldInsertRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.Execute(new Insert<Personn>() );
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
+		}
+		
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldCommitInsertRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldCommitInsertRows")]
+		public void ShouldCommitInsertRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldCommitInsertRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Insert<Personn>().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+			database.EndTransaction(true);
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
+		}
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldRevertInsertRows")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldRevertInsertRows")]
+		public void ShouldRevertInsertRows()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldRevertInsertRows");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Insert<Personn>().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+			database.EndTransaction(false);
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Ned", rows[2].LastName);
+		}
+
+
+		[TestMethod]
+		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldSelectWithinInsertTransaction")]
+		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldSelectWithinInsertTransaction")]
+		public void ShouldSelectWithinInsertTransaction()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			Database database;
+			dynamic rows;
+
+			connection = OnCreateConnection("ShouldSelectWithinInsertTransaction");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.BeginTransaction();
+			database.Execute(new Insert<Personn>().Set(Personn.LastName, "Maud").Where(Personn.LastName.IsEqualTo("Ned")));
+
+			rows = database.Execute(new Select(Personn.FirstName, Personn.LastName).From<Personn>()).ToArray();
+			Assert.AreEqual(3, rows.Length);
+			Assert.AreEqual("Simpson", rows[0].FirstName);
+			Assert.AreEqual("Homer", rows[0].LastName);
+			Assert.AreEqual("Simpson", rows[1].FirstName);
+			Assert.AreEqual("Marje", rows[1].LastName);
+			Assert.AreEqual("Flanders", rows[2].FirstName);
+			Assert.AreEqual("Maud", rows[2].LastName);
+
+			database.EndTransaction(false);
+
+		}
+		//*/
+
+
+
+
+
+
+
 		[TestMethod]
 		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldGetTables")]
 		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldGetTables")]
@@ -357,7 +479,6 @@ namespace NetORMLibUnitTest
 			DbConnection connection;
 			ICommandBuilder commandBuilder;
 			Database database;
-			dynamic rows;
 			string[] tables;
 
 			connection = OnCreateConnection("ShouldGetTables");
@@ -368,6 +489,26 @@ namespace NetORMLibUnitTest
 
 			Assert.AreEqual(1, tables.Length);
 			Assert.AreEqual("Personn", tables[0]);
+		}
+
+		/*[TestMethod]
+		public void ShouldCreateTableWithPrimaryKeyAndIdentity()
+		{
+			DbConnection connection;
+			ICommandBuilder commandBuilder;
+			IDatabaseCreator databaseCreator;
+			Database database;
+
+			Directory.Delete("ShouldCreateTableWithPrimaryKeyAndIdentity", true);
+			Directory.CreateDirectory("ShouldCreateTableWithPrimaryKeyAndIdentity");
+			databaseCreator = new SqlLocalDatabaseCreator("ShouldCreateTableWithPrimaryKeyAndIdentity", "ShouldCreateTableWithPrimaryKeyAndIdentity");
+			connection = OnCreateConnection("ShouldCreateTableWithPrimaryKeyAndIdentity");
+			commandBuilder = new SqlCommandBuilder();
+			database = new Database(connection, commandBuilder);
+
+			database.Execute(new CreateTable<Personn>(Personn.PersonnID, Personn.FirstName, Personn.LastName));
+
+			databaseCreator.DropDatabase();
 		}
 
 

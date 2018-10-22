@@ -78,7 +78,9 @@
     <Compile Include="Queries\ICreateTable.cs" />
     <Compile Include="Queries\ISetter.cs" />
     <Compile Include="Queries\CreateTable.cs" />
+    <Compile Include="Queries\IInsert.cs" />
     <Compile Include="Queries\Setter.cs" />
+    <Compile Include="Queries\Insert.cs" />
     <Compile Include="Queries\Update.cs" />
     <Compile Include="Queries\IFilterableQuery.cs" />
     <Compile Include="Queries\IOrderableQuery.cs" />
