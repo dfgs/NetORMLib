@@ -14,17 +14,7 @@ namespace NetORMLibUnitTest
 	public class SqlSelectCommandBuilderUnitTest
 	{
 
-		[TestMethod]
-		public void ShouldThrowExceptionIfNoTableSpecified()
-		{
-			IQuery query;
-			ICommandBuilder builder;
-
-			query = new Select(Personn.FirstName);
-			builder = new SqlCommandBuilder();
-			Assert.ThrowsException<InvalidOperationException>( () => builder.BuildCommand(query));
-			
-		}
+		
 
 		[TestMethod]
 		public void ShouldBuildExplicitSelect()
@@ -33,7 +23,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName).From<Personn>();
+			query = new Select<Personn>(Personn.FirstName);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName] FROM [Personn]", command.CommandText);
@@ -49,7 +39,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsEqualTo("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0", command.CommandText);
@@ -65,7 +55,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsEqualTo("John"),Personn.LastName.IsEqualTo("Doe"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsEqualTo("John"),Personn.LastName.IsEqualTo("Doe"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0 AND [Personn].[LastName]=@LastName1", command.CommandText);
@@ -83,7 +73,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsNotEqualTo("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNotEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<>@FirstName0", command.CommandText);
@@ -99,7 +89,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsGreaterThan("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsGreaterThan("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]>@FirstName0", command.CommandText);
@@ -115,7 +105,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsLowerThan("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsLowerThan("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<@FirstName0", command.CommandText);
@@ -131,7 +121,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsGreaterOrEqualTo("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsGreaterOrEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]>=@FirstName0", command.CommandText);
@@ -147,7 +137,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsLowerOrEqualTo("John"));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsLowerOrEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<=@FirstName0", command.CommandText);
@@ -163,7 +153,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsNull());
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNull());
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName] IS NULL", command.CommandText);
@@ -177,7 +167,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(Personn.FirstName.IsNotNull());
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNotNull());
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName] IS NOT NULL", command.CommandText);
@@ -192,7 +182,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(new AndFilter( Personn.FirstName.IsNotNull(),Personn.LastName.IsEqualTo("Doe") ) );
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>( Personn.FirstName.IsNotNull(),Personn.LastName.IsEqualTo("Doe") ) );
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0)", command.CommandText);
@@ -208,7 +198,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(new AndFilter(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe"), Personn.LastName.IsEqualTo("Doe")));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe"), Personn.LastName.IsEqualTo("Doe")));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0 AND [Personn].[LastName]=@LastName1)", command.CommandText);
@@ -226,7 +216,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(new AndFilter(Personn.FirstName.IsEqualTo("John"),  new AndFilter(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe") ), Personn.LastName.IsEqualTo("Doe") ));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>(Personn.FirstName.IsEqualTo("John"),  new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe") ), Personn.LastName.IsEqualTo("Doe") ));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName]=@FirstName0 AND ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName1) AND [Personn].[LastName]=@LastName2)", command.CommandText);
@@ -246,7 +236,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select(Personn.FirstName, Personn.LastName).From<Personn>().Where(new OrFilter(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe")));
+			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new OrFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe")));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL OR [Personn].[LastName]=@LastName0)", command.CommandText);

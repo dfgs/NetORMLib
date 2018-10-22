@@ -17,6 +17,15 @@ namespace NetORMLib.Filters
 
 	}
 
-	
+	public interface IBooleanFilter<T>:IBooleanFilter,IFilter<T>
+	{
+		new IEnumerable<IFilter<T>> Members
+		{
+			get;
+		}
+
+	}
+
+
 
 }

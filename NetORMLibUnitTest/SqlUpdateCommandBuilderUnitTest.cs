@@ -15,12 +15,12 @@ namespace NetORMLibUnitTest
 	{
 
 		[TestMethod]
-		public void ShouldThrowExceptionIfNoTableSpecified()
+		public void ShouldThrowExceptionIfNoSetterSpecified()
 		{
 			IQuery query;
 			ICommandBuilder builder;
 
-			query = new Update();
+			query = new Update<Personn>();
 			builder = new SqlCommandBuilder();
 			Assert.ThrowsException<InvalidOperationException>( () => builder.BuildCommand(query));
 			
@@ -33,7 +33,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update().Set(Personn.FirstName,"John").Set(Personn.LastName,"Doe");
+			query = new Update<Personn>().Set(Personn.FirstName,"John").Set(Personn.LastName,"Doe");
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1", command.CommandText);
@@ -53,7 +53,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update().Set(Personn.FirstName, "John").Set(Personn.LastName, "Doe").Where(Personn.FirstName.IsEqualTo("Homer"));
+			query = new Update<Personn>().Set(Personn.FirstName, "John").Set(Personn.LastName, "Doe").Where(Personn.FirstName.IsEqualTo("Homer"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1 WHERE [Personn].[FirstName]=@FirstName2", command.CommandText);
@@ -73,7 +73,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update().Set(Personn.FirstName, "John").Set(Personn.LastName, "Doe").Where(Personn.FirstName.IsEqualTo("Homer"),Personn.LastName.IsEqualTo("Simpson"));
+			query = new Update<Personn>().Set(Personn.FirstName, "John").Set(Personn.LastName, "Doe").Where(Personn.FirstName.IsEqualTo("Homer"),Personn.LastName.IsEqualTo("Simpson"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1 WHERE [Personn].[FirstName]=@FirstName2 AND [Personn].[LastName]=@LastName3", command.CommandText);

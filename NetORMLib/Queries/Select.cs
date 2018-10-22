@@ -8,52 +8,43 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
-	public class Select : ISelect
+	public class Select<T> : ISelect<T>
 	{
-		private string table;
-		public string Table => table;
+		public string Table => Table<T>.Name;
 
-		private List<IColumn> columns;
-		public IEnumerable<IColumn> Columns => columns;
+		private List<IColumn<T>> columns;
+		IEnumerable<IColumn> ISelect.Columns=> columns;
+		public IEnumerable<IColumn<T>> Columns => columns;
 
-		private List<IColumn> orders;
-		public IEnumerable<IColumn> Orders => orders;
+		private List<IColumn<T>> orders;
+		IEnumerable<IColumn> IOrderableQuery.Orders => orders;
+		public IEnumerable<IColumn<T>> Orders => orders;
 
-		private List<IFilter> filters;
-		public IEnumerable<IFilter> Filters => filters;
+		private List<IFilter<T>> filters;
+		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
+		public IEnumerable<IFilter<T>> Filters => filters;
 
-	
-		public Select(params IColumn[] Columns)
+
+		public Select(params IColumn<T>[] Columns)
 		{
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Must must specify at least one column");
-			columns = new List<IColumn>();
-			filters = new List<IFilter>();
-			orders = new List<IColumn>();
+			columns = new List<IColumn<T>>();
+			filters = new List<IFilter<T>>();
+			orders = new List<IColumn<T>>();
 
 			columns.AddRange(Columns);
 		}
 
-		public ISelect From<T>()
-		{
-			this.table = Table<T>.Name;
-			return this;
-		}
 
-		IFilterableQuery IFilterableQuery.Where(params IFilter[] Filters)
-		{
-			return Where(Filters);
-		}
-		public ISelect Where(params IFilter[] Filters)
+
+		public ISelect<T> Where(params IFilter<T>[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;
 		}
 
-		IOrderableQuery IOrderableQuery.OrderBy(params IColumn[] Columns)
-		{
-			return OrderBy(Columns);
-		}
-		public ISelect OrderBy(params IColumn[] Columns)
+		
+		public ISelect<T> OrderBy(params IColumn<T>[] Columns)
 		{
 			orders.AddRange(Columns);
 			return this;

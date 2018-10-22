@@ -9,6 +9,20 @@ namespace NetORMLib.Queries
 {
 	public interface IOrderableQuery : IQuery
 	{
-		IOrderableQuery OrderBy(params IColumn[] Columns);
+		IEnumerable<IColumn> Orders
+		{
+			get;
+		}
+
 	}
+
+	public interface IOrderableQuery<T>:IQuery<T>,IOrderableQuery
+	{
+		new IEnumerable<IColumn<T>> Orders
+		{
+			get;
+		}
+
+	}
+
 }

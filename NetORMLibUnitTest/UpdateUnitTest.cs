@@ -15,7 +15,7 @@ namespace NetORMLibUnitTest
 		{
 			IUpdate query;
 
-			query = new Update().Set(Personn.FirstName,"John");
+			query = new Update<Personn>().Set(Personn.FirstName,"John");
 			Assert.AreEqual("Personn", query.Table);
 			Assert.AreEqual(1, query.Setters.Count());
 		}
@@ -26,7 +26,7 @@ namespace NetORMLibUnitTest
 		{
 			IUpdate query;
 
-			query = new Update().Set(Personn.FirstName, "John").Where(Personn.FirstName.IsEqualTo("Homer"));
+			query = new Update<Personn>().Set(Personn.FirstName, "John").Where(Personn.FirstName.IsEqualTo("Homer"));
 			Assert.AreEqual("Personn", query.Table);
 			Assert.AreEqual(1, query.Setters.Count());
 			Assert.AreEqual(1, query.Filters.Count());

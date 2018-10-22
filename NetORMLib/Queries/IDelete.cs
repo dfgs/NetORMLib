@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface IDelete:IQuery, IFilterableQuery
+	public interface IDelete:IFilterableQuery
 	{
-
-		IEnumerable<IFilter> Filters
-		{
-			get;
-		}
-
-		IDelete From<T>();
-		new IDelete Where(params IFilter[] Filters);
+		
+	}
+	public interface IDelete<T>:IDelete,IFilterableQuery<T>
+	{
+		IDelete<T> Where(params IFilter<T>[] Filters);
 
 	}
+
 
 }

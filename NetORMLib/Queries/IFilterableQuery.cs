@@ -9,6 +9,21 @@ namespace NetORMLib.Queries
 {
 	public interface IFilterableQuery:IQuery
 	{
-		IFilterableQuery Where(params IFilter[] Filters);
+		IEnumerable<IFilter> Filters
+		{
+			get;
+		}
+
 	}
+
+	public interface IFilterableQuery<T>: IQuery<T>,IFilterableQuery
+	{
+		new IEnumerable<IFilter<T>> Filters
+		{
+			get;
+		}
+
+	}
+
+
 }

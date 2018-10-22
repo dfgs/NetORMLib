@@ -8,25 +8,26 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
-	public class Insert<T> : IInsert
+	public class Insert<T> : IInsert<T>
 	{
-		private string table;
-		public string Table => table;
+		public string Table => Table<T>.Name;
 
 
-		private IEnumerable<ISetter> setters;
-		public IEnumerable<ISetter> Setters => setters;
+		private List<ISetter<T>> setters;
+		IEnumerable<ISetter> IInsert.Setters => setters;
+		public IEnumerable<ISetter<T>> Setters => setters;
 
-		public Insert(params ISetter<T>[] Setters)
+		public Insert()
 		{
-			if ((Setters == null) || (Setters.Length == 0)) throw new ArgumentNullException("Must must specify at least one setter");
-			setters = Setters;
-			table = Table<T>.Name;
+			setters = new List<ISetter<T>>();
 		}
 
-
-
 		
+		public IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		{
+			setters.Add(new Setter<T, TVal>(Column, Value));
+			return this;
+		}
 
 
 	}

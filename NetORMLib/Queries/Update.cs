@@ -8,46 +8,39 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
-	public class Update : IUpdate
+	public class Update<T> : IUpdate<T>
 	{
-		private string table;
-		public string Table => table;
+		public string Table => Table<T>.Name;
 
-		private List<IFilter> filters;
-		public IEnumerable<IFilter> Filters => filters;
+		private List<IFilter<T>> filters;
+		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
+		public IEnumerable<IFilter<T>> Filters => filters;
 
-		private List<ISetter> setters;
-		public IEnumerable<ISetter> Setters => setters;
+		private List<ISetter<T>> setters;
+		IEnumerable<ISetter> IUpdate.Setters => setters;
+		public IEnumerable<ISetter<T>> Setters => setters;
 
 		public Update()
 		{
-			filters = new List<IFilter>();
-			setters = new List<ISetter>();
+			filters = new List<IFilter<T>>();
+			setters = new List<ISetter<T>>();
+			
 		}
 
 
-		IFilterableQuery IFilterableQuery.Where(params IFilter[] Filters)
-		{
-			return Where(Filters);
-		}
-		public IUpdate Where(params IFilter[] Filters)
+		public IUpdate<T> Where(params IFilter<T>[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;
 		}
 
-		public IUpdate Set<T, TVal>(IColumn<T, TVal> Column, TVal Value)
+		
+		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
 		{
-			this.table = Table<T>.Name;
 			setters.Add(new Setter<T,TVal>(Column, Value));
 			return this;
 		}
-
-		public IUpdate Set<T, TVal>(IEnumerable<ISetter<T, TVal>> Setters)
-		{
-			setters.AddRange(Setters);
-			return this;
-		}
+		
 
 
 

@@ -166,6 +166,8 @@ namespace NetORMLib.Sql.CommandBuilders
 			StringBuilder sql;
 			int index;
 
+			if (!Query.Setters.Any()) throw (new InvalidOperationException("Update query must specify at least one setter"));
+
 			sql = new StringBuilder();
 			sql.Append("UPDATE ");
 			sql.Append(OnFormatTableName(Query.Table));
@@ -199,14 +201,16 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append("INSERT INTO ");
 			sql.Append(OnFormatTableName(Query.Table));
 
-			sql.Append(" (");
-			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatColumnName(item.Column))));
-			sql.Append(") VALUES (");
+			if (Query.Setters.Any())
+			{
+				sql.Append(" (");
+				sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatColumnName(item.Column))));
+				sql.Append(") VALUES (");
 
-			index = 0;
-			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatParameterName(item.Column.Name,ref index))));
-			sql.Append(")");
-
+				index = 0;
+				sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatParameterName(item.Column.Name, ref index))));
+				sql.Append(")");
+			}
 
 			command = new SqlCommand(sql.ToString());
 			index = 0;

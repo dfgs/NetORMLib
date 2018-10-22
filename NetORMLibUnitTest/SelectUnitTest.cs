@@ -15,7 +15,7 @@ namespace NetORMLibUnitTest
 		{
 			ISelect query;
 
-			query = new Select(Personn.LastName, Personn.FirstName).From<Personn>();
+			query = new Select<Personn>(Personn.LastName, Personn.FirstName);
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(Personn.LastName, query.Columns.ElementAt(0));
 			Assert.AreEqual(Personn.FirstName, query.Columns.ElementAt(1));
@@ -26,7 +26,7 @@ namespace NetORMLibUnitTest
 		{
 			ISelect query;
 
-			query = new Select(Personn.FirstName).From<Personn>().OrderBy(Personn.LastName,Personn.FirstName);
+			query = new Select<Personn>(Personn.FirstName).OrderBy(Personn.LastName,Personn.FirstName);
 			Assert.AreEqual(2, query.Orders.Count());
 			Assert.AreEqual(Personn.LastName, query.Orders.ElementAt(0));
 			Assert.AreEqual(Personn.FirstName, query.Orders.ElementAt(1));
@@ -38,7 +38,7 @@ namespace NetORMLibUnitTest
 		{
 			ISelect query;
 
-			query = new Select(Personn.FirstName).From<Personn>().Where(Personn.FirstName.IsEqualTo("John"));
+			query = new Select<Personn>(Personn.FirstName).Where(Personn.FirstName.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 

@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class IsNullFilter:IFilter, IIsNullFilter
+	public class IsNullFilter<T> : IIsNullFilter<T>
 	{
-		private IColumn column;
-		public IColumn Column => column;
+		private IColumn<T> column;
+		IColumn IIsNullFilter.Column => column;
+		public IColumn<T> Column => column;
 
 
 
-		public IsNullFilter(IColumn Column)
+		public IsNullFilter(IColumn<T> Column)
 		{
 			this.column = Column;
 		}

@@ -8,24 +8,23 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface IUpdate:IQuery, IFilterableQuery
+	public interface IUpdate:IFilterableQuery
 	{
-
 		IEnumerable<ISetter> Setters
 		{
 			get;
 		}
+	}
 
-
-		IEnumerable<IFilter> Filters
+	public interface IUpdate<T>:IUpdate,IFilterableQuery<T>
+	{
+		new IEnumerable<ISetter<T>> Setters
 		{
 			get;
 		}
 
-		IUpdate Set<T, TVal>(IColumn<T, TVal> Column, TVal Value);
-		IUpdate Set<T, TVal>(IEnumerable<ISetter<T,TVal>> Setters);
-		new IUpdate Where(params IFilter[] Filters);
-
+		IUpdate<T> Where(params IFilter<T>[] Filters);
+		IUpdate<T> Set<TVal>(IColumn<T,TVal> Column, TVal Value);
 	}
 
 }

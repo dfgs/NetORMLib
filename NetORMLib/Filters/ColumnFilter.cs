@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public abstract class ColumnFilter<TVal>:IColumnFilter<TVal>
+	public abstract class ColumnFilter<T,TVal>:IColumnFilter<T,TVal>
 	{
-		private IColumn<TVal> column;
+		private IColumn<T,TVal> column;
 		IColumn IColumnFilter.Column => column;
-		public IColumn<TVal> Column => column;
+		IColumn<T> IColumnFilter<T>.Column => column;
+		public IColumn<T,TVal> Column => column;
 
 		private TVal value;
 		object IColumnFilter.Value => value;
@@ -19,7 +20,7 @@ namespace NetORMLib.Filters
 
 
 
-		public ColumnFilter(IColumn<TVal> Column,TVal Value)
+		public ColumnFilter(IColumn<T,TVal> Column,TVal Value)
 		{
 			this.column = Column;this.value = Value;
 		}

@@ -47,26 +47,26 @@ namespace NetORMLib.Columns
 		}
 	}
 
-	public interface IColumn<TVal>:IColumn
+	public interface IColumn<T>:IColumn
+	{
+		IIsNullFilter<T> IsNull();
+		IIsNotNullFilter<T> IsNotNull();
+	}
+
+	public interface IColumn<T,TVal> : IColumn<T>
 	{
 		new TVal DefaultValue
 		{
 			get;
 			set;
 		}
-	}
 
-	public interface IColumn<T,TVal> : IColumn<TVal>
-	{
-
-		IIsEqualToFilter<TVal> IsEqualTo(TVal Value);
-		IIsNotEqualToFilter<TVal> IsNotEqualTo(TVal Value);
-		IIsGreaterThanFilter<TVal> IsGreaterThan(TVal Value);
-		IIsLowerThanFilter<TVal> IsLowerThan(TVal Value);
-		IIsGreaterOrEqualToFilter<TVal> IsGreaterOrEqualTo(TVal Value);
-		IIsLowerOrEqualToFilter<TVal> IsLowerOrEqualTo(TVal Value);
-		IIsNullFilter IsNull();
-		IIsNotNullFilter IsNotNull();
+		IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value);
+		IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value);
+		IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value);
+		IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value);
+		IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value);
+		IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value);
 	}
 
 }

@@ -10,6 +10,10 @@ namespace NetORMLib.Filters
 	public interface IFilter
 	{
 	}
-	
+
+	public interface IFilter<T>:IFilter
+	{
+	}
+
 
 }

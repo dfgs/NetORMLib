@@ -8,23 +8,21 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
-	public class CreateTable<T> : ICreateTable
+	public class CreateTable<T> : ICreateTable<T>
 	{
-		private string table;
-		public string Table => table;
+		public string Table => Table<T>.Name;
 
-		private List<IColumn> columns;
-		public IEnumerable<IColumn> Columns => columns;
+		private List<IColumn<T>> columns;
+		IEnumerable<IColumn> ICreateTable.Columns => columns;
+		public IEnumerable<IColumn<T>> Columns => columns;
 
 
-	
-		public CreateTable(params IColumn[] Columns)
+
+		public CreateTable(params IColumn<T>[] Columns)
 		{
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Must must specify at least one column");
-			columns = new List<IColumn>();
-
+			columns = new List<IColumn<T>>();
 			columns.AddRange(Columns);
-			this.table = Table<T>.Name;
 		}
 
 	

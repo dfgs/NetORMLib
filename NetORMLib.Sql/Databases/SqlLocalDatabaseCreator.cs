@@ -35,7 +35,7 @@ namespace NetORMLib.Sql.Databases
 				}
 				return true;
 			}
-			catch(Exception ex)
+			catch
 			{
 				return false;
 			}

@@ -62,37 +62,37 @@ namespace NetORMLib.Columns
 
 		
 
-		public IIsEqualToFilter<TVal> IsEqualTo(TVal Value)
+		public IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value)
 		{
-			return new IsEqualToFilter<TVal>(this, Value);
+			return new IsEqualToFilter<T, TVal>(this, Value);
 		}
-		public IIsNotEqualToFilter<TVal> IsNotEqualTo(TVal Value)
+		public IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value)
 		{
-			return new IsNotEqualToFilter<TVal>(this, Value);
+			return new IsNotEqualToFilter<T, TVal>(this, Value);
 		}
-		public IIsGreaterThanFilter<TVal> IsGreaterThan(TVal Value)
+		public IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value)
 		{
-			return new IsGreaterThanFilter<TVal>(this, Value);
+			return new IsGreaterThanFilter<T, TVal>(this, Value);
 		}
-		public IIsLowerThanFilter<TVal> IsLowerThan(TVal Value)
+		public IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value)
 		{
-			return new IsLowerThanFilter<TVal>(this, Value);
+			return new IsLowerThanFilter<T, TVal>(this, Value);
 		}
-		public IIsGreaterOrEqualToFilter<TVal> IsGreaterOrEqualTo(TVal Value)
+		public IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value)
 		{
-			return new IsGreaterOrEqualToFilter<TVal>(this, Value);
+			return new IsGreaterOrEqualToFilter<T, TVal>(this, Value);
 		}
-		public IIsLowerOrEqualToFilter<TVal> IsLowerOrEqualTo(TVal Value)
+		public IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value)
 		{
-			return new IsLowerOrEqualToFilter<TVal>(this, Value);
+			return new IsLowerOrEqualToFilter<T, TVal>(this, Value);
 		}
-		public IIsNullFilter IsNull()
+		public IIsNullFilter<T> IsNull()
 		{
-			return new IsNullFilter(this);
+			return new IsNullFilter<T>(this);
 		}
-		public IIsNotNullFilter IsNotNull()
+		public IIsNotNullFilter<T> IsNotNull()
 		{
-			return new IsNotNullFilter(this);
+			return new IsNotNullFilter<T>(this);
 		}
 
 		public override string ToString()

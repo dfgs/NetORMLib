@@ -22,7 +22,7 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Insert<Personn>(new Setter<Personn,string>( Personn.FirstName,"John"), new Setter<Personn, string>(Personn.LastName,"Doe"));
+			query = new Insert<Personn>().Set(Personn.FirstName, "John").Set(Personn.LastName, "Doe");
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("INSERT INTO [Personn] ([Personn].[FirstName], [Personn].[LastName]) VALUES (@FirstName0, @LastName1)", command.CommandText);
@@ -33,9 +33,21 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual("Doe", command.Parameters[1].Value);
 		}
 
+		[TestMethod]
+		public void ShouldBuildImplicitInsert()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Insert<Personn>();
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("INSERT INTO [Personn]", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
 
 
-	
 
 	}
 }

@@ -23,9 +23,17 @@ namespace NetORMLib.Filters
 	}
 
 	
-	public interface IColumnFilter<TVal> : IColumnFilter
+	public interface IColumnFilter<T> : IColumnFilter,IFilter<T>
 	{
-		new IColumn<TVal> Column
+		new IColumn<T> Column
+		{
+			get;
+		}
+	}
+
+	public interface IColumnFilter<T,TVal> : IColumnFilter<T>
+	{
+		new IColumn<T,TVal> Column
 		{
 			get;
 		}
@@ -33,9 +41,7 @@ namespace NetORMLib.Filters
 		{
 			get;
 		}
-
 	}
-
 
 
 }

@@ -21,7 +21,8 @@ namespace NetORMLibUnitTest
 			return new System.Data.SqlClient.SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={Directory.GetCurrentDirectory()}\{Folder}\UnitTestDatabase.mdf;Integrated Security=True;Connect Timeout=30");
 		}
 
-		[TestMethod]
+		/*
+		 * [TestMethod]
 		[DeploymentItem(@"UnitTestDatabase.mdf", "ShouldSelectRows")]
 		[DeploymentItem(@"UnitTestDatabase_log.ldf", "ShouldSelectRows")]
 		public void ShouldSelectRows()
@@ -463,8 +464,7 @@ namespace NetORMLibUnitTest
 			database.EndTransaction(false);
 
 		}
-		//*/
-
+	
 
 
 
@@ -491,7 +491,7 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual("Personn", tables[0]);
 		}
 
-		/*[TestMethod]
+		[TestMethod]
 		public void ShouldCreateTableWithPrimaryKeyAndIdentity()
 		{
 			DbConnection connection;
