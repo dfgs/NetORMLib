@@ -18,9 +18,9 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			return $"[{Table}]";
 		}
-		protected override string OnFormatColumnName(IColumn Column)
+		protected override string OnFormatColumnName(IColumn Column,bool FullName=true)
 		{
-			return $"[{Column.Table}].[{Column.Name}]";
+			return FullName?$"[{Column.Table}].[{Column.Name}]": $"[{Column.Name}]";
 		}
 		protected override string OnFormatParameterName(string Column,ref int Index)
 		{
@@ -223,17 +223,14 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			SqlCommand command;
 			StringBuilder sql;
-			IColumn primaryKey;
 
 			sql = new StringBuilder();
 			sql.Append("CREATE TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
 
 			sql.Append(" (");
-			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}" )   ) );
+			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{(item.IsPrimaryKey ? " PRIMARY KEY" : "")}" )   ) );
 			sql.Append(")");
-			primaryKey = Query.Columns.FirstOrDefault(item => item.IsPrimaryKey);
-			if (primaryKey!=null) sql.Append($" CONSTRAINT [PK_{Query.Table}] PRIMARY KEY CLUSTERED ([{primaryKey.Name}] ASC)");
 
 			command = new SqlCommand(sql.ToString());
 

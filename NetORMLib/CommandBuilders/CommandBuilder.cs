@@ -13,7 +13,7 @@ namespace NetORMLib.CommandBuilders
 	public abstract class CommandBuilder : ICommandBuilder
 	{
 		protected abstract string OnFormatTableName(string Table);
-		protected abstract string OnFormatColumnName(IColumn Column);
+		protected abstract string OnFormatColumnName(IColumn Column,bool FullName);
 		protected abstract string OnFormatParameterName(string Column,ref int Index);
 		protected abstract string OnFormatFilter(IFilter Filter, ref int Index);
 		protected abstract string OnFormatSetter(ISetter Setter, ref int Index);

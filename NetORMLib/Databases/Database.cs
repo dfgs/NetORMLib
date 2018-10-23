@@ -66,7 +66,17 @@ namespace NetORMLib.Databases
 			{
 				connection.Open();
 				command.Connection = connection;
-				using (reader = command.ExecuteReader())
+
+				try
+				{
+					reader = command.ExecuteReader();
+				}
+				catch (Exception ex)
+				{
+					throw new ORMException(command, ex);
+				}
+
+				using (reader)
 				{
 					while (reader.Read())
 					{
@@ -91,7 +101,14 @@ namespace NetORMLib.Databases
 			{
 				connection.Open();
 				command.Connection = connection;
-				command.ExecuteNonQuery();
+				try
+				{
+					command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw new ORMException(command, ex);
+				}
 				connection.Close();
 			}
 		}
@@ -116,7 +133,14 @@ namespace NetORMLib.Databases
 							command = commandBuilder.BuildCommand(query);
 							command.Connection = connection;
 							command.Transaction = transaction;
-							command.ExecuteNonQuery();
+							try
+							{
+								command.ExecuteNonQuery();
+							}
+							catch(Exception ex)
+							{
+								throw new ORMException(command, ex);
+							}
 						}
 					}
 					catch (Exception ex)

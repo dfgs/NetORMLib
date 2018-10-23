@@ -30,6 +30,7 @@ namespace NetORMLib.VersionControl
 		}
 
 		public abstract int GetTargetRevision();
+		protected abstract IEnumerable<IQuery> OnUpgradeTo(int Version);
 
 		public bool IsUpToDate()
 		{
@@ -38,13 +39,26 @@ namespace NetORMLib.VersionControl
 
 		public void Upgrade()
 		{
-			int current;
+			int current,target;
+			List<IQuery> queries;
 
+			target = GetTargetRevision();
 			current = GetCurrentRevision();
 			if (current==-1)
 			{
 				database.Execute(new CreateTable<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
+				current = 0;
 			}
+
+			while(current<target)
+			{
+				current ++;
+				queries = new List<IQuery>();
+				queries.AddRange(OnUpgradeTo(current));
+				queries.Add(new Insert<UpgradeLog>().Set(UpgradeLog.Revision, current).Set(UpgradeLog.Date, DateTime.Now));
+				database.Execute(queries);
+			}
+
 
 		}
 

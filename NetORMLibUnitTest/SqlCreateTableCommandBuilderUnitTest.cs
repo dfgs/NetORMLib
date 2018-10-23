@@ -34,7 +34,7 @@ namespace NetORMLibUnitTest
 			query = new CreateTable<Personn>(Personn.PersonnID, Personn.FirstName, Personn.LastName, Personn.Job);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("CREATE TABLE [Personn] ([Personn].[PersonnID] int IDENTITY(1, 1) NOT NULL, [Personn].[FirstName] nvarchar(MAX) NOT NULL, [Personn].[LastName] nvarchar(MAX) NOT NULL, [Personn].[Job] nvarchar(MAX) NULL) CONSTRAINT [PK_Personn] PRIMARY KEY CLUSTERED ([PersonnID] ASC)", command.CommandText);
+			Assert.AreEqual("CREATE TABLE [Personn] ([PersonnID] int IDENTITY(1, 1) NOT NULL PRIMARY KEY, [FirstName] nvarchar(MAX) NOT NULL, [LastName] nvarchar(MAX) NOT NULL, [Job] nvarchar(MAX) NULL)", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 		[TestMethod]
@@ -47,7 +47,7 @@ namespace NetORMLibUnitTest
 			query = new CreateTable<Job>(Job.Description,Job.Company);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("CREATE TABLE [Job] ([Job].[Description] nvarchar(MAX) NOT NULL, [Job].[Company] nvarchar(MAX) NULL)", command.CommandText);
+			Assert.AreEqual("CREATE TABLE [Job] ([Description] nvarchar(MAX) NOT NULL, [Company] nvarchar(MAX) NULL)", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
@@ -61,7 +61,7 @@ namespace NetORMLibUnitTest
 			query = new CreateTable<JobType>(JobType.JobTypeID,JobType.Description);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("CREATE TABLE [JobType] ([JobType].[JobTypeID] int NOT NULL, [JobType].[Description] nvarchar(MAX) NOT NULL) CONSTRAINT [PK_JobType] PRIMARY KEY CLUSTERED ([JobTypeID] ASC)", command.CommandText);
+			Assert.AreEqual("CREATE TABLE [JobType] ([JobTypeID] int NOT NULL PRIMARY KEY, [Description] nvarchar(MAX) NOT NULL)", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
