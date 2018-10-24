@@ -24,6 +24,7 @@ namespace NetORMLib.CommandBuilders
 		protected abstract DbCommand OnBuildInsertCommand(IInsert Query);
 		protected abstract DbCommand OnBuildCreateTableCommand(ICreateTable Query);
 		protected abstract DbCommand OnBuildCreateRelationCommand(ICreateRelation Query);
+		protected abstract DbCommand OnBuildCreateColumnCommand(ICreateColumn Query);
 
 
 		public DbCommand BuildCommand(IQuery Query)
@@ -37,6 +38,7 @@ namespace NetORMLib.CommandBuilders
 			if (Query is IInsert insert) return OnBuildInsertCommand(insert);
 			if (Query is ICreateTable createTable) return OnBuildCreateTableCommand(createTable);
 			if (Query is ICreateRelation createRelation) return OnBuildCreateRelationCommand(createRelation);
+			if (Query is ICreateColumn createColumn) return OnBuildCreateColumnCommand(createColumn);
 			else throw new NotSupportedException($"Query of type {Query.GetType().Name} is not supported");
 		}
 

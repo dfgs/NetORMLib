@@ -51,11 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateColumnUnitTest.cs" />
     <Compile Include="CreateRelationUnitTest.cs" />
     <Compile Include="CreateTableUnitTest.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\JobType.cs" />
     <Compile Include="InsertUnitTest.cs" />
+    <Compile Include="SqlCreateColumnCommandBuilderUnitTest.cs" />
     <Compile Include="SqlCreateRelationCommandBuilderUnitTest.cs" />
     <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />

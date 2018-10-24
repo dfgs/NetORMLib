@@ -249,21 +249,35 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table}_{Query.PrimaryColumn.Table}]");
 			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
 			sql.Append($" REFERENCES {OnFormatTableName(Query.PrimaryColumn.Table)} ({OnFormatColumnName(Query.PrimaryColumn,false)})");
+			//if (Relation.DeleteReferentialAction == DeleteReferentialAction.Delete) sql += " ON DELETE CASCADE";
 
+
+			command = new SqlCommand(sql.ToString());
+
+			return command;
+		}
+
+		protected override DbCommand OnBuildCreateColumnCommand(ICreateColumn Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+
+			sql = new StringBuilder();
+			sql.Append("ALTER TABLE ");
+			sql.Append(OnFormatTableName(Query.Table));
+			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{(Query.Column.IsPrimaryKey ? " PRIMARY KEY" : "")}");
 
 			command = new SqlCommand(sql.ToString());
 
 			return command;
 
 			/*
-			 			sql = "ALTER TABLE [" + Relation.ForeignColumn.TableName + "] WITH CHECK ADD CONSTRAINT [FK_"
-				+ Relation.ForeignColumn.TableName + "_" + Relation.PrimaryColumn.TableName + "] FOREIGN KEY([" + Relation.ForeignColumn.Name + "]) "
-				+ "REFERENCES [" + Relation.PrimaryColumn.TableName + "] ([" + Relation.PrimaryColumn.Name + "])";
-			if (Relation.DeleteReferentialAction == DeleteReferentialAction.Delete) sql += " ON DELETE CASCADE";
-
+			
+			sql = "alter table " + OnFormatTableName(Column.TableName) + " ADD  "
+				+ OnFormatColumnName(Column) + " " + GetTypeName(Column) + (Column.IsNullable ? " NULL" : " NOT NULL"); ;
+			if (Column.DefaultValue != null) sql += " DEFAULT('" + Column.Default
 			 */
 		}
-
 
 
 	}
