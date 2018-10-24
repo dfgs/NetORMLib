@@ -51,10 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateRelationUnitTest.cs" />
     <Compile Include="CreateTableUnitTest.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\JobType.cs" />
     <Compile Include="InsertUnitTest.cs" />
+    <Compile Include="SqlCreateRelationCommandBuilderUnitTest.cs" />
     <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />
     <Compile Include="SqlInsertCommandBuilderUnitTest.cs" />

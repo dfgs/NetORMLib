@@ -237,22 +237,33 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
-		/*
-		 * 
-		 protected override SqlCommand OnCreateTableCreateCommand(ITable Table)
+
+		protected override DbCommand OnBuildCreateRelationCommand(ICreateRelation Query)
 		{
-			string sql;
+			SqlCommand command;
+			StringBuilder sql;
+
+			sql = new StringBuilder();
+			sql.Append("ALTER TABLE ");
+			sql.Append(OnFormatTableName(Query.Table));
+			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table}_{Query.PrimaryColumn.Table}]");
+			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
+			sql.Append($" REFERENCES {OnFormatTableName(Query.PrimaryColumn.Table)} ({OnFormatColumnName(Query.PrimaryColumn,false)})");
 
 
-			sql = "create table [" + Table.Name + "] (";
-			foreach (IColumn column in Table.Columns.Where(item => (item.Revision == 0 ) && !item.IsVirtual))
-			{
-				sql += OnFormatColumnName(column) + " " + GetTypeName(column) + (column.IsNullable ? " NULL," : " NOT NULL,");
-			}
-			sql += "CONSTRAINT [PK_" + Table.Name + "]" + " PRIMARY KEY CLUSTERED ([" + Table.PrimaryKey.Name + "] ASC))";
+			command = new SqlCommand(sql.ToString());
 
-			return new SqlCommand(sql);
-		}*/
+			return command;
+
+			/*
+			 			sql = "ALTER TABLE [" + Relation.ForeignColumn.TableName + "] WITH CHECK ADD CONSTRAINT [FK_"
+				+ Relation.ForeignColumn.TableName + "_" + Relation.PrimaryColumn.TableName + "] FOREIGN KEY([" + Relation.ForeignColumn.Name + "]) "
+				+ "REFERENCES [" + Relation.PrimaryColumn.TableName + "] ([" + Relation.PrimaryColumn.Name + "])";
+			if (Relation.DeleteReferentialAction == DeleteReferentialAction.Delete) sql += " ON DELETE CASCADE";
+
+			 */
+		}
+
 
 
 	}

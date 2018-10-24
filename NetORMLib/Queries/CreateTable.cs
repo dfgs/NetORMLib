@@ -20,7 +20,7 @@ namespace NetORMLib.Queries
 
 		public CreateTable(params IColumn<T>[] Columns)
 		{
-			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Must must specify at least one column");
+			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
 			columns = new List<IColumn<T>>();
 			columns.AddRange(Columns);
 		}

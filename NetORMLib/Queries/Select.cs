@@ -27,7 +27,7 @@ namespace NetORMLib.Queries
 
 		public Select(params IColumn<T>[] Columns)
 		{
-			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Must must specify at least one column");
+			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
 			columns = new List<IColumn<T>>();
 			filters = new List<IFilter<T>>();
 			orders = new List<IColumn<T>>();
