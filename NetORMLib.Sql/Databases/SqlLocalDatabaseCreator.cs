@@ -47,11 +47,13 @@ namespace NetORMLib.Sql.Databases
 			SqlConnection connection;
 			SqlCommand command;
 
-			connection = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB");
-			connection.Open();
-			command = new SqlCommand($"CREATE DATABASE [{DatabaseName}] ON PRIMARY (Name={DatabaseName}_data, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}.mdf') LOG ON (Name={DatabaseName}_log, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}_log.ldf')", connection);
-			command.ExecuteNonQuery();
-			connection.Close();
+			using (connection = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB"))
+			{
+				connection.Open();
+				command = new SqlCommand($"CREATE DATABASE [{DatabaseName}] ON PRIMARY (Name={DatabaseName}_data, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}.mdf') LOG ON (Name={DatabaseName}_log, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}_log.ldf')", connection);
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
 		}
 
 		public override void DropDatabase()

@@ -39,10 +39,12 @@ namespace NetORMLib.Sql.Databases
 			SqlConnection connection;
 			SqlCommand command;
 
-			connection = new SqlConnection(connectionString);
-			connection.Open();
-			command = new SqlCommand("CREATE DATABASE TEST", connection);
-			connection.Close();
+			using (connection = new SqlConnection(connectionString))
+			{
+				connection.Open();
+				command = new SqlCommand("CREATE DATABASE TEST", connection);
+				connection.Close();
+			}
 		}
 		public override void DropDatabase()
 		{
