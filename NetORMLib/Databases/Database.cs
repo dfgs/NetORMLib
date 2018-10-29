@@ -91,6 +91,38 @@ namespace NetORMLib.Databases
 				connection.Close();
 			}
 		}
+		public object Execute(ISelectIdentity Query)
+		{
+			DbCommand command;
+			DbDataReader reader;
+			object result = null;
+
+			command = commandBuilder.BuildCommand(Query);
+
+			using (DbConnection connection = connectionFactory.CreateConnection())
+			{
+				connection.Open();
+				command.Connection = connection;
+
+				try
+				{
+					reader = command.ExecuteReader();
+				}
+				catch (Exception ex)
+				{
+					throw new ORMException(command, ex);
+				}
+
+				using (reader)
+				{
+					if (reader.Read()) result=reader[0];
+				}
+				connection.Close();
+			}
+
+			return result;
+		}
+
 
 		public void Execute(IQuery Query)
 		{

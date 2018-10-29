@@ -82,9 +82,11 @@
     <Compile Include="Queries\ICreateColumn.cs" />
     <Compile Include="Queries\ICreateRelation.cs" />
     <Compile Include="Queries\ICreateTable.cs" />
+    <Compile Include="Queries\ISelectIdentity.cs" />
     <Compile Include="Queries\ISetter.cs" />
     <Compile Include="Queries\CreateTable.cs" />
     <Compile Include="Queries\IInsert.cs" />
+    <Compile Include="Queries\SelectIndentity.cs" />
     <Compile Include="Queries\Setter.cs" />
     <Compile Include="Queries\Insert.cs" />
     <Compile Include="Queries\Update.cs" />

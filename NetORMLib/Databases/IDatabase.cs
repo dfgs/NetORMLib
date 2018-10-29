@@ -14,6 +14,7 @@ namespace NetORMLib.Databases
 		void EndTransaction(bool Commit);*/
 
 		IEnumerable<Row> Execute(ISelect Query);
+		object Execute(ISelectIdentity Query);
 		void Execute(IQuery Query);
 		void Execute(params IQuery[] Queries);
 		void Execute(IEnumerable<IQuery> Queries);
