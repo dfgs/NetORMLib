@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Queries
 {
-	public interface ISelectIdentity: IQuery
+	public interface ISelectIdentity: IQuery, ICallBackQuery
 	{
 
 	}

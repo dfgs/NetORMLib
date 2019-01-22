@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\CreateColumn.cs" />
     <Compile Include="Queries\CreateRelation.cs" />
+    <Compile Include="Queries\ICallBackQuery.cs" />
     <Compile Include="Queries\ICreateColumn.cs" />
     <Compile Include="Queries\ICreateRelation.cs" />
     <Compile Include="Queries\ICreateTable.cs" />

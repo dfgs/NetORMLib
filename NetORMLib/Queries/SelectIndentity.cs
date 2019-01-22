@@ -12,10 +12,15 @@ namespace NetORMLib.Queries
 	{
 		public string Table => Table<T>.Name;
 
-
-
-		public SelectIdentity()
+		public Action<object> ResultCallBack
 		{
+			get;
+			private set;
+		}
+
+		public SelectIdentity(Action<object> ResultCallBack=null)
+		{
+			this.ResultCallBack = ResultCallBack;
 		}
 
 	

@@ -40,7 +40,8 @@ namespace NetORMLib.VersionControl
 		public void Upgrade()
 		{
 			int current,target;
-			List<IQuery> queries;
+			//List<IQuery> queries;
+			IQuery upgradeLogInsert;
 
 			target = GetTargetRevision();
 			current = GetCurrentRevision();
@@ -53,10 +54,12 @@ namespace NetORMLib.VersionControl
 			while(current<target)
 			{
 				current ++;
-				queries = new List<IQuery>();
-				queries.AddRange(OnUpgradeTo(current));
-				queries.Add(new Insert<UpgradeLog>().Set(UpgradeLog.Revision, current).Set(UpgradeLog.Date, DateTime.Now));
-				database.Execute(queries);
+				upgradeLogInsert = new Insert<UpgradeLog>().Set(UpgradeLog.Revision, current).Set(UpgradeLog.Date, DateTime.Now);
+				//queries = new List<IQuery>();
+				//queries.AddRange(OnUpgradeTo(current));
+				//queries.Add();
+				database.Execute(OnUpgradeTo(current).Union( new IQuery[] { upgradeLogInsert} ));
+					
 			}
 
 

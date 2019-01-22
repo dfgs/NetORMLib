@@ -115,7 +115,9 @@ namespace NetORMLib.Databases
 
 				using (reader)
 				{
-					if (reader.Read()) result=reader[0];
+					if (!reader.Read()) throw new ORMException(command, new Exception("No identity value returned"));
+					result = reader[0];
+					if (Query.ResultCallBack != null) Query.ResultCallBack(result);
 				}
 				connection.Close();
 			}
@@ -152,6 +154,7 @@ namespace NetORMLib.Databases
 		public void Execute(IEnumerable<IQuery> Queries)
 		{
 			DbCommand command;
+			object result;
 
 			using (DbConnection connection = connectionFactory.CreateConnection())
 			{
@@ -167,7 +170,12 @@ namespace NetORMLib.Databases
 							command.Transaction = transaction;
 							try
 							{
-								command.ExecuteNonQuery();
+								if (query is ICallBackQuery callBackQuery)
+								{
+									result=command.ExecuteScalar();
+									callBackQuery?.ResultCallBack(result);
+								}
+								else command.ExecuteNonQuery();
 							}
 							catch(Exception ex)
 							{

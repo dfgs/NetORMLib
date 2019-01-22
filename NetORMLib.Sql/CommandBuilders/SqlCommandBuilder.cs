@@ -221,7 +221,7 @@ namespace NetORMLib.Sql.CommandBuilders
 
 		protected override DbCommand OnBuildSelectIdentityCommand(ISelectIdentity Query)
 		{
-			return new SqlCommand("SELECT SCOPE_IDENTITY()");
+			return new SqlCommand("SELECT @@IDENTITY");
 		}
 
 		protected override DbCommand OnBuildCreateTableCommand(ICreateTable Query)
