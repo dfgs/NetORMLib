@@ -13,8 +13,8 @@ namespace NetORMLib.Columns
 	{
 		object IColumn.DefaultValue
 		{
-			get { return DefaultValue; }
-			set { DefaultValue = (TVal)value; }
+			get { return default(TVal); }
+			//set { DefaultValue = (TVal)value; }
 		}
 
 		public bool IsPrimaryKey
@@ -34,23 +34,25 @@ namespace NetORMLib.Columns
 			set;
 		}
 
-		public bool HasDefaultValue
+		/*public bool HasDefaultValue
 		{
 			get;
 			private set;
-		}
+		}*/
 
-		private TVal defaultValue;
+		//private TVal defaultValue;
 		public TVal DefaultValue
 		{
-			get
+			get;
+			set;
+			/*get
 			{
 				return defaultValue;
 			}
 			set
 			{
 				defaultValue = value;HasDefaultValue = true;
-			}
+			}*/
 		}
 
 		public string Name

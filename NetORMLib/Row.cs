@@ -18,7 +18,7 @@ namespace NetORMLib
 			values = new Dictionary<string, object>();
 			foreach (IColumn column in Columns)
 			{
-				values.Add(column.Name, column.DefaultValue);
+				values.Add(column.Name, column.DefaultValue); 
 			}
 		}
 		public override bool TryGetMember(GetMemberBinder Binder, out object Result)

@@ -19,16 +19,20 @@ namespace NetORMLib.Columns
 			get;
 		}
 
-		bool HasDefaultValue
+
+		// Not supported because we cannot use parameter to define DEFAULT
+		/*bool HasDefaultValue
 		{
 			get;
-		}
+		}*/
 
 		object DefaultValue
 		{
 			get;
-			set;
+			//set;
 		}
+
+
 		bool IsPrimaryKey
 		{
 			get;
@@ -60,11 +64,11 @@ namespace NetORMLib.Columns
 
 	public interface IColumn<T,TVal> : IColumn<T>
 	{
-		new TVal DefaultValue
+		/*new TVal DefaultValue
 		{
 			get;
 			set;
-		}
+		}*/
 
 		IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value);
 		IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value);

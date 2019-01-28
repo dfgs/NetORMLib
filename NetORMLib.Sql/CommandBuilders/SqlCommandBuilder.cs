@@ -228,21 +228,17 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			SqlCommand command;
 			StringBuilder sql;
-			int index = 0;
+
 			sql = new StringBuilder();
 			sql.Append("CREATE TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
 
 			sql.Append(" (");
-			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{(item.IsPrimaryKey ? " PRIMARY KEY" : "")}{(item.HasDefaultValue ? $" DEFAULT {OnFormatParameterName(item.Name,ref index)}" : "")}" )   ) );
+			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{(item.IsPrimaryKey ? " PRIMARY KEY" : "")}" )   ) );
 			sql.Append(")");
 
 			command = new SqlCommand(sql.ToString());
-			index = 0;
-			foreach(IColumn column in Query.Columns.Where(item=>item.HasDefaultValue))
-			{
-				command.Parameters.AddWithValue(OnFormatParameterName(column.Name, ref index),column.DefaultValue);
-			}
+			
 
 			return command;
 		}
@@ -271,18 +267,14 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			SqlCommand command;
 			StringBuilder sql;
-			int index=0;
-			string parameterName;
 
-			parameterName = OnFormatParameterName(Query.Column.Name, ref index);
 
 			sql = new StringBuilder();
 			sql.Append("ALTER TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
-			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{(Query.Column.IsPrimaryKey ? " PRIMARY KEY" : "")}{(Query.Column.HasDefaultValue ? $" DEFAULT {parameterName}" : "")}");
+			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{(Query.Column.IsPrimaryKey ? " PRIMARY KEY" : "")}");
 
 			command = new SqlCommand(sql.ToString());
-			if (Query.Column.HasDefaultValue) command.Parameters.AddWithValue(parameterName, Query.Column.DefaultValue);
 			return command;
 
 			/*

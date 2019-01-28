@@ -27,6 +27,8 @@ namespace NetORMLibUnitTest
 			dynamic row;
 
 			row = new Row(Table<Personn>.Columns);
+			row.FirstName = "Homer";
+			row.LastName = "Simpson";
 			Assert.AreEqual("Homer", row.FirstName);
 			Assert.AreEqual("Simpson", row.LastName);
 		}
@@ -36,9 +38,12 @@ namespace NetORMLibUnitTest
 			dynamic row;
 
 			row = new Row(Table<Personn>.Columns);
+			row.FirstName = "Homer";
+			row.LastName = "Simpson";
 			Assert.AreEqual("Homer", row.FirstName);
 			Assert.AreEqual("Simpson", row.LastName);
 			AssertFailsDynamic(() => { int age = row.Age; });
+			AssertFailsDynamic(() => { row.Age=12; });
 		}
 
 		[TestMethod]
