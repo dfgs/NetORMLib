@@ -10,6 +10,7 @@ namespace NetORMLibUnitTest.Models
 	public class JobType
 	{
 		public static readonly IColumn<JobType, int> JobTypeID = new Column<JobType, int>() { IsPrimaryKey=true };
-		public static readonly IColumn<JobType, string> Description = new Column<JobType, string>() {DefaultValue="New job type" };
+		public static readonly IColumn<JobType, string> Name = new Column<JobType, string>() { DefaultValue = "New job" };
+		public static readonly IColumn<JobType, string> Description = new Column<JobType, string>() ;
 	}
 }

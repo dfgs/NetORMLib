@@ -27,7 +27,7 @@ namespace NetORMLibUnitTest
 			query = new CreateRelation<Personn,JobType,int>(Personn.PersonnID, JobType.JobTypeID);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("ALTER TABLE [JobType] WITH CHECK ADD CONSTRAINT [FK_JobType_Personn] FOREIGN KEY ([JobTypeID]) REFERENCES [Personn] ([PersonnID])", command.CommandText);
+			Assert.AreEqual("ALTER TABLE [JobType] WITH CHECK ADD CONSTRAINT [FK_JobType_JobTypeID_Personn] FOREIGN KEY ([JobTypeID]) REFERENCES [Personn] ([PersonnID])", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 		

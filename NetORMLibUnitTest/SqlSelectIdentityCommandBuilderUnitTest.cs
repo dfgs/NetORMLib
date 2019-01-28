@@ -26,7 +26,7 @@ namespace NetORMLibUnitTest
 			query = new SelectIdentity<Personn>();
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT SCOPE_IDENTITY()", command.CommandText);
+			Assert.AreEqual("SELECT @@IDENTITY", command.CommandText);
 		}
 
 

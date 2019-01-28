@@ -34,8 +34,11 @@ namespace NetORMLibUnitTest
 			query = new CreateTable<Personn>(Personn.PersonnID, Personn.FirstName, Personn.LastName, Personn.Job);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("CREATE TABLE [Personn] ([PersonnID] int IDENTITY(1, 1) NOT NULL PRIMARY KEY, [FirstName] nvarchar(MAX) NOT NULL, [LastName] nvarchar(MAX) NOT NULL, [Job] nvarchar(MAX) NULL)", command.CommandText);
-			Assert.AreEqual(0, command.Parameters.Count);
+			Assert.AreEqual("CREATE TABLE [Personn] ([PersonnID] int IDENTITY(1, 1) NOT NULL PRIMARY KEY, [FirstName] nvarchar(MAX) NOT NULL DEFAULT @FirstName0, [LastName] nvarchar(MAX) NOT NULL DEFAULT @LastName1, [Job] nvarchar(MAX) NULL)", command.CommandText);
+			Assert.AreEqual(2, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("@LastName1", command.Parameters[1].ParameterName);
+
 		}
 		[TestMethod]
 		public void ShouldBuildCreateTableWithoutPrimaryKey()

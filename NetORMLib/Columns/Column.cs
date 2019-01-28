@@ -27,15 +27,30 @@ namespace NetORMLib.Columns
 			get;
 			set;
 		}
+
 		public bool IsNullable
 		{
 			get;
 			set;
 		}
-		public TVal DefaultValue
+
+		public bool HasDefaultValue
 		{
 			get;
-			set;
+			private set;
+		}
+
+		private TVal defaultValue;
+		public TVal DefaultValue
+		{
+			get
+			{
+				return defaultValue;
+			}
+			set
+			{
+				defaultValue = value;HasDefaultValue = true;
+			}
 		}
 
 		public string Name

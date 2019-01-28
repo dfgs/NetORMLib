@@ -56,7 +56,20 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
+		[TestMethod]
+		public void ShouldBuildCreateColumnWithDefaultValue()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
 
+			query = new CreateColumn<JobType>(JobType.Name);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("ALTER TABLE [JobType] ADD [Name] nvarchar(MAX) NOT NULL DEFAULT @Name0", command.CommandText);
+			Assert.AreEqual(1, command.Parameters.Count);
+			Assert.AreEqual("@Name0", command.Parameters[0].ParameterName);
+		}
 
 
 	}

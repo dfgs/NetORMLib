@@ -18,7 +18,12 @@ namespace NetORMLib.Columns
 		{
 			get;
 		}
-		
+
+		bool HasDefaultValue
+		{
+			get;
+		}
+
 		object DefaultValue
 		{
 			get;
