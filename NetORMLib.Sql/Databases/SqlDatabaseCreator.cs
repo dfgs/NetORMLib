@@ -10,11 +10,11 @@ namespace NetORMLib.Sql.Databases
 {
 	public class SqlDatabaseCreator : DatabaseCreator
 	{
-		private string connectionString;
+		private string server;
 
-		public SqlDatabaseCreator(string DatabaseName,string ConnectionString):base(DatabaseName)
+		public SqlDatabaseCreator(string Server,string DatabaseName):base(DatabaseName)
 		{
-			this.connectionString = ConnectionString;
+			this.server = Server;
 		}
 
 		public override bool DatabaseExists()
@@ -23,7 +23,7 @@ namespace NetORMLib.Sql.Databases
 			SqlCommand command;
 			SqlDataReader reader;
 
-			using (connection = new SqlConnection(connectionString))
+			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
 			{
 				connection.Open();
 				command = new SqlCommand($"SELECT Name FROM master.dbo.sysdatabases where (Name=@Name)", connection);
@@ -39,16 +39,26 @@ namespace NetORMLib.Sql.Databases
 			SqlConnection connection;
 			SqlCommand command;
 
-			using (connection = new SqlConnection(connectionString))
+			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
 			{
 				connection.Open();
-				command = new SqlCommand("CREATE DATABASE TEST", connection);
+				command = new SqlCommand($"CREATE DATABASE {DatabaseName}", connection);
+				command.ExecuteNonQuery();
 				connection.Close();
 			}
 		}
 		public override void DropDatabase()
 		{
-			throw new NotImplementedException();
+			SqlConnection connection;
+			SqlCommand command;
+
+			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
+			{
+				connection.Open();
+				command = new SqlCommand($"DROP DATABASE {DatabaseName}", connection);
+				command.ExecuteNonQuery();
+				connection.Close();
+			}
 		}
 
 	}

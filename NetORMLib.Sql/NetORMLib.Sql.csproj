@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandBuilders\SqlCommandBuilder.cs" />
+    <Compile Include="ConnectionFactories\SqlConnectionFactory.cs" />
     <Compile Include="ConnectionFactories\SqlLocalConnectionFactory.cs" />
     <Compile Include="Databases\SqlLocalDatabaseCreator.cs" />
     <Compile Include="Databases\SqlDatabaseCreator.cs" />
