@@ -108,6 +108,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return result;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildSelectCommand(ISelect Query)
 		{
 			SqlCommand command;
@@ -135,6 +136,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildDeleteCommand(IDelete Query)
 		{
 			SqlCommand command;
@@ -160,6 +162,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildUpdateCommand(IUpdate Query)
 		{
 			SqlCommand command;
@@ -191,6 +194,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildInsertCommand(IInsert Query)
 		{
 			SqlCommand command;
@@ -224,6 +228,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return new SqlCommand("SELECT @@IDENTITY");
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildCreateTableCommand(ICreateTable Query)
 		{
 			SqlCommand command;
@@ -255,7 +260,6 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table}_{Query.ForeignColumn.Name}_{Query.PrimaryColumn.Table}]");
 			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
 			sql.Append($" REFERENCES {OnFormatTableName(Query.PrimaryColumn.Table)} ({OnFormatColumnName(Query.PrimaryColumn,false)})");
-			//if (Relation.DeleteReferentialAction == DeleteReferentialAction.Delete) sql += " ON DELETE CASCADE";
 
 
 			command = new SqlCommand(sql.ToString());
@@ -277,12 +281,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			command = new SqlCommand(sql.ToString());
 			return command;
 
-			/*
-			
-			sql = "alter table " + OnFormatTableName(Column.TableName) + " ADD  "
-				+ OnFormatColumnName(Column) + " " + GetTypeName(Column) + (Column.IsNullable ? " NULL" : " NOT NULL"); ;
-			if (Column.DefaultValue != null) sql += " DEFAULT('" + Column.Default
-			 */
+		
 		}
 
 

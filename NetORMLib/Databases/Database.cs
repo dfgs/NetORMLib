@@ -13,10 +13,9 @@ namespace NetORMLib.Databases
 {
 	public class Database:IDatabase
 	{
-		private IConnectionFactory connectionFactory;
-		private ICommandBuilder commandBuilder;
+		private readonly IConnectionFactory connectionFactory;
+		private readonly ICommandBuilder commandBuilder;
 
-		//private DbTransaction transaction;
 
 		public Database(IConnectionFactory ConnectionFactory, ICommandBuilder CommandBuilder)
 		{
@@ -24,20 +23,6 @@ namespace NetORMLib.Databases
 			this.commandBuilder = CommandBuilder;
 		}
 
-		/*public void BeginTransaction()
-		{
-			if (transaction != null) throw new InvalidOperationException("A transaction is already running");
-			connectionFactory.Open();
-			transaction = connectionFactory.BeginTransaction();
-		}
-		public void EndTransaction(bool Commit)
-		{
-			if (transaction == null) throw new InvalidOperationException("There is no running transaction");
-			if (Commit) transaction.Commit();
-			else transaction.Rollback();
-			transaction = null;
-			connectionFactory.Close();
-		}*/
 
 		public IEnumerable<string> GetTables()
 		{
@@ -119,7 +104,6 @@ namespace NetORMLib.Databases
 					result = reader[0];
 					if (Query.ResultCallBack != null) Query.ResultCallBack(result);
 				}
-				connection.Close();
 			}
 
 			return result;
@@ -143,7 +127,6 @@ namespace NetORMLib.Databases
 				{
 					throw new ORMException(command, ex);
 				}
-				connection.Close();
 			}
 		}
 
@@ -183,14 +166,13 @@ namespace NetORMLib.Databases
 							}
 						}
 					}
-					catch (Exception ex)
+					catch
 					{
 						transaction.Rollback();
-						throw (ex);
+						throw;
 					}
 					transaction.Commit();
 				}
-				connection.Close();
 			}
 		}
 

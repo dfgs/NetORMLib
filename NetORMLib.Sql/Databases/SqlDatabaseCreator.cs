@@ -10,7 +10,7 @@ namespace NetORMLib.Sql.Databases
 {
 	public class SqlDatabaseCreator : DatabaseCreator
 	{
-		private string server;
+		private readonly string server;
 
 		public SqlDatabaseCreator(string Server,string DatabaseName):base(DatabaseName)
 		{
@@ -44,7 +44,6 @@ namespace NetORMLib.Sql.Databases
 				connection.Open();
 				command = new SqlCommand($"CREATE DATABASE {DatabaseName}", connection);
 				command.ExecuteNonQuery();
-				connection.Close();
 			}
 		}
 		public override void DropDatabase()
@@ -57,7 +56,6 @@ namespace NetORMLib.Sql.Databases
 				connection.Open();
 				command = new SqlCommand($"DROP DATABASE {DatabaseName}", connection);
 				command.ExecuteNonQuery();
-				connection.Close();
 			}
 		}
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib
 {
+	[Serializable]
 	public class ORMException:Exception
 	{
 
