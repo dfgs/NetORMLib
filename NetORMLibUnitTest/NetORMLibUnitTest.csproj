@@ -59,7 +59,6 @@
     <Compile Include="InsertUnitTest.cs" />
     <Compile Include="SqlCreateColumnCommandBuilderUnitTest.cs" />
     <Compile Include="SqlCreateRelationCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlLocalDatabaseCreatorUnitTest.cs" />
     <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />
     <Compile Include="SqlInsertCommandBuilderUnitTest.cs" />
     <Compile Include="SqlLocalConnectionFactoryUnitTest.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="SqlDeleteCommandBuilderUnitTest.cs" />
     <Compile Include="SqlSelectCommandBuilderUnitTest.cs" />
     <Compile Include="TableUnitTest.cs" />
-    <Compile Include="RowUnitTest.cs" />
     <Compile Include="DatabaseUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>

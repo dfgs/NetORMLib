@@ -99,7 +99,6 @@
     <Compile Include="Queries\ISelect.cs" />
     <Compile Include="Queries\Delete.cs" />
     <Compile Include="Queries\Select.cs" />
-    <Compile Include="Row.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup />
