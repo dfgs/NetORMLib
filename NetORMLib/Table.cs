@@ -44,7 +44,6 @@ namespace NetORMLib
 				if (!typeof(IColumn).IsAssignableFrom(fi.FieldType)) continue;
 				value = fi.GetValue(null);
 				columns.Add((IColumn)value);
-
 			}
 		}
 
