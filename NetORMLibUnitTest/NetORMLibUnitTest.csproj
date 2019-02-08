@@ -73,7 +73,6 @@
     <Compile Include="SqlDeleteCommandBuilderUnitTest.cs" />
     <Compile Include="SqlSelectCommandBuilderUnitTest.cs" />
     <Compile Include="TableUnitTest.cs" />
-    <Compile Include="DatabaseUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
