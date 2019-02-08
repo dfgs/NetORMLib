@@ -10,10 +10,7 @@ namespace NetORMLib.Databases
 	public interface IDatabase
 	{
 
-		/*void BeginTransaction();
-		void EndTransaction(bool Commit);*/
-
-		IEnumerable<Row> Execute(ISelect Query);
+		IEnumerable<T> Execute<T>(ISelect Query) where T:new();
 		object Execute(ISelectIdentity Query);
 		void Execute(IQuery Query);
 		void Execute(params IQuery[] Queries);

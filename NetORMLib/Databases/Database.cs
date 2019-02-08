@@ -4,6 +4,7 @@ using NetORMLib.ConnectionFactories;
 using NetORMLib.Queries;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,6 @@ namespace NetORMLib.Databases
 			this.commandBuilder = CommandBuilder;
 		}
 
-
 		public IEnumerable<string> GetTables()
 		{
 			using (DbConnection connection=connectionFactory.CreateConnection())
@@ -37,12 +37,16 @@ namespace NetORMLib.Databases
 			}
 		}
 
-		public IEnumerable<Row> Execute(ISelect Query)
+		public IEnumerable<T> Execute<T>(ISelect Query)
+			where T : new()
 		{
 			DbCommand command;
 			DbDataReader reader;
-			dynamic row;
 			IColumn[] columns;
+			T row;
+			PropertyDescriptorCollection pdcs;
+
+			pdcs=TypeDescriptor.GetProperties(typeof(T));
 
 			columns = Query.Columns.ToArray();
 			command = commandBuilder.BuildCommand(Query);
@@ -65,10 +69,10 @@ namespace NetORMLib.Databases
 				{
 					while (reader.Read())
 					{
-						row = new Row(columns);
+						row = new T();
 						for (int t = 0; t < columns.Length; t++)
 						{
-							row.TrySetMember(columns[t], reader[t]);
+							pdcs[columns[t].Name].SetValue(row, reader[t]);
 						}
 						yield return row;
 					}
@@ -76,6 +80,7 @@ namespace NetORMLib.Databases
 				connection.Close();
 			}
 		}
+
 		public object Execute(ISelectIdentity Query)
 		{
 			DbCommand command;
@@ -134,6 +139,7 @@ namespace NetORMLib.Databases
 		{
 			Execute((IEnumerable<IQuery>)Queries);
 		}
+
 		public void Execute(IEnumerable<IQuery> Queries)
 		{
 			DbCommand command;
