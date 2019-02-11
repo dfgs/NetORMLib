@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
 	public class CreateRelation<TPrimary,TForeign,TVal> : ICreateRelation<TPrimary,TForeign,TVal>
+		where TVal: IDbType
 	{
 		public string Table => Table<TForeign>.Name;
 

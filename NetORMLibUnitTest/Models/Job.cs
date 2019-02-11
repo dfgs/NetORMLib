@@ -1,4 +1,6 @@
-﻿using NetORMLib.Columns;
+﻿using NetORMLib;
+using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace NetORMLibUnitTest.Models
 {
 	public class Job
 	{
-		public static readonly IColumn<Job, string> Description = new Column<Job, string>();
-		public static readonly IColumn<Job, string?> Company = new Column<Job, string?>() ;
+		public static readonly IColumn<Job, DbString> Description = new Column<Job, DbString>();
+		public static readonly IColumn<Job, DbString> Company = new NullableColumn<Job, DbString>();
 	}
 }

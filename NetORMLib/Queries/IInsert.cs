@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using NetORMLib.Filters;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace NetORMLib.Queries
 			get;
 		}
 
-		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value);
+		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+			where TVal: IDbType;
 
 	}
 

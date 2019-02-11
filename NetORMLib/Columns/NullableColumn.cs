@@ -14,21 +14,21 @@ using NetORMLib.Filters;
 
 namespace NetORMLib.Columns
 {
-	public class Column<T,TVal>:BaseColumn<T,TVal>
+	public class NullableColumn<T,TVal>:BaseColumn<T,TVal>
 		where TVal: IDbType
 	{
 		
 	
 		public override bool IsNullable
 		{
-			get => false;
+			get => true;
 		}
 
 		
 
 		
 
-		public Column([CallerMemberName]string Name=null):base(Name)
+		public NullableColumn([CallerMemberName]string Name=null):base(Name)
 		{
 		}
 			   

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 
 namespace NetORMLib.Queries
 {
 	public class Setter<T, TVal> : ISetter<T, TVal>
+		where TVal: IDbType
 	{
 		IColumn ISetter.Column
 		{
@@ -19,7 +21,7 @@ namespace NetORMLib.Queries
 			set;
 		}
 
-		object ISetter.Value
+		IDbType ISetter.Value
 		{
 			get { return Value; }
 		}

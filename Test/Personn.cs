@@ -1,4 +1,6 @@
-﻿using NetORMLib.Columns;
+﻿using NetORMLib;
+using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +11,9 @@ namespace Test
 {
 	public class Personn
 	{
-		public static readonly IColumn<Personn, string> FirstName = new Column<Personn, string>();
-		public string firstName
-		{
-			get ;
-		}
-		public static readonly IColumn<Personn, string> LastName = new Column<Personn, string>();
+		public static readonly IColumn<Personn, DbString> FirstName = new Column<Personn, DbString>();
+		
+		public static readonly IColumn<Personn, DbString> LastName = new Column<Personn, DbString>();
 
 	}
 }

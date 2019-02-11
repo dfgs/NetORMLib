@@ -21,7 +21,7 @@ namespace NetORMLib.Sql.Databases
 		{
 			return $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={System.IO.Path.Combine(path, DatabaseName)}.mdf;Integrated Security=True;Connect Timeout=30";
 		}
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Ne pas supprimer d'objets plusieurs fois")]
+		
 		public override bool DatabaseExists()
 		{
 			SqlConnection connection;
@@ -42,7 +42,7 @@ namespace NetORMLib.Sql.Databases
 
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Ne pas supprimer d'objets plusieurs fois")]
+		
 		public override void CreateDatabase()
 		{
 			SqlConnection connection;
@@ -56,7 +56,7 @@ namespace NetORMLib.Sql.Databases
 			}
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
+		
 		public override void DropDatabase()
 		{
 			SqlConnection connection;

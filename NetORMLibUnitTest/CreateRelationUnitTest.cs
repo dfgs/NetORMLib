@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetORMLib.DbTypes;
 using NetORMLib.Queries;
 using NetORMLibUnitTest.Models;
 
@@ -15,9 +16,9 @@ namespace NetORMLibUnitTest
 		{
 			ICreateRelation query;
 
-			query = new CreateRelation<Personn, JobType, int>(Personn.PersonnID, JobType.JobTypeID);
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, int>(null, JobType.JobTypeID));
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, int>(Personn.PersonnID, null));
+			query = new CreateRelation<Personn, JobType, DbInt>(Personn.PersonnID, JobType.JobTypeID);
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, DbInt>(null, JobType.JobTypeID));
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, DbInt>(Personn.PersonnID, null));
 		}
 
 

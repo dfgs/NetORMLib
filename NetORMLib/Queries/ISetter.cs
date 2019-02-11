@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace NetORMLib.Queries
 		{
 			get;
 		}
-		object Value
+		IDbType Value
 		{
 			get;
 		}
@@ -23,6 +24,7 @@ namespace NetORMLib.Queries
 
 	}
 	public interface ISetter<T,TVal>:ISetter<T>
+		where TVal: IDbType
 	{
 		new IColumn<T,TVal> Column
 		{

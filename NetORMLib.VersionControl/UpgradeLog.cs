@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace NetORMLib.VersionControl
 	public class UpgradeLog
 	{
 
-		public static readonly Column<UpgradeLog, int> UpgradeLogID = new Column<UpgradeLog, int>() { IsPrimaryKey = true, IsIdentity = true };
-		public static readonly Column<UpgradeLog, DateTime> Date = new Column<UpgradeLog, DateTime>();
-		public static readonly Column<UpgradeLog, int> Revision = new Column<UpgradeLog, int>();
+		public static readonly Column<UpgradeLog, DbInt> UpgradeLogID = new Column<UpgradeLog, DbInt>() { IsPrimaryKey = true, IsIdentity = true };
+		public static readonly Column<UpgradeLog, DbDate> Date = new Column<UpgradeLog, DbDate>();
+		public static readonly Column<UpgradeLog, DbInt> Revision = new Column<UpgradeLog, DbInt>();
 	
 
 	}

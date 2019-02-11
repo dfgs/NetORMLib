@@ -52,7 +52,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			{
 				if (filter is IColumnFilter columnFilter)
 				{
-					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value);
+					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value.GetCLRValue());
 				}
 				else if (filter is IBooleanFilter booleanFilter) OnBuildParameters(Command, booleanFilter.Members, ref Index);
 			}
@@ -61,7 +61,7 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			foreach (ISetter setter in Setters)
 			{
-				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value);
+				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value.GetCLRValue());
 			}
 		}
 
@@ -69,17 +69,18 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			string result;
 
+			
 			if (Column.DataType.IsEnum) return "int";
 
 			switch (Column.DataType.Name)
 			{
-				case "String":
+				case "DbString":
 					result = "nvarchar(MAX)";
 					break;
 				case "Byte":
 					result = "tinyint";
 					break;
-				case "Int32":
+				case "DbInt":
 					result = "int";
 					break;
 				case "UInt16":
@@ -91,7 +92,7 @@ namespace NetORMLib.Sql.CommandBuilders
 				case "Boolean":
 					result = "bit";
 					break;
-				case "DateTime":
+				case "DbDate":
 					result = "DateTime";
 					break;
 				case "TimeSpan":
@@ -108,7 +109,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return result;
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
+		
 		protected override DbCommand OnBuildSelectCommand(ISelect Query)
 		{
 			SqlCommand command;
@@ -131,12 +132,12 @@ namespace NetORMLib.Sql.CommandBuilders
 			command = new SqlCommand(sql.ToString());
 			index = 0;
 			OnBuildParameters(command, Query.Filters,ref index);
-			
 
+			
 			return command;
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
+		
 		protected override DbCommand OnBuildDeleteCommand(IDelete Query)
 		{
 			SqlCommand command;
@@ -162,7 +163,6 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
 		protected override DbCommand OnBuildUpdateCommand(IUpdate Query)
 		{
 			SqlCommand command;
@@ -194,7 +194,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return command;
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
+		
 		protected override DbCommand OnBuildInsertCommand(IInsert Query)
 		{
 			SqlCommand command;
@@ -228,7 +228,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			return new SqlCommand("SELECT @@IDENTITY");
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Vérifier si les requêtes SQL présentent des failles de sécurité")]
+		
 		protected override DbCommand OnBuildCreateTableCommand(ICreateTable Query)
 		{
 			SqlCommand command;

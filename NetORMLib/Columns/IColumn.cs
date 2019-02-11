@@ -1,4 +1,5 @@
-﻿using NetORMLib.Filters;
+﻿using NetORMLib.DbTypes;
+using NetORMLib.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,21 +19,7 @@ namespace NetORMLib.Columns
 		{
 			get;
 		}
-
-
-		// Not supported because we cannot use parameter to define DEFAULT
-		/*bool HasDefaultValue
-		{
-			get;
-		}*/
-
-		object DefaultValue
-		{
-			get;
-			//set;
-		}
-
-
+			   
 		bool IsPrimaryKey
 		{
 			get;
@@ -63,13 +50,9 @@ namespace NetORMLib.Columns
 	}
 
 	public interface IColumn<T,TVal> : IColumn<T>
+		where TVal: IDbType
 	{
-		/*new TVal DefaultValue
-		{
-			get;
-			set;
-		}*/
-
+		
 		IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value);
 		IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value);
 		IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value);
