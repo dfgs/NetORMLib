@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -73,14 +75,30 @@ namespace NetORMLib.Columns
 		public Column([CallerMemberName]string Name="empty")
 		{
 			Type type;
+			FieldInfo fi;
+			bool nullable;
+			NullableAttribute attr;
 
 			this.Name = Name;
 
-			type = this.GetType().GenericTypeArguments[1];
-			object[] attr=type.GetCustomAttributes(true);
+			// temp method to know if TVal is nullable
+			nullable = false;
+			System.Diagnostics.StackTrace st;
 
-			
-			this.IsNullable = type == typeof(string) || Nullable.GetUnderlyingType(type) != null;
+			st = new System.Diagnostics.StackTrace();
+			if (st.FrameCount >= 1)
+			{
+				type = st.GetFrame(1).GetMethod().DeclaringType;
+				fi=type.GetField(Name);
+				if (fi != null)
+				{
+					attr = fi.GetCustomAttribute<NullableAttribute>();
+					if (attr != null) nullable = attr.Mode != 0;
+				}
+			}
+
+				
+			this.IsNullable = nullable || Nullable.GetUnderlyingType(typeof(TVal)) != null;
 		}
 
 

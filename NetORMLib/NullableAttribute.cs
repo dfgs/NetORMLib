@@ -22,6 +22,9 @@ namespace System.Runtime.CompilerServices
 			this.Mode = mode;
 		}
 
-		public NullableAttribute(byte[] _) => throw new System.NotImplementedException();
+		public NullableAttribute(byte[] _)
+		{
+			int t = 0;
+		}
 	}
 }
