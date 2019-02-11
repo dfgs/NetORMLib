@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetORMLib.Filters;
 
-[module: System.Runtime.CompilerServices.NonNullTypes]
 
 
 namespace NetORMLib.Columns
@@ -68,15 +67,20 @@ namespace NetORMLib.Columns
 			get { return typeof(TVal); }
 		}
 
+		
+		
+
 		public Column([CallerMemberName]string Name="empty")
 		{
 			Type type;
 
 			this.Name = Name;
 
-			type = typeof(TVal);
-			System.Runtime.CompilerServices.NullableAttribute;
-			this.IsNullable = type == typeof(string?) || Nullable.GetUnderlyingType(type) != null;
+			type = this.GetType().GenericTypeArguments[1];
+			object[] attr=type.GetCustomAttributes(true);
+
+			
+			this.IsNullable = type == typeof(string) || Nullable.GetUnderlyingType(type) != null;
 		}
 
 

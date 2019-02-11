@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NullableReferenceTypes>true</NullableReferenceTypes>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -77,6 +78,7 @@
     <Compile Include="Filters\IIsGreaterThanFilter.cs" />
     <Compile Include="Filters\IIsEqualToFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="NullableAttribute.cs" />
     <Compile Include="ORMException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\CreateColumn.cs" />

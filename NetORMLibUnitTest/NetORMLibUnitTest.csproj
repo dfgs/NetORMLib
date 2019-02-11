@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NullableReferenceTypes>true</NullableReferenceTypes>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -86,7 +87,7 @@
       <Name>NetORMLib.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\NetORMLib\NetORMLib.csproj">
-      <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
+      <Project>{c94b7bf1-bf85-4483-b032-1582f9ec6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
   </ItemGroup>
