@@ -29,10 +29,10 @@ namespace NetORMLib.Queries
 			set;
 		}
 
-		public Setter()
+		/*public Setter()
 		{
 
-		}
+		}*/
 
 		public Setter(IColumn<T, TVal> Column,TVal Value)
 		{

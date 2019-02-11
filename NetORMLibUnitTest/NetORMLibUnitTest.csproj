@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColumnUnitTest.cs" />
     <Compile Include="CreateColumnUnitTest.cs" />
     <Compile Include="CreateRelationUnitTest.cs" />
     <Compile Include="CreateTableUnitTest.cs" />

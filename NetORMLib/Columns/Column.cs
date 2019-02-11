@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetORMLib.Filters;
 
+[module: System.Runtime.CompilerServices.NonNullTypes]
+
+
 namespace NetORMLib.Columns
 {
 	public class Column<T,TVal>:IColumn<T,TVal>
@@ -31,14 +34,8 @@ namespace NetORMLib.Columns
 		public bool IsNullable
 		{
 			get;
-			set;
-		}
-
-		/*public bool HasDefaultValue
-		{
-			get;
 			private set;
-		}*/
+		}
 
 		//private TVal defaultValue;
 		public TVal DefaultValue
@@ -71,9 +68,15 @@ namespace NetORMLib.Columns
 			get { return typeof(TVal); }
 		}
 
-		public Column([CallerMemberName]string Name=null)
+		public Column([CallerMemberName]string Name="empty")
 		{
+			Type type;
+
 			this.Name = Name;
+
+			type = typeof(TVal);
+			System.Runtime.CompilerServices.NullableAttribute;
+			this.IsNullable = type == typeof(string?) || Nullable.GetUnderlyingType(type) != null;
 		}
 
 
