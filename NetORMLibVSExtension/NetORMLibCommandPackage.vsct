@@ -22,7 +22,7 @@
 
   <!--The Commands section is where commands, menus, and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidBuildClassesCommandPackage">
+  <Commands package="guidNetORMLibCommandPackage">
     <!-- Inside this section we have different sub-sections: one for the menus, another
     for the menu groups, one for the buttons (the actual commands), one for the combos
     and the last one for the bitmaps used. Each element is identified by a command id that
@@ -36,7 +36,7 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidBuildClassesCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidNetORMLibCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
     </Groups>
@@ -52,11 +52,18 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidBuildClassesCommandPackageCmdSet" id="BuildClassesCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidBuildClassesCommandPackageCmdSet" id="MyMenuGroup" />
+      <Button guid="guidNetORMLibCommandPackageCmdSet" id="CreateDatabaseFileCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidNetORMLibCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Generate ORM files</ButtonText>
+          <ButtonText>Create Database File</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidNetORMLibCommandPackageCmdSet" id="CreateORMFilesCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidNetORMLibCommandPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic2" />
+        <Strings>
+          <ButtonText>Create ORM Files</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -68,22 +75,22 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\BuildClassesCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+      <Bitmap guid="guidImages" href="Resources\CreateDatabaseFileCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
     </Bitmaps>
   </Commands>
 
-  
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidBuildClassesCommandPackage" value="{aa1aa126-4fa7-49be-abd2-0d1e2515f68e}" />
+    <GuidSymbol name="guidNetORMLibCommandPackage" value="{9052f36c-939d-46b8-b926-b578e630f1d7}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidBuildClassesCommandPackageCmdSet" value="{11f605d7-0e7c-4515-aa54-a4e0086676c5}">
+    <GuidSymbol name="guidNetORMLibCommandPackageCmdSet" value="{a9251404-8cf9-4185-8dc9-a9958093545f}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="BuildClassesCommandId" value="0x0100" />
+      <IDSymbol name="CreateDatabaseFileCommandId" value="0x0100" />
+      <IDSymbol name="CreateORMFilesCommandId" value="0x0101" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidImages" value="{13f1bb5f-a452-4e83-b0cc-251f354d2c66}" >
+    <GuidSymbol name="guidImages" value="{468bb80b-8ea6-4b10-a71c-413cac8edc58}" >
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
