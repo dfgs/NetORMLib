@@ -16,5 +16,16 @@ namespace NetORMLibVSExtension.Models
             get;
             set;
         }
-    }
+
+		public List<Column> Columns
+		{
+			get;
+			set;
+		}
+
+		public CreateTable()
+		{
+			Columns = new List<Column>();
+		}
+	}
 }

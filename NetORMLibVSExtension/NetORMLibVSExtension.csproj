@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="CreateORMFilesCommand.cs" />
     <Compile Include="CreateDatabaseFileCommand.cs" />
+    <Compile Include="Models\Column.cs" />
     <Compile Include="NetORMLibCommandPackage.cs" />
     <Compile Include="Models\Change.cs" />
     <Compile Include="Models\CreateTable.cs" />

@@ -75,13 +75,35 @@ namespace NetORMLibVSExtension
             return Parent.ProjectItems.AddFromFile(fileName);
         }
 
-        public static void CreateDatabaseFile(IServiceProvider ServiceProvider)
+	
+
+		public static Stream OpenFile(Project Parent, string Name)
+		{
+			string fileName;
+
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Parent.FullName), Name);
+			return new FileStream(fileName, FileMode.Open);
+		}
+
+		public static Stream OpenFile(ProjectItem Parent, string Name)
+		{
+			string fileName;
+
+			ThreadHelper.ThrowIfNotOnUIThread();
+
+			fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Parent.ContainingProject.FullName), Parent.Name, Name);
+			return new FileStream(fileName, FileMode.Open);
+		}
+
+		public static void CreateDatabaseFile(IServiceProvider ServiceProvider)
         {
             string fileName;
             ThreadHelper.ThrowIfNotOnUIThread();
             Project project;
             ProjectItem file;
-
+			CreateTable createTable;
 
             project = Utils.GetActiveProject(ServiceProvider);
             if (project == null) return;
@@ -97,10 +119,14 @@ namespace NetORMLibVSExtension
             Database database = new Database();
             Revision revision = new Revision();
             database.Revisions.Add(revision);
-            revision.Changes.Add(new CreateTable() { Name = "Table1" });
-            revision.Changes.Add(new CreateTable() { Name = "Table2" });
 
-            fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(project.FullName), "database.xml");
+			createTable = new CreateTable() { Name = "Table1" }; createTable.Columns.Add(new Column() { Name = "ID", Type = "DBInt" });
+			revision.Changes.Add(createTable);
+			createTable = new CreateTable() { Name = "Table2" }; createTable.Columns.Add(new Column() { Name = "ID", Type = "DBInt" });
+			revision.Changes.Add(createTable);
+
+
+			fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(project.FullName), "database.xml");
             database.SaveToFile(fileName);
             project.ProjectItems.AddFromFile(fileName);
 
@@ -110,27 +136,73 @@ namespace NetORMLibVSExtension
 
         }
 
-        public static void CreateORMFiles(IServiceProvider ServiceProvider)
+		private static void GenerateTableFile(Stream Stream,string NameSpace,string Table,IEnumerable<Column> Columns)
+		{
+			StreamWriter writer;
+
+			writer = new StreamWriter(Stream);
+
+			writer.WriteLine("using NetORMLib.Columns;");
+			writer.WriteLine("using NetORMLib.DbTypes;");
+			writer.WriteLine();
+			writer.WriteLine($"namespace {NameSpace}");
+			writer.WriteLine("{");
+			writer.WriteLine($"	public static class {Table}");
+			writer.WriteLine("	{");
+			foreach (Column column in Columns)
+			{
+				writer.WriteLine($"		public static readonly IColumn<{Table}, {column.Type}> {column.Name} = new Column<{Table}, {column.Type}>();");
+			}
+			writer.WriteLine("	}");
+			writer.WriteLine("}");
+
+			writer.Flush();
+		}
+	
+
+
+		public static void CreateORMFiles(IServiceProvider ServiceProvider)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             Project project;
-            ProjectItem folder, file;
- 
+            ProjectItem folder, file,databaseFile;
+			Database database;
 
             project = Utils.GetActiveProject(ServiceProvider);
             if (project == null) return;
 
+			databaseFile = Utils.GetProjectItem(project, "database.xml");
+			if (databaseFile == null)
+			{
+				VsShellUtilities.ShowMessageBox(ServiceProvider, "No Database file found, you must create it first", "Information", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+				return;
+			}
 
-            folder = Utils.GetProjectItem(project, "Tables");
-            if (folder == null) folder = project.ProjectItems.AddFolder("Tables");
+			folder = Utils.GetProjectItem(project, "Tables");
+			if (folder == null) folder = project.ProjectItems.AddFolder("Tables");
 
-            file = Utils.GetProjectItem(folder,"test.cs");
-            if (file == null) file = Utils.CreateFile(folder, "test.cs");
+			using (Stream stream = Utils.OpenFile(project, "database.xml"))
+			{
+				database = Database.LoadFromStream(stream);
+			}
+			
+			foreach (CreateTable table in database.EnumerateCreateTables())
+			{
+				file = Utils.GetProjectItem(folder, $"{table.Name}.cs");
+				if (file == null) file = Utils.CreateFile(folder, $"{table.Name}.cs");
+				using (Stream stream = Utils.OpenFile(folder, $"{table.Name}.cs"))
+				{
+					Utils.GenerateTableFile(stream, $"{project.Name}.Tables", table.Name, database.EnumerateColumns(table.Name));
+				}
+			}
+
 
             project.Save();
 
             VsShellUtilities.ShowMessageBox(ServiceProvider, "ORM files created", "Information", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
         }
-    }
+
+		
+	}
 }

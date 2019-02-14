@@ -52,5 +52,41 @@ namespace NetORMLibVSExtension.Models
             return (Database)serializer.Deserialize(Stream);
         }
 
-    }
+		public IEnumerable<Change> EnumerateChanges()
+		{
+			foreach(Revision revision in Revisions)
+			{
+				foreach(Change change in revision.Changes)
+				{
+					yield return change;
+				}
+			}
+		}
+
+		public IEnumerable<CreateTable> EnumerateCreateTables()
+		{
+			foreach(Change change in EnumerateChanges())
+			{
+				if (change is CreateTable createTable) yield return createTable;
+			}
+		}
+
+		public IEnumerable<Column> EnumerateColumns(string Table)
+		{
+			List<Column> items;
+
+			items = new List<Column>();
+			foreach (Change change in EnumerateChanges())
+			{
+				if ((change is CreateTable createTable) && (createTable.Name==Table)) items.AddRange(createTable.Columns);
+				//TODO: Implement add and delete column
+			}
+			return items;
+		}
+
+
+
+
+
+	}
 }
