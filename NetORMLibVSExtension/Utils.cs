@@ -151,7 +151,15 @@ namespace NetORMLibVSExtension
 			writer.WriteLine("	{");
 			foreach (Column column in Columns)
 			{
-				writer.WriteLine($"		public static readonly IColumn<{Table}, {column.Type}> {column.Name} = new Column<{Table}, {column.Type}>();");
+				writer.Write($"		public static readonly IColumn<{Table}, {column.Type}> {column.Name} = new Column<{Table}, {column.Type}>()");
+				if (column.IsPrimaryKey || column.IsIdentity)
+				{
+					writer.Write("{ ");
+					if (column.IsPrimaryKey) writer.Write("IsPrimaryKey = true;");
+					if (column.IsPrimaryKey) writer.Write("IsPrimaryKey = true;");
+					writer.Write("} ");
+				}
+				writer.WriteLine(";");
 			}
 			writer.WriteLine("	}");
 			writer.WriteLine("}");

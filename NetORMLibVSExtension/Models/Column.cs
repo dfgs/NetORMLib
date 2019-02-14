@@ -16,5 +16,9 @@ namespace NetORMLibVSExtension.Models
 		public string Type { get; set; }
 		[XmlAttribute]
 		public bool AllowNull { get; set; }
+		[XmlAttribute]
+		public bool IsIdentity { get; set; }
+		[XmlAttribute]
+		public bool IsPrimaryKey { get; set; }
 	}
 }
