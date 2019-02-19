@@ -37,12 +37,17 @@ namespace NetORMLibVSExtension
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(NetORMLibCommandPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideEditorFactory(typeof(EditorFactory), 101)]
+    [ProvideEditorExtension(typeof(EditorFactory),".tbx", 64, NameResourceID = 101)] // must have high priority
     public sealed class NetORMLibCommandPackage : AsyncPackage
     {
         /// <summary>
         /// CreateDatabaseFileCommandPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "9052f36c-939d-46b8-b926-b578e630f1d7";
+        public const string GuidEditorFactory = "93fa4dc3-61ec-47af-b0ba-50cad3caf049";
+
+        private EditorFactory editorFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NetORMLibCommandPackage"/> class.
@@ -66,11 +71,16 @@ namespace NetORMLibVSExtension
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await CreateDatabaseFileCommand.InitializeAsync(this);
             await CreateORMFilesCommand.InitializeAsync(this);
+
+
+            this.editorFactory = new EditorFactory(this);
+            base.RegisterEditorFactory(this.editorFactory);
         }
 
         #endregion

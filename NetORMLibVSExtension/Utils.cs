@@ -13,6 +13,7 @@ namespace NetORMLibVSExtension
 {
     public static class Utils
     {
+        public static readonly string databaseFileName = "database.tbx";
         public static ProjectItem GetProjectItem(Project Project,string Name)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
@@ -109,7 +110,7 @@ namespace NetORMLibVSExtension
             if (project == null) return;
 
 
-            file = Utils.GetProjectItem(project, "database.xml");
+            file = Utils.GetProjectItem(project, Utils.databaseFileName);
             if (file != null)
             {
                 VsShellUtilities.ShowMessageBox(ServiceProvider, "Database file already exists", "Information", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
@@ -126,7 +127,7 @@ namespace NetORMLibVSExtension
 			revision.Changes.Add(createTable);
 
 
-			fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(project.FullName), "database.xml");
+			fileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(project.FullName), Utils.databaseFileName);
             database.SaveToFile(fileName);
             project.ProjectItems.AddFromFile(fileName);
 
@@ -179,7 +180,7 @@ namespace NetORMLibVSExtension
             project = Utils.GetActiveProject(ServiceProvider);
             if (project == null) return;
 
-			databaseFile = Utils.GetProjectItem(project, "database.xml");
+			databaseFile = Utils.GetProjectItem(project, Utils.databaseFileName);
 			if (databaseFile == null)
 			{
 				VsShellUtilities.ShowMessageBox(ServiceProvider, "No Database file found, you must create it first", "Information", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
@@ -189,7 +190,7 @@ namespace NetORMLibVSExtension
 			folder = Utils.GetProjectItem(project, "Tables");
 			if (folder == null) folder = project.ProjectItems.AddFolder("Tables");
 
-			using (Stream stream = Utils.OpenFile(project, "database.xml"))
+			using (Stream stream = Utils.OpenFile(project, Utils.databaseFileName))
 			{
 				database = Database.LoadFromStream(stream);
 			}
