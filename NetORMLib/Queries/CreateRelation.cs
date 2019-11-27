@@ -12,7 +12,7 @@ namespace NetORMLib.Queries
 	public class CreateRelation<TPrimary,TForeign,TVal> : ICreateRelation<TPrimary,TForeign,TVal>
 		where TVal: IDbType
 	{
-		public string Table => Table<TForeign>.Name;
+		public string Table => TableDefinition<TForeign>.Name;
 
 		private IColumn<TPrimary,TVal> primaryColumn;
 		IColumn ICreateRelation.PrimaryColumn => primaryColumn;

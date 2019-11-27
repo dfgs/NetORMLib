@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.DbTypes
 {
-	public abstract class DbType<T>:IEquatable<T>,IDbType
+	public abstract class DbType<T>: IDbType,IEquatable<T>,IEquatable<DbType<T>>
 	{
 		private readonly T value;
 
@@ -25,6 +25,11 @@ namespace NetORMLib.DbTypes
 		{
 			return value.Equals(other);
 		}
+		public bool Equals(DbType<T> other)
+		{
+			if (other == null) return false;
+			return value.Equals(other.value);
+		}
 
 		public override string ToString()
 		{
@@ -35,7 +40,8 @@ namespace NetORMLib.DbTypes
 		{
 			return Value.value;
 		}
-		
+
+
 
 		public object GetCLRValue()
 		{

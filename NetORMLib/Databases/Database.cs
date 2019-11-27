@@ -37,16 +37,16 @@ namespace NetORMLib.Databases
 			}
 		}
 
-		public IEnumerable<T> Execute<T>(ISelect Query)
-			where T : new()
+		public IEnumerable<Row<T>> Execute<T>(ISelect Query)
+			//where T : new()
 		{
 			DbCommand command;
 			DbDataReader reader;
 			IColumn[] columns;
-			T row;
-			PropertyDescriptorCollection pdcs;
+			Row<T> row;
+			//PropertyDescriptorCollection pdcs;
 
-			pdcs=TypeDescriptor.GetProperties(typeof(T));
+			//pdcs=TypeDescriptor.GetProperties(typeof(T));
 
 			columns = Query.Columns.ToArray();
 			command = commandBuilder.BuildCommand(Query);
@@ -69,10 +69,11 @@ namespace NetORMLib.Databases
 				{
 					while (reader.Read())
 					{
-						row = new T();
+						row = new Row<T>();
 						for (int t = 0; t < columns.Length; t++)
 						{
-							pdcs[columns[t].Name].SetValue(row, reader[t]);
+							((IRow<T>)row).SetValue(columns[t], reader[t]);
+							//pdcs[columns[t].Name].SetValue(row, reader[t]);
 						}
 						yield return row;
 					}

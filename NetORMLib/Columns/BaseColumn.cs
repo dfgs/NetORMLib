@@ -17,7 +17,9 @@ namespace NetORMLib.Columns
 	public abstract class BaseColumn<T,TVal>:IColumn<T,TVal>
 		where TVal: IDbType
 	{
-		
+
+		private Dictionary<IRow<T>, TVal> dictionary;
+
 		public bool IsPrimaryKey
 		{
 			get;
@@ -44,7 +46,7 @@ namespace NetORMLib.Columns
 
 		public string Table
 		{
-			get { return Table<T>.Name; }
+			get { return TableDefinition<T>.Name; }
 		}
 
 		public Type DataType
@@ -53,16 +55,45 @@ namespace NetORMLib.Columns
 		}
 
 		
-		
 
 		public BaseColumn(string Name)
 		{
+			dictionary = new Dictionary<IRow<T>, TVal>();
 			this.Name = Name;
 			//this.IsNullable = Nullable.GetUnderlyingType(typeof(TVal))!=null;
 		}
 
+		object IColumn.GetValue(IRow Row)
+		{
+			return GetValue((IRow<T>)Row);
+		}
+		void IColumn.SetValue(IRow Row, object Value)
+		{
+			SetValue((IRow<T>)Row, (TVal)Value);
+		}
 
-		
+		object IColumn<T>.GetValue(IRow<T> Row)
+		{
+			return GetValue(Row);
+		}
+		void IColumn<T>.SetValue(IRow<T> Row, object Value)
+		{
+			SetValue(Row, (TVal)Value);
+		}
+
+
+		public TVal GetValue(IRow<T> Row)
+		{
+			TVal result;
+			if (dictionary.TryGetValue(Row, out result)) return result;
+			return default(TVal);
+		}
+		public void SetValue(IRow<T> Row, TVal Value)
+		{
+			dictionary[Row] = Value;
+		}
+
+
 
 		public IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value)
 		{

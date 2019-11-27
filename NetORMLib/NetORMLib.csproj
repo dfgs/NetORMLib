@@ -84,6 +84,7 @@
     <Compile Include="Filters\IIsGreaterThanFilter.cs" />
     <Compile Include="Filters\IIsEqualToFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="IRow.cs" />
     <Compile Include="ORMException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\CreateColumn.cs" />
@@ -108,7 +109,8 @@
     <Compile Include="Queries\ISelect.cs" />
     <Compile Include="Queries\Delete.cs" />
     <Compile Include="Queries\Select.cs" />
-    <Compile Include="Table.cs" />
+    <Compile Include="Row.cs" />
+    <Compile Include="TableDefinition.cs" />
     <Compile Include="DbTypes\DbString.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -10,7 +10,7 @@ namespace NetORMLib.Databases
 	public interface IDatabase
 	{
 
-		IEnumerable<T> Execute<T>(ISelect Query) where T:new();
+		IEnumerable<Row<T>> Execute<T>(ISelect Query);
 		object Execute(ISelectIdentity Query);
 		void Execute(IQuery Query);
 		void Execute(params IQuery[] Queries);

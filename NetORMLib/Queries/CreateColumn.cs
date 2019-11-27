@@ -10,7 +10,7 @@ namespace NetORMLib.Queries
 {
 	public class CreateColumn<T> : ICreateColumn<T>
 	{
-		public string Table => Table<T>.Name;
+		public string Table => TableDefinition<T>.Name;
 
 		private IColumn<T> column;
 		IColumn ICreateColumn.Column => column;

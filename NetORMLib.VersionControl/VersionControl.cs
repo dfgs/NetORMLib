@@ -19,12 +19,12 @@ namespace NetORMLib.VersionControl
 
 		public int GetCurrentRevision()
 		{
-			IEnumerable<UpgradeLogRow> rows;
+			IEnumerable<Row<UpgradeLog>> rows;
 
 			if (!database.GetTables().Contains("UpgradeLog")) return -1;
 
-			rows = database.Execute<UpgradeLogRow>(new Select<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
-			if (rows.Any()) return rows.Max(item => item.Revision);
+			rows = database.Execute<UpgradeLog>(new Select<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
+			if (rows.Any()) return rows.Max(item => item.GetValue(UpgradeLog.Revision));
 			else return 0;
 		}
 

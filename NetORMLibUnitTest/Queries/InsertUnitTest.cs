@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
 using NetORMLibUnitTest.Models;
 
-namespace NetORMLibUnitTest
+namespace NetORMLibUnitTest.Queries
 {
 	[TestClass]
 	public class InsertUnitTest

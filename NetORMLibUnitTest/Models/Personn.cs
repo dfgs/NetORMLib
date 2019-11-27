@@ -18,5 +18,5 @@ namespace NetORMLibUnitTest.Models
 		public static readonly IColumn<Personn, DbString> LastName = new Column<Personn, DbString>();
 		public static readonly IColumn<Personn, DbInt> SecureCode = new NullableColumn<Personn, DbInt>();
 		public static readonly IColumn<Personn, DbString> Job = new NullableColumn<Personn, DbString>();
-}
+	}
 }

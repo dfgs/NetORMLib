@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetORMLib;
 using NetORMLib.Queries;
 using NetORMLibUnitTest.Models;
 
@@ -19,6 +20,16 @@ namespace NetORMLibUnitTest
 			Assert.AreEqual(true, Personn.Job.IsNullable);
 		}
 
+		[TestMethod]
+		public void ShouldGetAndSetValue()
+		{
+			Row<Personn> row;
+
+			row = new Row<Personn>();
+			Assert.AreEqual(null, Personn.FirstName.GetValue(row));
+			Personn.FirstName.SetValue(row, "Homer");
+			Assert.IsTrue(Personn.FirstName.GetValue(row).Equals("Homer"));
+		}
 
 
 	}

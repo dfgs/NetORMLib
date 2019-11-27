@@ -11,7 +11,7 @@ namespace Test
 	{
 		static void Main(string[] args)
 		{
-			foreach(var t in Table<Personn>.Columns)
+			foreach(var t in TableDefinition<Personn>.Columns)
 			{
 
 			}

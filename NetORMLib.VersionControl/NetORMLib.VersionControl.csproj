@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UpgradeLogRow.cs" />
     <Compile Include="UpgradeLog.cs" />
     <Compile Include="VersionControl.cs" />
     <Compile Include="IVersionControl.cs" />

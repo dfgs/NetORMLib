@@ -5,7 +5,7 @@ using NetORMLib.DbTypes;
 using NetORMLib.Queries;
 using NetORMLibUnitTest.Models;
 
-namespace NetORMLibUnitTest
+namespace NetORMLibUnitTest.Queries
 {
 	[TestClass]
 	public class CreateRelationUnitTest

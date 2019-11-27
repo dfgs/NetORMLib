@@ -8,30 +8,29 @@ using NetORMLib.Sql;
 using NetORMLib.Sql.CommandBuilders;
 using NetORMLibUnitTest.Models;
 
-namespace NetORMLibUnitTest
+namespace NetORMLibUnitTest.CommandBuilders
 {
 	[TestClass]
-	public class SqlSelectCommandBuilderUnitTest
+	public class SqlDeleteCommandBuilderUnitTest
 	{
 
-		
+	
 
 		[TestMethod]
-		public void ShouldBuildExplicitSelect()
+		public void ShouldBuildExplicitDelete()
 		{
 			IQuery query;
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName);
+			query = new Delete<Personn>();
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName] FROM [Personn]", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn]", command.CommandText);
 		}
 
-		/// <summary>
-		/// Command builder should include WHERE clause in SELECT query using "=" operator. 
-		/// </summary>
+		
+
 		[TestMethod]
 		public void ShouldBuildEqualsFilter()
 		{
@@ -39,10 +38,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsEqualTo("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -55,10 +54,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsEqualTo("John"),Personn.LastName.IsEqualTo("Doe"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsEqualTo("John"),Personn.LastName.IsEqualTo("Doe"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0 AND [Personn].[LastName]=@LastName1", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]=@FirstName0 AND [Personn].[LastName]=@LastName1", command.CommandText);
 			Assert.AreEqual(2, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -73,10 +72,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNotEqualTo("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsNotEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<>@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]<>@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -89,10 +88,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsGreaterThan("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsGreaterThan("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]>@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]>@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -105,10 +104,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsLowerThan("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsLowerThan("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]<@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -121,10 +120,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsGreaterOrEqualTo("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsGreaterOrEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]>=@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]>=@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -137,10 +136,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsLowerOrEqualTo("John"));
+			query = new Delete<Personn>().Where(Personn.FirstName.IsLowerOrEqualTo("John"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName]<=@FirstName0", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName]<=@FirstName0", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -153,10 +152,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNull());
+			query = new Delete<Personn>().Where(Personn.FirstName.IsNull());
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName] IS NULL", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName] IS NULL", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
@@ -167,10 +166,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(Personn.FirstName.IsNotNull());
+			query = new Delete<Personn>().Where(Personn.FirstName.IsNotNull());
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE [Personn].[FirstName] IS NOT NULL", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE [Personn].[FirstName] IS NOT NULL", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
@@ -182,10 +181,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>( Personn.FirstName.IsNotNull(),Personn.LastName.IsEqualTo("Doe") ) );
+			query = new Delete<Personn>().Where(new AndFilter<Personn>( Personn.FirstName.IsNotNull(),Personn.LastName.IsEqualTo("Doe") ) );
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0)", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0)", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@LastName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("Doe", command.Parameters[0].Value);
@@ -198,10 +197,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe"), Personn.LastName.IsEqualTo("Doe")));
+			query = new Delete<Personn>().Where(new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe"), Personn.LastName.IsEqualTo("Doe")));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0 AND [Personn].[LastName]=@LastName1)", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName0 AND [Personn].[LastName]=@LastName1)", command.CommandText);
 			Assert.AreEqual(2, command.Parameters.Count);
 			Assert.AreEqual("@LastName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("Doe", command.Parameters[0].Value);
@@ -216,10 +215,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new AndFilter<Personn>(Personn.FirstName.IsEqualTo("John"),  new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe") ), Personn.LastName.IsEqualTo("Doe") ));
+			query = new Delete<Personn>().Where(new AndFilter<Personn>(Personn.FirstName.IsEqualTo("John"),  new AndFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe") ), Personn.LastName.IsEqualTo("Doe") ));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName]=@FirstName0 AND ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName1) AND [Personn].[LastName]=@LastName2)", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE ([Personn].[FirstName]=@FirstName0 AND ([Personn].[FirstName] IS NOT NULL AND [Personn].[LastName]=@LastName1) AND [Personn].[LastName]=@LastName2)", command.CommandText);
 			Assert.AreEqual(3, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
@@ -236,10 +235,10 @@ namespace NetORMLibUnitTest
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Select<Personn>(Personn.FirstName, Personn.LastName).Where(new OrFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe")));
+			query = new Delete<Personn>().Where(new OrFilter<Personn>(Personn.FirstName.IsNotNull(), Personn.LastName.IsEqualTo("Doe")));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("SELECT [Personn].[FirstName], [Personn].[LastName] FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL OR [Personn].[LastName]=@LastName0)", command.CommandText);
+			Assert.AreEqual("DELETE FROM [Personn] WHERE ([Personn].[FirstName] IS NOT NULL OR [Personn].[LastName]=@LastName0)", command.CommandText);
 			Assert.AreEqual(1, command.Parameters.Count);
 			Assert.AreEqual("@LastName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("Doe", command.Parameters[0].Value);

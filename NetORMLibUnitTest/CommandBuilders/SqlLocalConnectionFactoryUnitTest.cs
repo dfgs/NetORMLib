@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.ConnectionFactories;
 using NetORMLib.Sql.ConnectionFactories;
 
-namespace NetORMLibUnitTest
+namespace NetORMLibUnitTest.CommandBuilders
 {
 	[TestClass]
 	public class SqlLocalConnectionFactoryUnitTest

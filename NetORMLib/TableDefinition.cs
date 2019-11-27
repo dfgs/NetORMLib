@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace NetORMLib
 {
-	public static class Table<T>
+	public static class TableDefinition<T>
 	{
-		private static List<IColumn> columns;
-		public static IEnumerable<IColumn> Columns
+		private static List<IColumn<T>> columns;
+		public static IEnumerable<IColumn<T>> Columns
 		{
 			get { return columns; }
 		}
+
+		
 
 		private static string name;
 		public static string Name
@@ -24,14 +26,14 @@ namespace NetORMLib
 			get { return name; }
 		}
 
-		static Table()
+		static TableDefinition()
 		{
 			Type type;
 			FieldInfo[] fis;
 			object value;
 			TableAttribute tableAttribute;
 
-			columns = new List<IColumn>();
+			columns = new List<IColumn<T>>();
 			type = typeof(T);
 			tableAttribute = type.GetCustomAttribute<TableAttribute>();
 
@@ -41,10 +43,17 @@ namespace NetORMLib
 			fis=type.GetFields(BindingFlags.Public | BindingFlags.Static);
 			foreach(FieldInfo fi in fis)
 			{
-				if (!typeof(IColumn).IsAssignableFrom(fi.FieldType)) continue;
+				if (!typeof(IColumn<T>).IsAssignableFrom(fi.FieldType)) continue;
 				value = fi.GetValue(null);
-				columns.Add((IColumn)value);
+				columns.Add((IColumn<T>)value);
 			}
+		}
+		public static IColumn<T> GetColumn(string Name)
+		{
+			IColumn<T> result;
+
+			result = columns.First(item => item.Name == Name);
+			return result;
 		}
 
 

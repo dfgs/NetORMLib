@@ -10,7 +10,7 @@ namespace NetORMLib.Queries
 {
 	public class Delete<T> : IDelete<T>
 	{
-		public string Table => Table<T>.Name;
+		public string Table => TableDefinition<T>.Name;
 
 		private List<IFilter<T>> filters;
 		IEnumerable<IFilter> IFilterableQuery.Filters => filters;

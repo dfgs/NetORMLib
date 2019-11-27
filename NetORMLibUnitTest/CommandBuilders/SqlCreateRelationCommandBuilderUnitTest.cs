@@ -9,7 +9,7 @@ using NetORMLib.Sql;
 using NetORMLib.Sql.CommandBuilders;
 using NetORMLibUnitTest.Models;
 
-namespace NetORMLibUnitTest
+namespace NetORMLibUnitTest.CommandBuilders
 {
 	[TestClass]
 	public class SqlCreateRelationCommandBuilderUnitTest

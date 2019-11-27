@@ -54,30 +54,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbTypeUnitTest.cs" />
+    <Compile Include="DbTypes\DbDateUnitTest.cs" />
+    <Compile Include="DbTypes\DbIntUnitTest.cs" />
+    <Compile Include="DbTypes\DbStringUnitTest.cs" />
     <Compile Include="ColumnUnitTest.cs" />
-    <Compile Include="CreateColumnUnitTest.cs" />
-    <Compile Include="CreateRelationUnitTest.cs" />
-    <Compile Include="CreateTableUnitTest.cs" />
+    <Compile Include="Queries\CreateColumnUnitTest.cs" />
+    <Compile Include="Queries\CreateRelationUnitTest.cs" />
+    <Compile Include="Queries\CreateTableUnitTest.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\JobType.cs" />
-    <Compile Include="InsertUnitTest.cs" />
-    <Compile Include="SqlCreateColumnCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlCreateRelationCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlCreateTableCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlInsertCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlLocalConnectionFactoryUnitTest.cs" />
-    <Compile Include="SqlSelectIdentityCommandBuilderUnitTest.cs" />
-    <Compile Include="UpdateUnitTest.cs" />
+    <Compile Include="Queries\InsertUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlCreateColumnCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlCreateRelationCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlCreateTableCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlInsertCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlLocalConnectionFactoryUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlSelectIdentityCommandBuilderUnitTest.cs" />
+    <Compile Include="RowUnitTest.cs" />
+    <Compile Include="Queries\UpdateUnitTest.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\PersonnExplicit.cs" />
-    <Compile Include="DeleteUnitTest.cs" />
-    <Compile Include="SelectUnitTest.cs" />
+    <Compile Include="Queries\DeleteUnitTest.cs" />
+    <Compile Include="Queries\SelectUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlUpdateCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlDeleteCommandBuilderUnitTest.cs" />
-    <Compile Include="SqlSelectCommandBuilderUnitTest.cs" />
-    <Compile Include="TableUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlUpdateCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlDeleteCommandBuilderUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlSelectCommandBuilderUnitTest.cs" />
+    <Compile Include="TableDefinitionUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

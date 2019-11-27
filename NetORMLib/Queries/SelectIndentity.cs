@@ -10,7 +10,7 @@ namespace NetORMLib.Queries
 {
 	public class SelectIdentity<T> : ISelectIdentity<T>
 	{
-		public string Table => Table<T>.Name;
+		public string Table => TableDefinition<T>.Name;
 
 		public Action<object> ResultCallBack
 		{

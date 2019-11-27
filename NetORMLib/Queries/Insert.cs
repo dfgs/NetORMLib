@@ -11,7 +11,7 @@ namespace NetORMLib.Queries
 {
 	public class Insert<T> : IInsert<T>
 	{
-		public string Table => Table<T>.Name;
+		public string Table => TableDefinition<T>.Name;
 
 
 		private List<ISetter<T>> setters;
