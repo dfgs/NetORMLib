@@ -52,7 +52,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			{
 				if (filter is IColumnFilter columnFilter)
 				{
-					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value.GetCLRValue());
+					Command.Parameters.AddWithValue(OnFormatParameterName(columnFilter.Column.Name, ref Index), columnFilter.Value);
 				}
 				else if (filter is IBooleanFilter booleanFilter) OnBuildParameters(Command, booleanFilter.Members, ref Index);
 			}
@@ -61,7 +61,7 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			foreach (ISetter setter in Setters)
 			{
-				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value.GetCLRValue());
+				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value);
 			}
 		}
 
@@ -74,16 +74,16 @@ namespace NetORMLib.Sql.CommandBuilders
 
 			switch (Column.DataType.Name)
 			{
-				case "DbString":
+				case "String":
 					result = "nvarchar(MAX)";
 					break;
 				case "Byte":
 					result = "tinyint";
 					break;
-				case "DbInt":
+				case "Int32":
 					result = "int";
 					break;
-				case "UInt16":
+				case "UInt32":
 					result = "int";
 					break;
 				case "Int64":
@@ -92,7 +92,7 @@ namespace NetORMLib.Sql.CommandBuilders
 				case "Boolean":
 					result = "bit";
 					break;
-				case "DbDate":
+				case "DateTime":
 					result = "DateTime";
 					break;
 				case "TimeSpan":

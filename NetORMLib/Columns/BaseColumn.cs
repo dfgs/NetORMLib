@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NetORMLib.DbTypes;
 using NetORMLib.Filters;
 
 
@@ -15,9 +14,12 @@ using NetORMLib.Filters;
 namespace NetORMLib.Columns
 {
 	public abstract class BaseColumn<T,TVal>:IColumn<T,TVal>
-		where TVal: IDbType
 	{
-
+		public TVal DefaultValue
+		{
+			get;
+			set;
+		}
 		private Dictionary<IRow<T>, TVal> dictionary;
 
 		public bool IsPrimaryKey
@@ -86,7 +88,7 @@ namespace NetORMLib.Columns
 		{
 			TVal result;
 			if (dictionary.TryGetValue(Row, out result)) return result;
-			return default(TVal);
+			return DefaultValue;
 		}
 		public void SetValue(IRow<T> Row, TVal Value)
 		{

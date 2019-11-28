@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +16,8 @@ namespace NetORMLib
 	}
 	public interface IRow<T>: IRow
 	{
-		TVal GetValue<TVal>(IColumn<T, TVal> Column)
-			where TVal:IDbType;
-		void SetValue<TVal>(IColumn<T, TVal> Column, TVal Value)
-			where TVal:IDbType;
+		TVal GetValue<TVal>(IColumn<T, TVal> Column);
+		void SetValue<TVal>(IColumn<T, TVal> Column, TVal Value);
 
 
 

@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace NetORMLib.Filters
 			get;
 		}
 
-		IDbType Value
+		object Value
 		{
 			get;
 		}
@@ -33,7 +33,6 @@ namespace NetORMLib.Filters
 	}
 
 	public interface IColumnFilter<T,TVal> : IColumnFilter<T>
-		where TVal: IDbType
 	{
 		new IColumn<T,TVal> Column
 		{

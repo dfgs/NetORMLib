@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace NetORMLib.Filters
 {
 	public abstract class ColumnFilter<T,TVal>:IColumnFilter<T,TVal>
-		where TVal: IDbType
 	{
 		private IColumn<T,TVal> column;
 		IColumn IColumnFilter.Column => column;
@@ -17,7 +16,7 @@ namespace NetORMLib.Filters
 		public IColumn<T,TVal> Column => column;
 
 		private TVal value;
-		IDbType IColumnFilter.Value => value;
+		object IColumnFilter.Value => value;
 		public TVal Value => value;
 
 

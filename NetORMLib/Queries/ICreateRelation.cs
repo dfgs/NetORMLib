@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using NetORMLib.Filters;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,6 @@ namespace NetORMLib.Queries
 	}
 
 	public interface ICreateRelation<TPrimary,TForeign,TVal>:ICreateRelation
-		where TVal: IDbType
 	{
 		new IColumn<TPrimary,TVal> PrimaryColumn
 		{

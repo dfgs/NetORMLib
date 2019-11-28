@@ -24,7 +24,7 @@ namespace NetORMLib.VersionControl
 			if (!database.GetTables().Contains("UpgradeLog")) return -1;
 
 			rows = database.Execute<UpgradeLog>(new Select<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
-			if (rows.Any()) return rows.Max(item => item.GetValue(UpgradeLog.Revision));
+			if (rows.Any()) return rows.Max(item => item.GetValue(UpgradeLog.Revision) );
 			else return 0;
 		}
 

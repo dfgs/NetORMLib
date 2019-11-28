@@ -1,4 +1,4 @@
-﻿using NetORMLib.DbTypes;
+﻿
 using NetORMLib.Filters;
 using System;
 using System.Collections.Generic;
@@ -56,8 +56,12 @@ namespace NetORMLib.Columns
 	}
 
 	public interface IColumn<T,TVal> : IColumn<T>
-		where TVal: IDbType
 	{
+		TVal DefaultValue
+		{
+			get;
+			set;
+		}
 		
 		IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value);
 		IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value);

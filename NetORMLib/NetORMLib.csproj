@@ -55,10 +55,6 @@
     <Compile Include="Databases\DatabaseCreator.cs" />
     <Compile Include="Databases\IDatabase.cs" />
     <Compile Include="Databases\IDatabaseCreator.cs" />
-    <Compile Include="DbTypes\DbDate.cs" />
-    <Compile Include="DbTypes\DbType.cs" />
-    <Compile Include="DbTypes\DbInt.cs" />
-    <Compile Include="DbTypes\IDbType.cs" />
     <Compile Include="Filters\OrFilter.cs" />
     <Compile Include="Filters\BooleanFilter.cs" />
     <Compile Include="Filters\AndFilter.cs" />
@@ -111,7 +107,6 @@
     <Compile Include="Queries\Select.cs" />
     <Compile Include="Row.cs" />
     <Compile Include="TableDefinition.cs" />
-    <Compile Include="DbTypes\DbString.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

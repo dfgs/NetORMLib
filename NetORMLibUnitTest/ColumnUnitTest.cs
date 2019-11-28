@@ -31,6 +31,15 @@ namespace NetORMLibUnitTest
 			Assert.IsTrue(Personn.FirstName.GetValue(row).Equals("Homer"));
 		}
 
+		[TestMethod]
+		public void ShouldGetDefaultValue()
+		{
+			Row<Personn> row;
 
+			row = new Row<Personn>();
+			Assert.IsTrue(Personn.Job.GetValue(row).Equals("No job"));
+
+
+		}
 	}
 }

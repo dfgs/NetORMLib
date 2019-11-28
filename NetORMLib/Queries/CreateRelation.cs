@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
 {
 	public class CreateRelation<TPrimary,TForeign,TVal> : ICreateRelation<TPrimary,TForeign,TVal>
-		where TVal: IDbType
 	{
 		public string Table => TableDefinition<TForeign>.Name;
 
@@ -19,6 +18,7 @@ namespace NetORMLib.Queries
 		public IColumn<TPrimary,TVal> PrimaryColumn => primaryColumn;
 
 		private IColumn<TForeign, TVal> foreignColumn;
+
 		IColumn ICreateRelation.ForeignColumn => foreignColumn;
 		public IColumn<TForeign, TVal> ForeignColumn => foreignColumn;
 
@@ -31,10 +31,6 @@ namespace NetORMLib.Queries
 			this.foreignColumn = ForeignColumn;
 		}
 
-	
-
 		
-
-	
 	}
 }

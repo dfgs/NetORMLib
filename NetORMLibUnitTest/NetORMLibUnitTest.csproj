@@ -54,9 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbTypes\DbDateUnitTest.cs" />
-    <Compile Include="DbTypes\DbIntUnitTest.cs" />
-    <Compile Include="DbTypes\DbStringUnitTest.cs" />
     <Compile Include="ColumnUnitTest.cs" />
     <Compile Include="Queries\CreateColumnUnitTest.cs" />
     <Compile Include="Queries\CreateRelationUnitTest.cs" />

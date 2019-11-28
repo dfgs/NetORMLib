@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -22,12 +22,10 @@ namespace NetORMLib
 		}
 
 		public TVal GetValue<TVal>(IColumn<T,TVal> Column)
-			where TVal:IDbType
 		{
 			return Column.GetValue(this);
 		}
 		public void SetValue<TVal>(IColumn<T, TVal> Column,TVal Value)
-			where TVal : IDbType
 		{
 			Column.SetValue(this, Value);
 		}

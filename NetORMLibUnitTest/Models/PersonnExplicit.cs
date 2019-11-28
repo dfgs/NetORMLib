@@ -1,7 +1,7 @@
 ﻿using NetORMLib;
 using NetORMLib.Attributes;
 using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ namespace NetORMLibUnitTest.Models
 	[Table(Name ="Personn")]
 	public class PersonnExplicit
 	{
-		public static readonly IColumn<PersonnExplicit, DbString> FirstNameExplicit = new Column<PersonnExplicit, DbString>("FirstName");
-		public static readonly IColumn<PersonnExplicit, DbString> LastNameExplicit = new Column<PersonnExplicit, DbString>("LastName");
+		public static readonly IColumn<PersonnExplicit, string> FirstNameExplicit = new Column<PersonnExplicit, string>("FirstName");
+		public static readonly IColumn<PersonnExplicit, string> LastNameExplicit = new Column<PersonnExplicit, string>("LastName");
 
 	}
 }

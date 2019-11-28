@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using NetORMLib.Filters;
 using System;
 using System.Collections.Generic;
@@ -25,8 +25,7 @@ namespace NetORMLib.Queries
 		}
 
 		IUpdate<T> Where(params IFilter<T>[] Filters);
-		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
-			where TVal: IDbType;
+		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value);
 	}
 
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using NetORMLib.Filters;
 
 namespace NetORMLib.Queries
@@ -37,7 +37,6 @@ namespace NetORMLib.Queries
 
 		
 		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
-			where TVal: IDbType
 		{
 			setters.Add(new Setter<T,TVal>(Column, Value));
 			return this;

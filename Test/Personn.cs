@@ -1,13 +1,13 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 
 namespace Test
 {
 	public class Personn
 	{
-		public static readonly IColumn<Personn, DbString> FirstName = new Column<Personn, DbString>() { IsIdentity=true,IsPrimaryKey=true };
+		public static readonly IColumn<Personn, string> FirstName = new Column<Personn, string>() { IsIdentity=true,IsPrimaryKey=true };
 		
-		public static readonly IColumn<Personn, DbString> LastName = new Column<Personn, DbString>();
+		public static readonly IColumn<Personn, string> LastName = new Column<Personn, string>();
 
 	}
 }
