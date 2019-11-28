@@ -58,8 +58,8 @@
     <Compile Include="Queries\CreateColumnUnitTest.cs" />
     <Compile Include="Queries\CreateRelationUnitTest.cs" />
     <Compile Include="Queries\CreateTableUnitTest.cs" />
-    <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\JobType.cs" />
+    <Compile Include="Tables\JobTable.cs" />
+    <Compile Include="Tables\JobTypeTable.cs" />
     <Compile Include="Queries\InsertUnitTest.cs" />
     <Compile Include="CommandBuilders\SqlCreateColumnCommandBuilderUnitTest.cs" />
     <Compile Include="CommandBuilders\SqlCreateRelationCommandBuilderUnitTest.cs" />
@@ -67,10 +67,10 @@
     <Compile Include="CommandBuilders\SqlInsertCommandBuilderUnitTest.cs" />
     <Compile Include="CommandBuilders\SqlLocalConnectionFactoryUnitTest.cs" />
     <Compile Include="CommandBuilders\SqlSelectIdentityCommandBuilderUnitTest.cs" />
-    <Compile Include="RowUnitTest.cs" />
     <Compile Include="Queries\UpdateUnitTest.cs" />
-    <Compile Include="Models\Personn.cs" />
-    <Compile Include="Models\PersonnExplicit.cs" />
+    <Compile Include="Tables\PersonnTestName.cs" />
+    <Compile Include="Tables\PersonnTable.cs" />
+    <Compile Include="Tables\PersonnExplicitName.cs" />
     <Compile Include="Queries\DeleteUnitTest.cs" />
     <Compile Include="Queries\SelectUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

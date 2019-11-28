@@ -42,8 +42,8 @@ namespace NetORMLib.Columns
 			set;
 		}
 
-		object GetValue(IRow Row);
-		void SetValue(IRow Row,object Value);
+		/*object GetValue(IRow Row);
+		void SetValue(IRow Row,object Value);*/
 	}
 
 	public interface IColumn<T>:IColumn
@@ -51,8 +51,8 @@ namespace NetORMLib.Columns
 		IIsNullFilter<T> IsNull();
 		IIsNotNullFilter<T> IsNotNull();
 
-		object GetValue(IRow<T> Row);
-		void SetValue(IRow<T> Row, object Value);
+		/*object GetValue(IRow<T> Row);
+		void SetValue(IRow<T> Row, object Value);*/
 	}
 
 	public interface IColumn<T,TVal> : IColumn<T>
@@ -70,8 +70,8 @@ namespace NetORMLib.Columns
 		IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value);
 		IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value);
 
-		new TVal GetValue(IRow<T> Row);
-		void SetValue(IRow<T> Row, TVal Value);
+		/*new TVal GetValue(IRow<T> Row);
+		void SetValue(IRow<T> Row, TVal Value);*/
 	}
 
 }

@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -15,8 +15,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ICreateColumn query;
 
-			query = new CreateColumn<Personn>(Personn.PersonnID);
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateColumn<Personn>(null));
+			query = new CreateColumn<PersonnTable>(PersonnTable.PersonnID);
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateColumn<PersonnTable>(null));
 		}
 
 

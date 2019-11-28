@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -15,7 +15,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IUpdate query;
 
-			query = new Update<Personn>().Set(Personn.FirstName,"John");
+			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John");
 			Assert.AreEqual("Personn", query.Table);
 			Assert.AreEqual(1, query.Setters.Count());
 		}
@@ -26,7 +26,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IUpdate query;
 
-			query = new Update<Personn>().Set(Personn.FirstName, "John").Where(Personn.FirstName.IsEqualTo("Homer"));
+			query = new Update<PersonnTable>().Set(PersonnTable.FirstName, "John").Where(PersonnTable.FirstName.IsEqualTo("Homer"));
 			Assert.AreEqual("Personn", query.Table);
 			Assert.AreEqual(1, query.Setters.Count());
 			Assert.AreEqual(1, query.Filters.Count());

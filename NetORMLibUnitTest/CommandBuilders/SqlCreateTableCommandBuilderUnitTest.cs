@@ -6,7 +6,7 @@ using NetORMLib.Filters;
 using NetORMLib.Queries;
 using NetORMLib.Sql;
 using NetORMLib.Sql.CommandBuilders;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.CommandBuilders
 {
@@ -20,7 +20,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 
 			builder = new SqlCommandBuilder();
-			Assert.ThrowsException<ArgumentNullException>( () => new CreateTable<Personn>());
+			Assert.ThrowsException<ArgumentNullException>( () => new CreateTable<PersonnTable>());
 			
 		}
 
@@ -31,7 +31,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateTable<Personn>(Personn.PersonnID, Personn.FirstName, Personn.LastName, Personn.Job);
+			query = new CreateTable<PersonnTable>(PersonnTable.PersonnID, PersonnTable.FirstName, PersonnTable.LastName, PersonnTable.Job);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("CREATE TABLE [Personn] ([PersonnID] int IDENTITY(1, 1) NOT NULL PRIMARY KEY, [FirstName] nvarchar(MAX) NOT NULL, [LastName] nvarchar(MAX) NOT NULL, [Job] nvarchar(MAX) NULL)", command.CommandText);
@@ -45,7 +45,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateTable<Job>(Job.Description,Job.Company);
+			query = new CreateTable<JobTable>(JobTable.Description, JobTable.Company);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("CREATE TABLE [Job] ([Description] nvarchar(MAX) NOT NULL, [Company] nvarchar(MAX) NULL)", command.CommandText);
@@ -59,7 +59,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateTable<JobType>(JobType.JobTypeID,JobType.Description);
+			query = new CreateTable<JobTypeTable>(JobTypeTable.JobTypeID, JobTypeTable.Description);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("CREATE TABLE [JobType] ([JobTypeID] int NOT NULL PRIMARY KEY, [Description] nvarchar(MAX) NOT NULL)", command.CommandText);

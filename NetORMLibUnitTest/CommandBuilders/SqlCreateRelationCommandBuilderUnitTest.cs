@@ -7,7 +7,7 @@ using NetORMLib.Filters;
 using NetORMLib.Queries;
 using NetORMLib.Sql;
 using NetORMLib.Sql.CommandBuilders;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.CommandBuilders
 {
@@ -25,7 +25,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			DbCommand command;
 			
 
-			query = new CreateRelation<Personn,JobType,int>(Personn.PersonnID, JobType.JobTypeID);
+			query = new CreateRelation<PersonnTable, JobTypeTable, int>(PersonnTable.PersonnID, JobTypeTable.JobTypeID);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("ALTER TABLE [JobType] WITH CHECK ADD CONSTRAINT [FK_JobType_JobTypeID_Personn] FOREIGN KEY ([JobTypeID]) REFERENCES [Personn] ([PersonnID])", command.CommandText);

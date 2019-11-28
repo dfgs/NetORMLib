@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -15,10 +15,10 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ICreateTable query;
 
-			query = new CreateTable<Personn>(Personn.LastName, Personn.FirstName);
+			query = new CreateTable<PersonnTable>(PersonnTable.LastName, PersonnTable.FirstName);
 			Assert.AreEqual(2, query.Columns.Count());
-			Assert.AreEqual(Personn.LastName, query.Columns.ElementAt(0));
-			Assert.AreEqual(Personn.FirstName, query.Columns.ElementAt(1));
+			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
+			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
 		}
 
 

@@ -20,7 +20,7 @@ namespace NetORMLib.Columns
 			get;
 			set;
 		}
-		private Dictionary<IRow<T>, TVal> dictionary;
+		//private Dictionary<IRow<T>, TVal> dictionary;
 
 		public bool IsPrimaryKey
 		{
@@ -56,43 +56,10 @@ namespace NetORMLib.Columns
 			get { return typeof(TVal); }
 		}
 
-		
 
 		public BaseColumn(string Name)
 		{
-			dictionary = new Dictionary<IRow<T>, TVal>();
 			this.Name = Name;
-			//this.IsNullable = Nullable.GetUnderlyingType(typeof(TVal))!=null;
-		}
-
-		object IColumn.GetValue(IRow Row)
-		{
-			return GetValue((IRow<T>)Row);
-		}
-		void IColumn.SetValue(IRow Row, object Value)
-		{
-			SetValue((IRow<T>)Row, (TVal)Value);
-		}
-
-		object IColumn<T>.GetValue(IRow<T> Row)
-		{
-			return GetValue(Row);
-		}
-		void IColumn<T>.SetValue(IRow<T> Row, object Value)
-		{
-			SetValue(Row, (TVal)Value);
-		}
-
-
-		public TVal GetValue(IRow<T> Row)
-		{
-			TVal result;
-			if (dictionary.TryGetValue(Row, out result)) return result;
-			return DefaultValue;
-		}
-		public void SetValue(IRow<T> Row, TVal Value)
-		{
-			dictionary[Row] = Value;
 		}
 
 

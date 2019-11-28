@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -15,7 +15,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IDelete query;
 
-			query = new Delete<Personn>();
+			query = new Delete<PersonnTable>();
 		}
 
 		
@@ -24,7 +24,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IDelete query;
 
-			query = new Delete<Personn>().Where(Personn.FirstName.IsEqualTo("John"));
+			query = new Delete<PersonnTable>().Where(PersonnTable.FirstName.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 

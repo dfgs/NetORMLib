@@ -6,7 +6,7 @@ using NetORMLib.Filters;
 using NetORMLib.Queries;
 using NetORMLib.Sql;
 using NetORMLib.Sql.CommandBuilders;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.CommandBuilders
 {
@@ -23,7 +23,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new SelectIdentity<Personn>();
+			query = new SelectIdentity<PersonnTable>();
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT @@IDENTITY", command.CommandText);

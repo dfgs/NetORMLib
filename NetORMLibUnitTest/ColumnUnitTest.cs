@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest
 {
@@ -14,32 +14,15 @@ namespace NetORMLibUnitTest
 		[TestMethod]
 		public void ShouldDetectIfColumnIsNullable()
 		{
-			Assert.AreEqual(false, Personn.FirstName.IsNullable);
-			Assert.AreEqual(false, Personn.PersonnID.IsNullable);
-			Assert.AreEqual(true, Personn.SecureCode.IsNullable);
-			Assert.AreEqual(true, Personn.Job.IsNullable);
+			Assert.AreEqual(false, PersonnTable.FirstName.IsNullable);
+			Assert.AreEqual(false, PersonnTable.PersonnID.IsNullable);
+			Assert.AreEqual(true, PersonnTable.SecureCode.IsNullable);
+			Assert.AreEqual(true, PersonnTable.Job.IsNullable);
 		}
 
-		[TestMethod]
-		public void ShouldGetAndSetValue()
-		{
-			Row<Personn> row;
-
-			row = new Row<Personn>();
-			Assert.AreEqual(null, Personn.FirstName.GetValue(row));
-			Personn.FirstName.SetValue(row, "Homer");
-			Assert.IsTrue(Personn.FirstName.GetValue(row).Equals("Homer"));
-		}
-
-		[TestMethod]
-		public void ShouldGetDefaultValue()
-		{
-			Row<Personn> row;
-
-			row = new Row<Personn>();
-			Assert.IsTrue(Personn.Job.GetValue(row).Equals("No job"));
+		
 
 
-		}
+
 	}
 }

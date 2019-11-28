@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -16,9 +16,9 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ICreateRelation query;
 
-			query = new CreateRelation<Personn, JobType, int>(Personn.PersonnID, JobType.JobTypeID);
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, int>(null, JobType.JobTypeID));
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<Personn, JobType, int>(Personn.PersonnID, null));
+			query = new CreateRelation<PersonnTable, JobTypeTable, int>(PersonnTable.PersonnID, JobTypeTable.JobTypeID);
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<PersonnTable, JobTypeTable, int>(null, JobTypeTable.JobTypeID));
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<PersonnTable, JobTypeTable, int>(PersonnTable.PersonnID, null));
 		}
 
 

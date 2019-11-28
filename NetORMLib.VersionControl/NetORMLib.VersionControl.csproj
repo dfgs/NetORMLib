@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UpgradeLog.cs" />
+    <Compile Include="UpgradeLogTable.cs" />
     <Compile Include="VersionControl.cs" />
     <Compile Include="IVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -19,12 +19,12 @@ namespace NetORMLib.VersionControl
 
 		public int GetCurrentRevision()
 		{
-			IEnumerable<Row<UpgradeLog>> rows;
+			IEnumerable<UpgradeLog> rows;
 
 			if (!database.GetTables().Contains("UpgradeLog")) return -1;
 
-			rows = database.Execute<UpgradeLog>(new Select<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
-			if (rows.Any()) return rows.Max(item => item.GetValue(UpgradeLog.Revision) );
+			rows = database.Execute<UpgradeLog>(new Select<UpgradeLogTable>(UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
+			if (rows.Any()) return rows.Max(item => item.Revision );
 			else return 0;
 		}
 
@@ -45,14 +45,14 @@ namespace NetORMLib.VersionControl
 			current = GetCurrentRevision();
 			if (current==-1)
 			{
-				database.Execute(new CreateTable<UpgradeLog>(UpgradeLog.UpgradeLogID,UpgradeLog.Revision,UpgradeLog.Date));
+				database.Execute(new CreateTable<UpgradeLogTable>(UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
 				current = 0;
 			}
 
 			while(current<target)
 			{
 				current ++;
-				upgradeLogInsert = new Insert<UpgradeLog>().Set(UpgradeLog.Revision, current).Set(UpgradeLog.Date, DateTime.Now);
+				upgradeLogInsert = new Insert<UpgradeLogTable>().Set(UpgradeLogTable.Revision, current).Set(UpgradeLogTable.Date, DateTime.Now);
 				database.Execute(OnUpgradeTo(current).Union( new IQuery[] { upgradeLogInsert} ));
 					
 			}

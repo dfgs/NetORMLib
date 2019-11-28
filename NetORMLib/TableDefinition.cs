@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NetORMLib
@@ -26,6 +27,8 @@ namespace NetORMLib
 			get { return name; }
 		}
 
+		private static Regex nameRegex = new Regex("(.+)Table$");
+
 		static TableDefinition()
 		{
 			Type type;
@@ -37,10 +40,28 @@ namespace NetORMLib
 			type = typeof(T);
 			tableAttribute = type.GetCustomAttribute<TableAttribute>();
 
-			
-			name = tableAttribute==null?type.Name: tableAttribute.Name;
+			if (tableAttribute!=null)
+			{
+				name = tableAttribute.Name; 
+			}
+			else
+			{
+				Match match;
 
-			fis=type.GetFields(BindingFlags.Public | BindingFlags.Static);
+				match = nameRegex.Match(type.Name);
+				if (match.Success)
+				{
+					name = match.Groups[1].Value;
+				}
+				else
+				{
+					name = type.Name;
+				}
+			}
+
+			
+
+			fis =type.GetFields(BindingFlags.Public | BindingFlags.Static);
 			foreach(FieldInfo fi in fis)
 			{
 				if (!typeof(IColumn<T>).IsAssignableFrom(fi.FieldType)) continue;

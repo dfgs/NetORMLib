@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Queries;
-using NetORMLibUnitTest.Models;
+using NetORMLibUnitTest.Tables;
 
 namespace NetORMLibUnitTest.Queries
 {
@@ -15,10 +15,10 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select<Personn>(Personn.LastName, Personn.FirstName);
+			query = new Select<PersonnTable>(PersonnTable.LastName, PersonnTable.FirstName);
 			Assert.AreEqual(2, query.Columns.Count());
-			Assert.AreEqual(Personn.LastName, query.Columns.ElementAt(0));
-			Assert.AreEqual(Personn.FirstName, query.Columns.ElementAt(1));
+			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
+			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
 		}
 
 		[TestMethod]
@@ -26,10 +26,10 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select<Personn>(Personn.FirstName).OrderBy(Personn.LastName,Personn.FirstName);
+			query = new Select<PersonnTable>(PersonnTable.FirstName).OrderBy(PersonnTable.LastName,PersonnTable.FirstName);
 			Assert.AreEqual(2, query.Orders.Count());
-			Assert.AreEqual(Personn.LastName, query.Orders.ElementAt(0));
-			Assert.AreEqual(Personn.FirstName, query.Orders.ElementAt(1));
+			Assert.AreEqual(PersonnTable.LastName, query.Orders.ElementAt(0));
+			Assert.AreEqual(PersonnTable.FirstName, query.Orders.ElementAt(1));
 		}
 
 
@@ -38,7 +38,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select<Personn>(Personn.FirstName).Where(Personn.FirstName.IsEqualTo("John"));
+			query = new Select<PersonnTable>(PersonnTable.FirstName).Where(PersonnTable.FirstName.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 
