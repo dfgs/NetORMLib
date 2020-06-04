@@ -31,7 +31,6 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual("ALTER TABLE [JobType] WITH CHECK ADD CONSTRAINT [FK_JobType_JobTypeID_Personn] FOREIGN KEY ([JobTypeID]) REFERENCES [Personn] ([PersonnID])", command.CommandText);
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
-		
 
 
 

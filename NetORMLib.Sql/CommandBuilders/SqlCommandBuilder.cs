@@ -68,11 +68,16 @@ namespace NetORMLib.Sql.CommandBuilders
 		private string GetTypeName(IColumn Column)
 		{
 			string result;
+			Type type, underlyingType;
 
 			
 			if (Column.DataType.IsEnum) return "int";
 
-			switch (Column.DataType.Name)
+			underlyingType = Nullable.GetUnderlyingType(Column.DataType);
+			if (underlyingType != null) type = underlyingType;
+			else type = Column.DataType;
+
+			switch (type.Name)
 			{
 				case "String":
 					result = "nvarchar(MAX)";
@@ -226,6 +231,8 @@ namespace NetORMLib.Sql.CommandBuilders
 		protected override DbCommand OnBuildSelectIdentityCommand(ISelectIdentity Query)
 		{
 			return new SqlCommand("SELECT @@IDENTITY");
+			//return new SqlCommand("SELECT SCOPE_IDENTITY()");
+			
 		}
 
 		

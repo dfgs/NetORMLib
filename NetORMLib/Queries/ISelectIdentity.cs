@@ -13,8 +13,9 @@ namespace NetORMLib.Queries
 
 	}
 
-	public interface ISelectIdentity<T>:ISelectIdentity
+	public interface ISelectIdentity<T> : ISelectIdentity
 	{
+
 	}
 
 

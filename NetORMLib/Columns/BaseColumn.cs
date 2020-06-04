@@ -36,6 +36,7 @@ namespace NetORMLib.Columns
 		public abstract bool IsNullable
 		{
 			get;
+			set;
 		}
 
 		

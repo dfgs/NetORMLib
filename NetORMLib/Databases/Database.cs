@@ -56,6 +56,14 @@ namespace NetORMLib.Databases
 				connection.Open();
 				command.Connection = connection;
 				PropertyDescriptorCollection pdcs;
+				object value;
+
+				pdcs = TypeDescriptor.GetProperties(typeof(TRow));
+				// ensure that all properties exist
+				for (int t = 0; t < columns.Length; t++)
+				{
+					if (pdcs[columns[t].Name] == null) throw new KeyNotFoundException($"Cannot find property {columns[t].Name} in descriptor collection");
+				}
 
 				try
 				{
@@ -66,7 +74,7 @@ namespace NetORMLib.Databases
 					throw new ORMException(command, ex);
 				}
 
-				pdcs = TypeDescriptor.GetProperties(typeof(TRow));
+
 				using (reader)
 				{
 					while (reader.Read())
@@ -74,8 +82,10 @@ namespace NetORMLib.Databases
 						row = new TRow();
 						for (int t = 0; t < columns.Length; t++)
 						{
-							//((IRow<TRow>)row).SetValue(columns[t], reader[t]);
-							pdcs[columns[t].Name].SetValue(row, reader[t]);
+							value = reader[t];
+							// cannot convert DBNull to Nullable<>
+							if (value == DBNull.Value) value = null;
+							pdcs[columns[t].Name].SetValue(row, value);
 						}
 						yield return row;
 					}
@@ -138,15 +148,15 @@ namespace NetORMLib.Databases
 			}
 		}
 
-		public void Execute(params IQuery[] Queries)
+		public object Execute(params IQuery[] Queries)
 		{
-			Execute((IEnumerable<IQuery>)Queries);
+			return Execute((IEnumerable<IQuery>)Queries);
 		}
 
-		public void Execute(IEnumerable<IQuery> Queries)
+		public object Execute(IEnumerable<IQuery> Queries)
 		{
 			DbCommand command;
-			object result;
+			object result=null;
 
 			using (DbConnection connection = connectionFactory.CreateConnection())
 			{
@@ -165,7 +175,7 @@ namespace NetORMLib.Databases
 								if (query is ICallBackQuery callBackQuery)
 								{
 									result=command.ExecuteScalar();
-									callBackQuery?.ResultCallBack(result);
+									if (callBackQuery.ResultCallBack!!=null) callBackQuery.ResultCallBack(result);
 								}
 								else command.ExecuteNonQuery();
 							}
@@ -183,6 +193,8 @@ namespace NetORMLib.Databases
 					transaction.Commit();
 				}
 			}
+
+			return result;
 		}
 
 

@@ -16,7 +16,7 @@ namespace NetORMLibUnitTest.Tables
 		public static readonly IColumn<PersonnTable, int> PersonnID = new Column<PersonnTable, int>() { IsPrimaryKey=true,IsIdentity=true };
 		public static readonly IColumn<PersonnTable, string> FirstName = new Column<PersonnTable, string>();
 		public static readonly IColumn<PersonnTable, string> LastName = new Column<PersonnTable, string>();
-		public static readonly IColumn<PersonnTable, int> SecureCode = new NullableColumn<PersonnTable, int>();
-		public static readonly IColumn<PersonnTable, string> Job = new NullableColumn<PersonnTable, string>() { DefaultValue="No job"};
+		public static readonly IColumn<PersonnTable, int> SecureCode = new Column<PersonnTable, int>() { IsNullable=true};
+		public static readonly IColumn<PersonnTable, string> Job = new Column<PersonnTable, string>() { DefaultValue="No job",IsNullable=true};
 	}
 }

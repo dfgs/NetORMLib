@@ -21,16 +21,26 @@ namespace NetORMLib.Queries
 		}
 	}
 
-	public interface ICreateRelation<TPrimary,TForeign,TVal>:ICreateRelation
+	public interface ICreateRelation<TPrimary,TForeign,TPrimaryVal>:ICreateRelation
 	{
-		new IColumn<TPrimary,TVal> PrimaryColumn
+		new IColumn<TPrimary,TPrimaryVal> PrimaryColumn
 		{
 			get;
 		}
-		new IColumn<TForeign, TVal> ForeignColumn
+		new IColumn<TForeign, TPrimaryVal> ForeignColumn
 		{
 			get;
 		}
 	}
-
+	public interface ICreateRelation<TPrimary, TForeign, TPrimaryVal,TForeignVal> : ICreateRelation
+	{
+		new IColumn<TPrimary, TPrimaryVal> PrimaryColumn
+		{
+			get;
+		}
+		new IColumn<TForeign, TForeignVal> ForeignColumn
+		{
+			get;
+		}
+	}
 }

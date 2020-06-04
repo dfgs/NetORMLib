@@ -14,8 +14,8 @@ namespace NetORMLib.Databases
 			where TRow:new();
 		object Execute(ISelectIdentity Query);
 		void Execute(IQuery Query);
-		void Execute(params IQuery[] Queries);
-		void Execute(IEnumerable<IQuery> Queries);
+		object Execute(params IQuery[] Queries);
+		object Execute(IEnumerable<IQuery> Queries);
 
 		IEnumerable<string> GetTables();
 

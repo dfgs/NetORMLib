@@ -20,7 +20,8 @@ namespace NetORMLib.Columns
 	
 		public override bool IsNullable
 		{
-			get => false;
+			get;
+			set;
 		}
 
 		
