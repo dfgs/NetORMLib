@@ -92,7 +92,8 @@
     <Compile Include="Queries\CreateTable.cs" />
     <Compile Include="Queries\IInsert.cs" />
     <Compile Include="Queries\SelectIndentity.cs" />
-    <Compile Include="Queries\Setter.cs" />
+    <Compile Include="Queries\ClassSetter.cs" />
+    <Compile Include="Queries\ValueSetter.cs" />
     <Compile Include="Queries\Insert.cs" />
     <Compile Include="Queries\Update.cs" />
     <Compile Include="Queries\IFilterableQuery.cs" />

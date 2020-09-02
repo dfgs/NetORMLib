@@ -36,12 +36,18 @@ namespace NetORMLib.Queries
 		}
 
 		
-		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+			where TVal:struct
 		{
-			setters.Add(new Setter<T,TVal>(Column, Value));
+			setters.Add(new ValueSetter<T,TVal>(Column, Value));
 			return this;
 		}
-		
+		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+			where TVal : class
+		{
+			setters.Add(new ClassSetter<T, TVal>(Column, Value));
+			return this;
+		}
 
 
 

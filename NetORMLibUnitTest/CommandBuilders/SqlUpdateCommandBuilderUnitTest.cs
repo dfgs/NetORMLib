@@ -33,18 +33,38 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John").Set(PersonnTable.LastName,"Doe");
+			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John").Set(PersonnTable.LastName,"Doe").Set(PersonnTable.SecureCode,3);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
-			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1", command.CommandText);
-			Assert.AreEqual(2, command.Parameters.Count);
+			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1, [Personn].[SecureCode]=@SecureCode2", command.CommandText);
+			Assert.AreEqual(3, command.Parameters.Count);
 			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
 			Assert.AreEqual("John", command.Parameters[0].Value);
 			Assert.AreEqual("@LastName1", command.Parameters[1].ParameterName);
 			Assert.AreEqual("Doe", command.Parameters[1].Value);
+			Assert.AreEqual("@SecureCode2", command.Parameters[2].ParameterName);
+			Assert.AreEqual(3, command.Parameters[2].Value);
 		}
 
+		[TestMethod]
+		public void ShouldBuildExplicitUpdateWithNullValue()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
 
+			query = new Update<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode, null);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1, [Personn].[SecureCode]=@SecureCode2", command.CommandText);
+			Assert.AreEqual(3, command.Parameters.Count);
+			Assert.AreEqual("@FirstName0", command.Parameters[0].ParameterName);
+			Assert.AreEqual("John", command.Parameters[0].Value);
+			Assert.AreEqual("@LastName1", command.Parameters[1].ParameterName);
+			Assert.AreEqual("Doe", command.Parameters[1].Value);
+			Assert.AreEqual("@SecureCode2", command.Parameters[2].ParameterName);
+			Assert.AreEqual(null, command.Parameters[2].Value);
+		}
 
 		[TestMethod]
 		public void ShouldBuildEqualsFilter()

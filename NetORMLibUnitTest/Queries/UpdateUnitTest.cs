@@ -15,9 +15,9 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IUpdate query;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John");
+			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John").Set(PersonnTable.SecureCode,3);
 			Assert.AreEqual("Personn", query.Table);
-			Assert.AreEqual(1, query.Setters.Count());
+			Assert.AreEqual(2, query.Setters.Count());
 		}
 
 		

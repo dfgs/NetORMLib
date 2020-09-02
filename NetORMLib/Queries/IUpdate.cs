@@ -25,7 +25,10 @@ namespace NetORMLib.Queries
 		}
 
 		IUpdate<T> Where(params IFilter<T>[] Filters);
-		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value);
+		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+			where TVal : struct;
+		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+			where TVal : class;
 	}
 
 }

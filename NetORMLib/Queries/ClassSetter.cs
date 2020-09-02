@@ -8,7 +8,10 @@ using NetORMLib.Columns;
 
 namespace NetORMLib.Queries
 {
-	public class Setter<T, TVal> : ISetter<T, TVal>
+	
+
+	public class ClassSetter<T, TVal> : IClassSetter<T, TVal>
+		where TVal:class
 	{
 		IColumn ISetter.Column
 		{
@@ -35,10 +38,14 @@ namespace NetORMLib.Queries
 
 		}*/
 
-		public Setter(IColumn<T, TVal> Column,TVal Value)
+		public ClassSetter(IColumn<T, TVal> Column,TVal Value)
 		{
 			this.Column = Column;this.Value = Value;
 		}
 
 	}
+
+
+
+
 }

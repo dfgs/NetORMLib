@@ -25,7 +25,10 @@ namespace NetORMLib.Queries
 			get;
 		}
 
-		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value);
+		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+			where TVal : struct;
+		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+			where TVal : class;
 
 	}
 
