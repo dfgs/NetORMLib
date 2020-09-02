@@ -61,7 +61,7 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			foreach (ISetter setter in Setters)
 			{
-				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value);
+				Command.Parameters.AddWithValue(OnFormatParameterName(setter.Column.Name, ref Index), setter.Value??DBNull.Value);
 			}
 		}
 
