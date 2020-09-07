@@ -10,6 +10,12 @@ namespace NetORMLib.Queries
 {
 	public class Select<T> : ISelect<T>
 	{
+		public int Limit
+		{
+			get;
+			private set;
+		}
+
 		public string Table => TableDefinition<T>.Name;
 
 		private List<IColumn<T>> columns;
@@ -28,6 +34,7 @@ namespace NetORMLib.Queries
 		public Select(params IColumn<T>[] Columns)
 		{
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
+			Limit = -1;
 			columns = new List<IColumn<T>>();
 			filters = new List<IFilter<T>>();
 			orders = new List<IColumn<T>>();
@@ -50,6 +57,13 @@ namespace NetORMLib.Queries
 			return this;
 		}
 
-	
+		public ISelect<T> Top(int Limit)
+		{
+			this.Limit = Limit;
+			return this;
+		}
+
+		
+
 	}
 }

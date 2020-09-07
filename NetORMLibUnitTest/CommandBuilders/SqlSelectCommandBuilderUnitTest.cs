@@ -29,6 +29,19 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual("SELECT [Personn].[FirstName] FROM [Personn]", command.CommandText);
 		}
 
+		[TestMethod]
+		public void ShouldBuildExplicitSelectFirst()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<PersonnTable>(PersonnTable.FirstName).Top(10);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT TOP(10) [Personn].[FirstName] FROM [Personn]", command.CommandText);
+		}
+
 		/// <summary>
 		/// Command builder should include WHERE clause in SELECT query using "=" operator. 
 		/// </summary>

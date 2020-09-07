@@ -19,6 +19,7 @@ namespace NetORMLibUnitTest.Queries
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
+			Assert.AreEqual(-1, query.Limit);
 		}
 
 		[TestMethod]
@@ -42,6 +43,18 @@ namespace NetORMLibUnitTest.Queries
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 
+		[TestMethod]
+		public void ShouldSelectFirst()
+		{
+			ISelect query;
 
+			query = new Select<PersonnTable>(PersonnTable.LastName, PersonnTable.FirstName).Top(10);
+			Assert.AreEqual(2, query.Columns.Count());
+			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
+			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
+			Assert.AreEqual(10, query.Limit);
+		}
+
+		
 	}
 }

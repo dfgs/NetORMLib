@@ -10,6 +10,10 @@ namespace NetORMLib.Queries
 {
 	public interface ISelect: IOrderableQuery,IFilterableQuery
 	{
+		int Limit
+		{
+			get;
+		}
 		IEnumerable<IColumn> Columns
 		{
 			get;
@@ -25,6 +29,7 @@ namespace NetORMLib.Queries
 		}
 		ISelect<T> Where(params IFilter<T>[] Filters);
 		ISelect<T> OrderBy(params IColumn<T>[] Columns);
+		ISelect<T> Top(int Limit);
 	}
 
 

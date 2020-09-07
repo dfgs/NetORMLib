@@ -123,6 +123,7 @@ namespace NetORMLib.Sql.CommandBuilders
 
 			sql = new StringBuilder();
 			sql.Append("SELECT ");
+			if (Query.Limit>=0) sql.Append($"TOP({Query.Limit}) ");
 			sql.Append(String.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item))));
 			sql.Append(" FROM ");
 			sql.Append(OnFormatTableName(Query.Table));

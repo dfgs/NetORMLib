@@ -63,7 +63,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual("@LastName1", command.Parameters[1].ParameterName);
 			Assert.AreEqual("Doe", command.Parameters[1].Value);
 			Assert.AreEqual("@SecureCode2", command.Parameters[2].ParameterName);
-			Assert.AreEqual(null, command.Parameters[2].Value);
+			Assert.AreEqual(DBNull.Value, command.Parameters[2].Value);
 		}
 
 		[TestMethod]
