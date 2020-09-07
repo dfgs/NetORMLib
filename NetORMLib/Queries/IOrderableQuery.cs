@@ -9,6 +9,11 @@ namespace NetORMLib.Queries
 {
 	public interface IOrderableQuery : IQuery
 	{
+		OrderModes OrderMode
+		{
+			get;
+		}
+
 		IEnumerable<IColumn> Orders
 		{
 			get;

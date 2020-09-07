@@ -127,13 +127,21 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append(String.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item))));
 			sql.Append(" FROM ");
 			sql.Append(OnFormatTableName(Query.Table));
-			
+
 			if (Query.Filters.Any())
 			{
 				index = 0;
 				sql.Append(" WHERE ");
-				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item,ref index)  )));
+				sql.Append(String.Join(" AND ", Query.Filters.Select(item => OnFormatFilter(item, ref index))));
 			}
+			if (Query.Orders.Any())
+			{
+				index = 0;
+				sql.Append(" ORDER BY ");
+				sql.Append(String.Join(", ", Query.Orders.Select(item => OnFormatColumnName(item))));
+				if (Query.OrderMode==OrderModes.ASC) sql.Append(" ASC"); else sql.Append(" DESC");
+			}
+
 
 			command = new SqlCommand(sql.ToString());
 			index = 0;

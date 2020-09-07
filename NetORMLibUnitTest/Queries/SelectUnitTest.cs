@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetORMLib;
 using NetORMLib.Queries;
 using NetORMLibUnitTest.Tables;
 
@@ -23,7 +24,7 @@ namespace NetORMLibUnitTest.Queries
 		}
 
 		[TestMethod]
-		public void ShouldOrderByColumns()
+		public void ShouldOrderByColumnsASC()
 		{
 			ISelect query;
 
@@ -31,8 +32,20 @@ namespace NetORMLibUnitTest.Queries
 			Assert.AreEqual(2, query.Orders.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Orders.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Orders.ElementAt(1));
+			Assert.AreEqual(OrderModes.ASC, query.OrderMode);
 		}
 
+		[TestMethod]
+		public void ShouldOrderByColumnsDESC()
+		{
+			ISelect query;
+
+			query = new Select<PersonnTable>(PersonnTable.FirstName).OrderBy(OrderModes.DESC, PersonnTable.LastName, PersonnTable.FirstName);
+			Assert.AreEqual(2, query.Orders.Count());
+			Assert.AreEqual(PersonnTable.LastName, query.Orders.ElementAt(0));
+			Assert.AreEqual(PersonnTable.FirstName, query.Orders.ElementAt(1));
+			Assert.AreEqual(OrderModes.DESC, query.OrderMode);
+		}
 
 		[TestMethod]
 		public void ShouldFilterByColumns()

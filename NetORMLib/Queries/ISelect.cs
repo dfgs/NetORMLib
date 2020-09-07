@@ -29,6 +29,7 @@ namespace NetORMLib.Queries
 		}
 		ISelect<T> Where(params IFilter<T>[] Filters);
 		ISelect<T> OrderBy(params IColumn<T>[] Columns);
+		ISelect<T> OrderBy(OrderModes OrderMode,params IColumn<T>[] Columns);
 		ISelect<T> Top(int Limit);
 	}
 

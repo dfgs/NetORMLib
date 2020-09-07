@@ -10,6 +10,12 @@ namespace NetORMLib.Queries
 {
 	public class Select<T> : ISelect<T>
 	{
+		public OrderModes OrderMode
+		{
+			get;
+			private set;
+		}
+
 		public int Limit
 		{
 			get;
@@ -50,9 +56,14 @@ namespace NetORMLib.Queries
 			return this;
 		}
 
-		
+
 		public ISelect<T> OrderBy(params IColumn<T>[] Columns)
 		{
+			return OrderBy(OrderModes.ASC, Columns);
+		}
+		public ISelect<T> OrderBy(OrderModes OrderMode,params IColumn<T>[] Columns)
+		{
+			this.OrderMode = OrderMode;
 			orders.AddRange(Columns);
 			return this;
 		}

@@ -50,6 +50,7 @@
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
     <Compile Include="ConnectionFactories\IConnectionFactory.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Databases\Database.cs" />
     <Compile Include="Databases\DatabaseCreator.cs" />
     <Compile Include="Databases\IDatabase.cs" />

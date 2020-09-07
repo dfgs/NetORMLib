@@ -42,6 +42,32 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual("SELECT TOP(10) [Personn].[FirstName] FROM [Personn]", command.CommandText);
 		}
 
+		[TestMethod]
+		public void ShouldBuildOrderedASCSelect()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<PersonnTable>(PersonnTable.FirstName).OrderBy(PersonnTable.FirstName);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [Personn].[FirstName] FROM [Personn] ORDER BY [Personn].[FirstName] ASC", command.CommandText);
+		}
+
+		[TestMethod]
+		public void ShouldBuildOrderedDESCSelect()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select<PersonnTable>(PersonnTable.FirstName).OrderBy(NetORMLib.OrderModes.DESC, PersonnTable.FirstName);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [Personn].[FirstName] FROM [Personn] ORDER BY [Personn].[FirstName] DESC", command.CommandText);
+		}
+
 		/// <summary>
 		/// Command builder should include WHERE clause in SELECT query using "=" operator. 
 		/// </summary>
