@@ -47,6 +47,7 @@
     <Compile Include="Columns\BaseColumn.cs" />
     <Compile Include="Columns\Column.cs" />
     <Compile Include="Columns\IColumn.cs" />
+    <Compile Include="Columns\IJoinCondition.cs" />
     <Compile Include="CommandBuilders\CommandBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandBuilder.cs" />
     <Compile Include="ConnectionFactories\IConnectionFactory.cs" />
@@ -106,6 +107,9 @@
     <Compile Include="Queries\Delete.cs" />
     <Compile Include="Queries\Select.cs" />
     <Compile Include="TableDefinition.cs" />
+    <Compile Include="Tables\IJoinedTables.cs" />
+    <Compile Include="Tables\ISingleTable.cs" />
+    <Compile Include="Tables\ITable.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
