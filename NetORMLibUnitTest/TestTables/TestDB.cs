@@ -13,5 +13,6 @@ namespace NetORMLibUnitTest.Tables
 		public static PersonnExplicitName PersonnExplicitName = new PersonnExplicitName();
 		public static PersonnTable PersonnTable = new PersonnTable();
 		public static PersonnTestName PersonnTestName = new PersonnTestName();
+		public static ChildTable ChildTable = new ChildTable();
 	}
 }

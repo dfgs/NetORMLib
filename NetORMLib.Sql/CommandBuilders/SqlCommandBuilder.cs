@@ -19,7 +19,9 @@ namespace NetORMLib.Sql.CommandBuilders
 		{
 			switch(Table)
 			{
-				case ISingleTable singleTable:return $"[{singleTable.Name}]";
+				case ISingleTable singleTable: return $"[{singleTable.Name}]";
+				case IJoinedTables joinedTables: 
+					return $"[{joinedTables.FirstTable.Name}]"+ string.Join("", joinedTables.Joins.Select(item=>$" INNER JOIN {OnFormatTableName(item.OtherTable)} ON {OnFormatColumnName(item.FirstColumn)} = {OnFormatColumnName(item.SecondColumn)}" ));
 				default: throw (new NotImplementedException("Invalid table type"));
 			}
 		}

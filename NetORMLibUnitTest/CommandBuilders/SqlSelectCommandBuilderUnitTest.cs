@@ -30,6 +30,28 @@ namespace NetORMLibUnitTest.CommandBuilders
 		}
 
 		[TestMethod]
+		public void ShouldBuildExplicitSelectWithJoinedTable()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new Select(PersonnTable.FirstName,ChildTable.FirstName).From(TestDB.PersonnTable.Join(TestDB.ChildTable.On(PersonnTable.PersonnID,ChildTable.PersonnID)));
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [Personn].[FirstName], [Child].[FirstName] FROM [Personn] INNER JOIN [Child] ON [Personn].[PersonnID] = [Child].[PersonnID]", command.CommandText);
+
+			query = new Select(PersonnTable.FirstName, ChildTable.FirstName).From(
+				TestDB.PersonnTable.Join(TestDB.ChildTable.On(PersonnTable.PersonnID, ChildTable.PersonnID))
+				.Join(TestDB.JobTypeTable.On(ChildTable.FirstName,JobTypeTable.Description))
+				);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("SELECT [Personn].[FirstName], [Child].[FirstName] FROM [Personn] INNER JOIN [Child] ON [Personn].[PersonnID] = [Child].[PersonnID] INNER JOIN [JobType] ON [Child].[FirstName] = [JobType].[Description]", command.CommandText);
+		}
+
+
+		[TestMethod]
 		public void ShouldBuildExplicitSelectFirst()
 		{
 			IQuery query;
@@ -285,6 +307,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 		}
 
 
+		
 
 	}
 }
