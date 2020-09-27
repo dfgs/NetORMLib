@@ -107,9 +107,12 @@
     <Compile Include="Queries\Delete.cs" />
     <Compile Include="Queries\Select.cs" />
     <Compile Include="TableDefinition.cs" />
+    <Compile Include="Tables\IJoin.cs" />
     <Compile Include="Tables\IJoinedTables.cs" />
     <Compile Include="Tables\ISingleTable.cs" />
     <Compile Include="Tables\ITable.cs" />
+    <Compile Include="Tables\Join.cs" />
+    <Compile Include="Tables\JoinedTables.cs" />
     <Compile Include="Tables\Table.cs" />
   </ItemGroup>
   <ItemGroup />

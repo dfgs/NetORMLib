@@ -16,17 +16,18 @@ namespace NetORMLibUnitTest.Queries
 			IDelete query;
 
 			query = new Delete().From(TestDB.PersonnTable);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 		}
 
-		
+
 		[TestMethod]
 		public void ShouldFilterByColumns()
 		{
 			IDelete query;
 
 			query = new Delete().From(TestDB.PersonnTable).Where(PersonnTable.FirstName.IsEqualTo("John"));
-			Assert.AreEqual(1, query.Filters.Count());
 			Assert.AreEqual(TestDB.PersonnTable, query.Table);
+			Assert.AreEqual(1, query.Filters.Count());
 		}
 
 

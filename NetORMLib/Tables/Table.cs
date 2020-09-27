@@ -56,6 +56,17 @@ namespace NetORMLib.Tables
 			}
 		}
 
+		public IJoinedTables Join(IJoin Join)
+		{
+			return new JoinedTables(this,Join);
+		}
+
+		public IJoin On(IColumn FirstColumn, IColumn SecondColumn)
+		{
+			return new Join(this, FirstColumn, SecondColumn);
+		}
+
+
 
 	}
 }

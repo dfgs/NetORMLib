@@ -16,7 +16,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select(PersonnTable.LastName, PersonnTable.FirstName);
+			query = new Select(PersonnTable.LastName, PersonnTable.FirstName).From(TestDB.PersonnTable);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
@@ -28,7 +29,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select(PersonnTable.FirstName).OrderBy(PersonnTable.LastName,PersonnTable.FirstName);
+			query = new Select(PersonnTable.FirstName).From(TestDB.PersonnTable).OrderBy(PersonnTable.LastName,PersonnTable.FirstName);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(2, query.Orders.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Orders.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Orders.ElementAt(1));
@@ -40,7 +42,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select(PersonnTable.FirstName).OrderBy(OrderModes.DESC, PersonnTable.LastName, PersonnTable.FirstName);
+			query = new Select(PersonnTable.FirstName).From(TestDB.PersonnTable).OrderBy(OrderModes.DESC, PersonnTable.LastName, PersonnTable.FirstName);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(2, query.Orders.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Orders.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Orders.ElementAt(1));
@@ -52,7 +55,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select(PersonnTable.FirstName).Where(PersonnTable.FirstName.IsEqualTo("John"));
+			query = new Select(PersonnTable.FirstName).From(TestDB.PersonnTable).Where(PersonnTable.FirstName.IsEqualTo("John"));
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(1, query.Filters.Count());
 		}
 
@@ -61,7 +65,8 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ISelect query;
 
-			query = new Select(PersonnTable.LastName, PersonnTable.FirstName).Top(10);
+			query = new Select(PersonnTable.LastName, PersonnTable.FirstName).Top(10).From(TestDB.PersonnTable);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));

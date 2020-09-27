@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Tables
 {
-	public interface ISingleTable:ITable
+	public interface IJoin
 	{
-		string Name
+		ISingleTable OtherTable
 		{
 			get;
 		}
-
-		IJoin On(IColumn FirstColumn, IColumn SecondColumn);
-
+		IColumn FirstColumn
+		{
+			get;
+		}
+		IColumn SecondColumn
+		{
+			get;
+		}
 	}
 }

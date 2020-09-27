@@ -8,5 +8,14 @@ namespace NetORMLib.Tables
 {
 	public interface IJoinedTables:ITable
 	{
+		ISingleTable FirstTable
+		{
+			get;
+		}
+		IEnumerable<IJoin> Joins
+		{
+			get;
+		}
+
 	}
 }

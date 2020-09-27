@@ -16,6 +16,8 @@ namespace NetORMLibUnitTest.Queries
 			ICreateColumn query;
 
 			query = new CreateColumn(TestDB.PersonnTable, PersonnTable.PersonnID);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
+			Assert.AreEqual(PersonnTable.PersonnID, query.Column);
 			Assert.ThrowsException<ArgumentNullException>(() => new CreateColumn(TestDB.PersonnTable, null));
 			Assert.ThrowsException<ArgumentNullException>(() => new CreateColumn(null, PersonnTable.FirstName));
 		}

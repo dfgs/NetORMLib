@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetORMLib.Columns;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace NetORMLib.Tables
 {
 	public interface ITable
 	{
-		
+		IJoinedTables Join(IJoin Join);
 	}
 }

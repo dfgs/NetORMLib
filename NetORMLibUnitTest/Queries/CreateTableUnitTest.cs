@@ -16,10 +16,10 @@ namespace NetORMLibUnitTest.Queries
 			ICreateTable query;
 
 			query = new CreateTable(TestDB.PersonnTable, PersonnTable.LastName, PersonnTable.FirstName);
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 			Assert.AreEqual(2, query.Columns.Count());
 			Assert.AreEqual(PersonnTable.LastName, query.Columns.ElementAt(0));
 			Assert.AreEqual(PersonnTable.FirstName, query.Columns.ElementAt(1));
-			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 		}
 
 
