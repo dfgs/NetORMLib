@@ -12,7 +12,7 @@ namespace NetORMLibUnitTest.Tables
 {
 	public class JobTable : Table
 	{
-		public static readonly IColumn<JobTable, string> Description = new Column<JobTable, string>();
-		public static readonly IColumn<JobTable, string> Company = new Column<JobTable, string>() { IsNullable = true };
+		public static readonly IColumn<string> Description = new Column<string>();
+		public static readonly IColumn<string> Company = new Column<string>() { IsNullable = true };
 	}
 }

@@ -10,22 +10,22 @@ using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class CreateRelation<TPrimary,TForeign,TPrimaryVal> : ICreateRelation<TPrimary,TForeign,TPrimaryVal>
+	public class CreateRelation<TVal> : ICreateRelation<TVal>
 	{
 		private ITable table;
 		public ITable Table => table;
 
-		private IColumn<TPrimary,TPrimaryVal> primaryColumn;
+		private IColumn<TVal> primaryColumn;
 		IColumn ICreateRelation.PrimaryColumn => primaryColumn;
-		public IColumn<TPrimary,TPrimaryVal> PrimaryColumn => primaryColumn;
+		public IColumn<TVal> PrimaryColumn => primaryColumn;
 
-		private IColumn<TForeign, TPrimaryVal> foreignColumn;
+		private IColumn<TVal> foreignColumn;
 
 		IColumn ICreateRelation.ForeignColumn => foreignColumn;
-		public IColumn<TForeign, TPrimaryVal> ForeignColumn => foreignColumn;
+		public IColumn<TVal> ForeignColumn => foreignColumn;
 
 
-		public CreateRelation(ITable Table, IColumn<TPrimary, TPrimaryVal> PrimaryColumn, IColumn<TForeign, TPrimaryVal> ForeignColumn)
+		public CreateRelation(ITable Table, IColumn<TVal> PrimaryColumn, IColumn<TVal> ForeignColumn)
 		{
 			if (Table == null) throw new ArgumentNullException("Table");
 			if (PrimaryColumn == null) throw new ArgumentNullException("PrimaryColumn");
@@ -37,7 +37,7 @@ namespace NetORMLib.Queries
 
 		
 	}
-	public class CreateRelation<TPrimary, TForeign, TPrimaryVal,TForeignVal> : ICreateRelation<TPrimary, TForeign, TPrimaryVal,TForeignVal>
+	/*public class CreateRelation<TPrimary, TForeign, TPrimaryVal,TForeignVal> : ICreateRelation<TPrimary, TForeign, TPrimaryVal,TForeignVal>
 	{
 		private ITable table;
 		public ITable Table => table;
@@ -63,5 +63,5 @@ namespace NetORMLib.Queries
 		}
 
 
-	}
+	}*/
 }

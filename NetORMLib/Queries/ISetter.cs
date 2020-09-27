@@ -19,14 +19,11 @@ namespace NetORMLib.Queries
 			get;
 		}
 	}
-	public interface ISetter<T> : ISetter
-	{
-
-	}
-	public interface IValueSetter<T,TVal>:ISetter<T>
+	
+	public interface IValueSetter<TVal>:ISetter
 		where TVal:struct
 	{
-		new IColumn<T,TVal> Column
+		new IColumn<TVal> Column
 		{
 			get;
 		}
@@ -36,10 +33,10 @@ namespace NetORMLib.Queries
 			get;
 		}
 	}
-	public interface IClassSetter<T, TVal> : ISetter<T>
+	public interface IClassSetter<TVal> : ISetter
 		where TVal : class
 	{
-		new IColumn<T, TVal> Column
+		new IColumn<TVal> Column
 		{
 			get;
 		}

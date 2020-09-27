@@ -16,13 +16,7 @@ namespace NetORMLib.Filters
 
 		string Format(string FormattedColumn);
 	}
-	public interface IIsNotNullFilter<T> : IIsNotNullFilter,IFilter<T>
-	{
-		new IColumn<T> Column
-		{
-			get;
-		}
-	}
+	
 
 
 

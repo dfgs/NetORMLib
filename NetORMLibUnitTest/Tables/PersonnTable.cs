@@ -13,10 +13,10 @@ namespace NetORMLibUnitTest.Tables
 {
 	public class PersonnTable : Table
 	{
-		public static readonly IColumn<PersonnTable, int> PersonnID = new Column<PersonnTable, int>() { IsPrimaryKey=true,IsIdentity=true };
-		public static readonly IColumn<PersonnTable, string> FirstName = new Column<PersonnTable, string>();
-		public static readonly IColumn<PersonnTable, string> LastName = new Column<PersonnTable, string>();
-		public static readonly IColumn<PersonnTable, int> SecureCode = new Column<PersonnTable, int>() { IsNullable=true};
-		public static readonly IColumn<PersonnTable, string> Job = new Column<PersonnTable, string>() { DefaultValue="No job",IsNullable=true};
+		public static readonly IColumn<int> PersonnID = new Column<int>() { IsPrimaryKey=true,IsIdentity=true };
+		public static readonly IColumn<string> FirstName = new Column<string>();
+		public static readonly IColumn<string> LastName = new Column<string>();
+		public static readonly IColumn<int> SecureCode = new Column<int>() { IsNullable=true};
+		public static readonly IColumn<string> Job = new Column<string>() { DefaultValue="No job",IsNullable=true};
 	}
 }

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public abstract class BooleanFilter<T> : IBooleanFilter<T>
+	public abstract class BooleanFilter : IBooleanFilter
 	{
-		private IFilter<T>[] members;
-		IEnumerable<IFilter> IBooleanFilter.Members => members;
-		public IEnumerable<IFilter<T>> Members => members;
+		private IFilter[] members;
+		public IEnumerable<IFilter> Members => members;
 
-		public BooleanFilter(params IFilter<T>[] Members)
+		public BooleanFilter(params IFilter[] Members)
 		{
 			if (Members.Length < 2) throw new ArgumentException("Boolean filter must constain at least 2 members");
 			this.members = Members;

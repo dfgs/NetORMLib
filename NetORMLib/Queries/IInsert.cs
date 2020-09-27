@@ -16,22 +16,13 @@ namespace NetORMLib.Queries
 		{
 			get;
 		}
+		IInsert Into(ITable Table);
 
-	}
-
-	public interface IInsert<T>:IInsert
-	{
-		new IEnumerable<ISetter<T>> Setters
-		{
-			get;
-		}
-		IInsert<T> Into(ITable Table);
-
-		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+		IInsert Set<TVal>(IColumn<TVal> Column, TVal? Value)
 			where TVal : struct;
-		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		IInsert Set<TVal>(IColumn<TVal> Column, TVal Value)
 			where TVal : class;
-
 	}
+
 
 }

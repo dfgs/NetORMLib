@@ -16,10 +16,10 @@ namespace NetORMLibUnitTest.Queries
 		{
 			ICreateRelation query;
 
-			query = new CreateRelation<PersonnTable, JobTypeTable, int>(TestDB.PersonnTable, PersonnTable.PersonnID, JobTypeTable.JobTypeID);
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<PersonnTable, JobTypeTable, int>(null, PersonnTable.PersonnID, JobTypeTable.JobTypeID));
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<PersonnTable, JobTypeTable, int>(TestDB.PersonnTable, null, JobTypeTable.JobTypeID));
-			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<PersonnTable, JobTypeTable, int>(TestDB.PersonnTable, PersonnTable.PersonnID, null));
+			query = new CreateRelation<int>(TestDB.PersonnTable,PersonnTable.PersonnID, JobTypeTable.JobTypeID) ;
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<int>(null, PersonnTable.PersonnID, JobTypeTable.JobTypeID));
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<int>(TestDB.PersonnTable,null, JobTypeTable.JobTypeID));
+			Assert.ThrowsException<ArgumentNullException>(() => new CreateRelation<int>(TestDB.PersonnTable, PersonnTable.PersonnID, null));
 		}
 
 

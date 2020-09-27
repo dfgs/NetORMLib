@@ -10,14 +10,14 @@ namespace NetORMLib.Queries
 {
 	
 
-	public class ValueSetter<T, TVal> : IValueSetter<T, TVal>
+	public class ValueSetter<TVal> : IValueSetter< TVal>
 		where TVal:struct
 	{
 		IColumn ISetter.Column
 		{
 			get { return Column; }
 		}
-		public IColumn<T, TVal> Column
+		public IColumn< TVal> Column
 		{
 			get;
 			set;
@@ -38,7 +38,7 @@ namespace NetORMLib.Queries
 
 		}*/
 
-		public ValueSetter(IColumn<T, TVal> Column,TVal? Value)
+		public ValueSetter(IColumn<TVal> Column,TVal? Value)
 		{
 			this.Column = Column;this.Value = Value;
 		}

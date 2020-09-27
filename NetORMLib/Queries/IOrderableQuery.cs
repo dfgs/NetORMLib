@@ -21,13 +21,6 @@ namespace NetORMLib.Queries
 
 	}
 
-	public interface IOrderableQuery<T>:IQuery<T>,IOrderableQuery
-	{
-		new IEnumerable<IColumn<T>> Orders
-		{
-			get;
-		}
-
-	}
+	
 
 }

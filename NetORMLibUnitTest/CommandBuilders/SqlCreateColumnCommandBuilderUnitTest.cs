@@ -22,7 +22,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateColumn<PersonnTable>(TestDB.PersonnTable, PersonnTable.PersonnID);
+			query = new CreateColumn(TestDB.PersonnTable, PersonnTable.PersonnID);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("ALTER TABLE [Personn] ADD [PersonnID] int IDENTITY(1, 1) NOT NULL PRIMARY KEY", command.CommandText);
@@ -35,7 +35,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateColumn<JobTable>(TestDB.JobTable, JobTable.Description);
+			query = new CreateColumn(TestDB.JobTable, JobTable.Description);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("ALTER TABLE [Job] ADD [Description] nvarchar(MAX) NOT NULL", command.CommandText);
@@ -49,7 +49,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new CreateColumn<JobTypeTable>(TestDB.JobTypeTable, JobTypeTable.JobTypeID);
+			query = new CreateColumn(TestDB.JobTypeTable, JobTypeTable.JobTypeID);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("ALTER TABLE [JobType] ADD [JobTypeID] int NOT NULL PRIMARY KEY", command.CommandText);

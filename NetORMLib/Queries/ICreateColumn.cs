@@ -16,12 +16,6 @@ namespace NetORMLib.Queries
 		}
 	}
 
-	public interface ICreateColumn<T>:ICreateColumn
-	{
-		new IColumn<T> Column
-		{
-			get;
-		}
-	}
+	
 
 }

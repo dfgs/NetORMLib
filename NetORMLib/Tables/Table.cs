@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Attributes;
+using NetORMLib.Columns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace NetORMLib.Tables
 		public Table()
 		{
 			TableAttribute tableAttribute;
+			FieldInfo[] fis;
+			IColumn column;
 			Type type;
 
 			type = GetType();
@@ -42,6 +45,14 @@ namespace NetORMLib.Tables
 				{
 					name = type.Name;
 				}
+			}
+
+			fis = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+			foreach (FieldInfo fi in fis)
+			{
+				if (!typeof(IColumn).IsAssignableFrom(fi.FieldType)) continue;
+				column = fi.GetValue(null) as IColumn;
+				column.Initialize(this,fi.Name);
 			}
 		}
 

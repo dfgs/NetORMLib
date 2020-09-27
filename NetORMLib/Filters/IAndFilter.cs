@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public interface IAndFilter<T>:IBooleanFilter<T>
+	public interface IAndFilter:IBooleanFilter
 	{
 	}
 	

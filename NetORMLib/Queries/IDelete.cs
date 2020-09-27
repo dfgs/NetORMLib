@@ -11,14 +11,10 @@ namespace NetORMLib.Queries
 {
 	public interface IDelete:IFilterableQuery
 	{
-		
-	}
-	public interface IDelete<T>:IDelete,IFilterableQuery<T>
-	{
-		IDelete<T> From(ITable Table);
-		IDelete<T> Where(params IFilter<T>[] Filters);
+		IDelete From(ITable Table);
+		IDelete Where(params IFilter[] Filters);
 
 	}
-
+	
 
 }

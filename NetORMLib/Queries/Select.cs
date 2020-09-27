@@ -9,7 +9,7 @@ using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class Select<T> : ISelect<T>
+	public class Select : ISelect
 	{
 		public OrderModes OrderMode
 		{
@@ -26,57 +26,54 @@ namespace NetORMLib.Queries
 		private ITable table;
 		public ITable Table => table;
 
-		private List<IColumn<T>> columns;
-		IEnumerable<IColumn> ISelect.Columns => columns;
-		public IEnumerable<IColumn<T>> Columns => columns;
+		private List<IColumn> columns;
+		public IEnumerable<IColumn> Columns => columns;
 
-		private List<IColumn<T>> orders;
-		IEnumerable<IColumn> IOrderableQuery.Orders => orders;
-		public IEnumerable<IColumn<T>> Orders => orders;
+		private List<IColumn> orders;
+		public IEnumerable<IColumn> Orders => orders;
 
-		private List<IFilter<T>> filters;
-		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
-		public IEnumerable<IFilter<T>> Filters => filters;
+		private List<IFilter> filters;
+		public IEnumerable<IFilter> Filters => filters;
 
 
-		public Select(params IColumn<T>[] Columns)
+		public Select(params IColumn[] Columns)
 		{
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
 			Limit = -1;
-			columns = new List<IColumn<T>>();
-			filters = new List<IFilter<T>>();
-			orders = new List<IColumn<T>>();
+			columns = new List<IColumn>();
+			filters = new List<IFilter>();
+			orders = new List<IColumn>();
 
 			columns.AddRange(Columns);
 		}
 
 	
 
-		public ISelect<T> From(ITable Table)
+		public ISelect From(ITable Table)
 		{
 			table=Table;
 			return this;
 		}
 
-		public ISelect<T> Where(params IFilter<T>[] Filters)
+		public ISelect Where(params IFilter[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;
 		}
 
 
-		public ISelect<T> OrderBy(params IColumn<T>[] Columns)
+		public ISelect OrderBy(params IColumn[] Columns)
 		{
 			return OrderBy(OrderModes.ASC, Columns);
 		}
-		public ISelect<T> OrderBy(OrderModes OrderMode,params IColumn<T>[] Columns)
+		public ISelect OrderBy(OrderModes OrderMode,params IColumn[] Columns)
 		{
 			this.OrderMode = OrderMode;
 			orders.AddRange(Columns);
 			return this;
 		}
 
-		public ISelect<T> Top(int Limit)
+		public ISelect Top(int Limit)
 		{
 			this.Limit = Limit;
 			return this;

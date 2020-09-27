@@ -10,45 +10,43 @@ using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class Update<T> : IUpdate<T>
+	public class Update : IUpdate
 	{
 		private ITable table;
 		public ITable Table => table;
 
-		private List<IFilter<T>> filters;
-		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
-		public IEnumerable<IFilter<T>> Filters => filters;
+		private List<IFilter> filters;
+		public IEnumerable<IFilter> Filters => filters;
 
-		private List<ISetter<T>> setters;
-		IEnumerable<ISetter> IUpdate.Setters => setters;
-		public IEnumerable<ISetter<T>> Setters => setters;
+		private List<ISetter> setters;
+		public IEnumerable<ISetter> Setters => setters;
 
 		public Update(ITable Table)
 		{
 			this.table = Table;
-			filters = new List<IFilter<T>>();
-			setters = new List<ISetter<T>>();
+			filters = new List<IFilter>();
+			setters = new List<ISetter>();
 			
 		}
 
 
-		public IUpdate<T> Where(params IFilter<T>[] Filters)
+		public IUpdate Where(params IFilter[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;
 		}
 
 		
-		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+		public IUpdate Set<TVal>(IColumn<TVal> Column, TVal? Value)
 			where TVal:struct
 		{
-			setters.Add(new ValueSetter<T,TVal>(Column, Value));
+			setters.Add(new ValueSetter<TVal>(Column, Value));
 			return this;
 		}
-		public IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		public IUpdate Set<TVal>(IColumn<TVal> Column, TVal Value)
 			where TVal : class
 		{
-			setters.Add(new ClassSetter<T, TVal>(Column, Value));
+			setters.Add(new ClassSetter<TVal>(Column, Value));
 			return this;
 		}
 

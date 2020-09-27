@@ -8,19 +8,23 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetORMLib.Filters;
-
-
+using NetORMLib.Tables;
 
 namespace NetORMLib.Columns
 {
-	public abstract class BaseColumn<T,TVal>:IColumn<T,TVal>
+	public abstract class BaseColumn<TVal>:IColumn<TVal>
 	{
+		public ISingleTable Table
+		{
+			get;
+			private set;
+		}
+
 		public TVal DefaultValue
 		{
 			get;
 			set;
 		}
-		//private Dictionary<IRow<T>, TVal> dictionary;
 
 		public bool IsPrimaryKey
 		{
@@ -47,10 +51,10 @@ namespace NetORMLib.Columns
 			private set;
 		}
 
-		public string Table
+		/*public string Table
 		{
-			get { return TableDefinition<T>.Name; }
-		}
+			get { return "todo" ; }//TableDefinition<T>.Name
+		}*/
 
 		public Type DataType
 		{
@@ -65,37 +69,37 @@ namespace NetORMLib.Columns
 
 
 
-		public IIsEqualToFilter<T,TVal> IsEqualTo(TVal Value)
+		public IIsEqualToFilter<TVal> IsEqualTo(TVal Value)
 		{
-			return new IsEqualToFilter<T, TVal>(this, Value);
+			return new IsEqualToFilter<TVal>(this, Value);
 		}
-		public IIsNotEqualToFilter<T, TVal> IsNotEqualTo(TVal Value)
+		public IIsNotEqualToFilter<TVal> IsNotEqualTo(TVal Value)
 		{
-			return new IsNotEqualToFilter<T, TVal>(this, Value);
+			return new IsNotEqualToFilter<TVal>(this, Value);
 		}
-		public IIsGreaterThanFilter<T, TVal> IsGreaterThan(TVal Value)
+		public IIsGreaterThanFilter<TVal> IsGreaterThan(TVal Value)
 		{
-			return new IsGreaterThanFilter<T, TVal>(this, Value);
+			return new IsGreaterThanFilter<TVal>(this, Value);
 		}
-		public IIsLowerThanFilter<T, TVal> IsLowerThan(TVal Value)
+		public IIsLowerThanFilter<TVal> IsLowerThan(TVal Value)
 		{
-			return new IsLowerThanFilter<T, TVal>(this, Value);
+			return new IsLowerThanFilter<TVal>(this, Value);
 		}
-		public IIsGreaterOrEqualToFilter<T, TVal> IsGreaterOrEqualTo(TVal Value)
+		public IIsGreaterOrEqualToFilter<TVal> IsGreaterOrEqualTo(TVal Value)
 		{
-			return new IsGreaterOrEqualToFilter<T, TVal>(this, Value);
+			return new IsGreaterOrEqualToFilter<TVal>(this, Value);
 		}
-		public IIsLowerOrEqualToFilter<T, TVal> IsLowerOrEqualTo(TVal Value)
+		public IIsLowerOrEqualToFilter<TVal> IsLowerOrEqualTo(TVal Value)
 		{
-			return new IsLowerOrEqualToFilter<T, TVal>(this, Value);
+			return new IsLowerOrEqualToFilter<TVal>(this, Value);
 		}
-		public IIsNullFilter<T> IsNull()
+		public IIsNullFilter IsNull()
 		{
-			return new IsNullFilter<T>(this);
+			return new IsNullFilter(this);
 		}
-		public IIsNotNullFilter<T> IsNotNull()
+		public IIsNotNullFilter IsNotNull()
 		{
-			return new IsNotNullFilter<T>(this);
+			return new IsNotNullFilter(this);
 		}
 
 		public override string ToString()
@@ -103,7 +107,11 @@ namespace NetORMLib.Columns
 			return Name;
 		}
 
-
+		public void Initialize(ISingleTable Table,string Name)
+		{
+			this.Table = Table;
+			if (this.Name==null) this.Name = Name;
+		}
 
 	}
 }

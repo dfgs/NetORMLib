@@ -16,12 +16,6 @@ namespace NetORMLib.Queries
 		}
 	}
 
-	public interface ICreateTable<T>:ICreateTable
-	{
-		new IEnumerable<IColumn<T>> Columns
-		{
-			get;
-		}
-	}
+	
 
 }

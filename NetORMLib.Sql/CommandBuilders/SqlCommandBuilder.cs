@@ -26,7 +26,7 @@ namespace NetORMLib.Sql.CommandBuilders
 
 		protected override string OnFormatColumnName(IColumn Column,bool FullName=true)
 		{
-			return FullName?$"[{Column.Table}].[{Column.Name}]": $"[{Column.Name}]";
+			return FullName?$"[{Column.Table.Name}].[{Column.Name}]": $"[{Column.Name}]";
 		}
 		protected override string OnFormatParameterName(string Column,ref int Index)
 		{
@@ -279,9 +279,9 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql = new StringBuilder();
 			sql.Append("ALTER TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
-			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table}_{Query.ForeignColumn.Name}_{Query.PrimaryColumn.Table}]");
+			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table.Name}_{Query.ForeignColumn.Name}_{Query.PrimaryColumn.Table.Name}]");
 			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
-			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table}] ({OnFormatColumnName(Query.PrimaryColumn,false)})");
+			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table.Name}] ({OnFormatColumnName(Query.PrimaryColumn,false)})");
 
 
 			command = new SqlCommand(sql.ToString());

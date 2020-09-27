@@ -11,9 +11,7 @@ namespace NetORMLib.Filters
 	{
 	}
 
-	public interface IFilter<T>:IFilter
-	{
-	}
+	
 
 
 }

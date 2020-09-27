@@ -20,20 +20,14 @@ namespace NetORMLib.Queries
 			get;
 		}
 
+		ISelect From(ITable Table);
+		ISelect Where(params IFilter[] Filters);
+		ISelect OrderBy(params IColumn[] Columns);
+		ISelect OrderBy(OrderModes OrderMode, params IColumn[] Columns);
+		ISelect Top(int Limit);
 	}
 
-	public interface ISelect<T>:ISelect,IOrderableQuery<T>,IFilterableQuery<T>
-	{
-		new IEnumerable<IColumn<T>> Columns
-		{
-			get;
-		}
-		ISelect<T> From(ITable Table);
-		ISelect<T> Where(params IFilter<T>[] Filters);
-		ISelect<T> OrderBy(params IColumn<T>[] Columns);
-		ISelect<T> OrderBy(OrderModes OrderMode,params IColumn<T>[] Columns);
-		ISelect<T> Top(int Limit);
-	}
+	
 
 
 }

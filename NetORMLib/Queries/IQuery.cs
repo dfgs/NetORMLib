@@ -15,9 +15,6 @@ namespace NetORMLib.Queries
 		}
 	}
 	
-	public interface IQuery<T>:IQuery
-	{
-
-	}
+	
 
 }

@@ -15,20 +15,13 @@ namespace NetORMLib.Queries
 		{
 			get;
 		}
-	}
-
-	public interface IUpdate<T>:IUpdate,IFilterableQuery<T>
-	{
-		new IEnumerable<ISetter<T>> Setters
-		{
-			get;
-		}
-
-		IUpdate<T> Where(params IFilter<T>[] Filters);
-		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+		IUpdate Where(params IFilter[] Filters);
+		IUpdate Set<TVal>(IColumn<TVal> Column, TVal? Value)
 			where TVal : struct;
-		IUpdate<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		IUpdate Set<TVal>(IColumn<TVal> Column, TVal Value)
 			where TVal : class;
 	}
+
+	
 
 }

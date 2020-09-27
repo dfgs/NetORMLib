@@ -13,8 +13,8 @@ namespace NetORMLibUnitTest.Tables
 
 	public class PersonnTestName:Table
 	{
-		public static readonly IColumn<PersonnTestName, string> FirstNameExplicit = new Column<PersonnTestName, string>("FirstName");
-		public static readonly IColumn<PersonnTestName, string> LastNameExplicit = new Column<PersonnTestName, string>("LastName");
+		public static readonly IColumn<string> FirstNameExplicit = new Column<string>("FirstName");
+		public static readonly IColumn<string> LastNameExplicit = new Column<string>("LastName");
 
 	}
 }

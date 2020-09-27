@@ -9,27 +9,26 @@ using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class Delete<T> : IDelete<T>
+	public class Delete : IDelete
 	{
 		private ITable table;
 		public ITable Table => table;
 
-		private List<IFilter<T>> filters;
-		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
-		public IEnumerable<IFilter<T>> Filters => filters;
+		private List<IFilter> filters;
+		public IEnumerable<IFilter> Filters => filters;
 
 		public Delete()
 		{
-			filters = new List<IFilter<T>>();
+			filters = new List<IFilter>();
 		}
-		public IDelete<T> From(ITable Table)
+		public IDelete From(ITable Table)
 		{
 			table = Table;
 			return this;
 		}
 
 
-		public IDelete<T> Where(params IFilter<T>[] Filters)
+		public IDelete Where(params IFilter[] Filters)
 		{
 			filters.AddRange(Filters);
 			return this;

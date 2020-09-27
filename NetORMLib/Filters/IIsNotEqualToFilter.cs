@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public interface IIsNotEqualToFilter<T, TVal>:IColumnFilter<T, TVal>
+	public interface IIsNotEqualToFilter< TVal>:IColumnFilter< TVal>
 	{
 	}
 

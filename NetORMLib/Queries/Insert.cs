@@ -10,37 +10,36 @@ using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class Insert<T> : IInsert<T>
+	public class Insert : IInsert
 	{
 		private ITable table;
 		public ITable Table => table;
 
 
-		private List<ISetter<T>> setters;
-		IEnumerable<ISetter> IInsert.Setters => setters;
-		public IEnumerable<ISetter<T>> Setters => setters;
+		private List<ISetter> setters;
+		public IEnumerable<ISetter> Setters => setters;
 
 		public Insert()
 		{
-			setters = new List<ISetter<T>>();
+			setters = new List<ISetter>();
 		}
 
-		public IInsert<T> Into(ITable Table)
+		public IInsert Into(ITable Table)
 		{
 			table = Table;
 			return this;
 		}
-		public IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
+		public IInsert Set<TVal>(IColumn<TVal> Column, TVal? Value)
 			where TVal:struct
 		{
-			setters.Add(new ValueSetter<T, TVal>(Column, Value));
+			setters.Add(new ValueSetter<TVal>(Column, Value));
 			return this;
 		}
 
-		public IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal Value)
+		public IInsert Set<TVal>(IColumn<TVal> Column, TVal Value)
 			where TVal : class
 		{
-			setters.Add(new ClassSetter<T, TVal>(Column, Value));
+			setters.Add(new ClassSetter<TVal>(Column, Value));
 			return this;
 		}
 

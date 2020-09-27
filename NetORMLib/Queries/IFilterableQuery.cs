@@ -16,14 +16,7 @@ namespace NetORMLib.Queries
 
 	}
 
-	public interface IFilterableQuery<T>: IQuery<T>,IFilterableQuery
-	{
-		new IEnumerable<IFilter<T>> Filters
-		{
-			get;
-		}
-
-	}
+	
 
 
 }

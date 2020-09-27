@@ -11,8 +11,8 @@ namespace NetORMLibUnitTest.Tables
 {
 	public class JobTypeTable : Table
 	{
-		public static readonly IColumn<JobTypeTable, int> JobTypeID = new Column<JobTypeTable, int>() { IsPrimaryKey=true };
-		public static readonly IColumn<JobTypeTable, string> Name = new Column<JobTypeTable, string>();
-		public static readonly IColumn<JobTypeTable, string> Description = new Column<JobTypeTable, string>() ;
+		public static readonly IColumn<int> JobTypeID = new Column<int>() { IsPrimaryKey=true };
+		public static readonly IColumn<string> Name = new Column<string>();
+		public static readonly IColumn<string> Description = new Column<string>() ;
 	}
 }

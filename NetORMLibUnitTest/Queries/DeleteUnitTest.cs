@@ -15,7 +15,7 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IDelete query;
 
-			query = new Delete<PersonnTable>();
+			query = new Delete().From(TestDB.PersonnTable);
 		}
 
 		
@@ -24,8 +24,9 @@ namespace NetORMLibUnitTest.Queries
 		{
 			IDelete query;
 
-			query = new Delete<PersonnTable>().Where(PersonnTable.FirstName.IsEqualTo("John"));
+			query = new Delete().From(TestDB.PersonnTable).Where(PersonnTable.FirstName.IsEqualTo("John"));
 			Assert.AreEqual(1, query.Filters.Count());
+			Assert.AreEqual(TestDB.PersonnTable, query.Table);
 		}
 
 

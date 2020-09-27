@@ -9,26 +9,25 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using NetORMLib.Filters;
-
-
+using NetORMLib.Tables;
 
 namespace NetORMLib.Columns
 {
-	public class Column<T,TVal>:BaseColumn<T,TVal>
+	public class Column<TVal> : BaseColumn<TVal>
 	{
-		
-	
+
+
 		public override bool IsNullable
 		{
 			get;
 			set;
 		}
 
-		
 
-		
 
-		public Column([CallerMemberName]string Name=null):base(Name)
+
+
+		public Column([CallerMemberName] string Name=null):base(Name)
 		{
 		}
 			   

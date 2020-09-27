@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Filters
 {
-	public class IsEqualToFilter<T,TVal>: ColumnFilter<T,TVal>, IIsEqualToFilter<T, TVal>
+	public class IsEqualToFilter<TVal>: ColumnFilter<TVal>, IIsEqualToFilter<TVal>
 	{
 
-		public IsEqualToFilter(IColumn<T, TVal> Column,TVal Value):base(Column,Value)
+		public IsEqualToFilter(IColumn<TVal> Column,TVal Value):base(Column,Value)
 		{
 		}
 
