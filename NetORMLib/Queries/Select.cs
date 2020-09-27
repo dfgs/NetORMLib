@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
@@ -22,10 +23,11 @@ namespace NetORMLib.Queries
 			private set;
 		}
 
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 		private List<IColumn<T>> columns;
-		IEnumerable<IColumn> ISelect.Columns=> columns;
+		IEnumerable<IColumn> ISelect.Columns => columns;
 		public IEnumerable<IColumn<T>> Columns => columns;
 
 		private List<IColumn<T>> orders;
@@ -48,7 +50,13 @@ namespace NetORMLib.Queries
 			columns.AddRange(Columns);
 		}
 
+	
 
+		public ISelect<T> From(ITable Table)
+		{
+			table=Table;
+			return this;
+		}
 
 		public ISelect<T> Where(params IFilter<T>[] Filters)
 		{

@@ -1,6 +1,6 @@
 ﻿using NetORMLib;
 using NetORMLib.Columns;
-
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLibUnitTest.Tables
 {
-	public class PersonnTable
+	public class PersonnTable : Table
 	{
 		public static readonly IColumn<PersonnTable, int> PersonnID = new Column<PersonnTable, int>() { IsPrimaryKey=true,IsIdentity=true };
 		public static readonly IColumn<PersonnTable, string> FirstName = new Column<PersonnTable, string>();

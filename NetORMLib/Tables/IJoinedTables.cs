@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.Tables
 {
-	public interface IJoinedTables
+	public interface IJoinedTables:ITable
 	{
 	}
 }

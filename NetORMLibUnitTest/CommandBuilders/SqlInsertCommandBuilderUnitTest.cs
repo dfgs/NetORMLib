@@ -22,7 +22,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Insert<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode,3);
+			query = new Insert<PersonnTable>().Into(TestDB.PersonnTable).Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode,3);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("INSERT INTO [Personn] ([Personn].[FirstName], [Personn].[LastName], [Personn].[SecureCode]) VALUES (@FirstName0, @LastName1, @SecureCode2)", command.CommandText);
@@ -41,7 +41,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Insert<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode, null);
+			query = new Insert<PersonnTable>().Into(TestDB.PersonnTable).Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode, null);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("INSERT INTO [Personn] ([Personn].[FirstName], [Personn].[LastName], [Personn].[SecureCode]) VALUES (@FirstName0, @LastName1, @SecureCode2)", command.CommandText);
@@ -60,7 +60,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Insert<PersonnTable>();
+			query = new Insert<PersonnTable>().Into(TestDB.PersonnTable);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("INSERT INTO [Personn]", command.CommandText);

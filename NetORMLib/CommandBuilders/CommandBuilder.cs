@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using NetORMLib.Columns;
 using NetORMLib.Filters;
 using NetORMLib.Queries;
+using NetORMLib.Tables;
 
 namespace NetORMLib.CommandBuilders
 {
 	public abstract class CommandBuilder : ICommandBuilder
 	{
-		protected abstract string OnFormatTableName(string Table);
+		protected abstract string OnFormatTableName(ITable Table);
 		protected abstract string OnFormatColumnName(IColumn Column,bool FullName);
 		protected abstract string OnFormatParameterName(string Column,ref int Index);
 		protected abstract string OnFormatFilter(IFilter Filter, ref int Index);
@@ -31,13 +32,13 @@ namespace NetORMLib.CommandBuilders
 		public DbCommand BuildCommand(IQuery Query)
 		{
 			if (Query == null) throw new ArgumentNullException("Query");
-			if (Query.Table == null) throw new InvalidOperationException("No table specified in query");
 
+			if (Query is ISelectIdentity selectIdentity) return OnBuildSelectIdentityCommand(selectIdentity);
+			if (Query.Table == null) throw new InvalidOperationException("No table specified in query");
 			if (Query is ISelect select) return OnBuildSelectCommand(select);
 			if (Query is IDelete delete) return OnBuildDeleteCommand(delete);
 			if (Query is IUpdate update) return OnBuildUpdateCommand(update);
 			if (Query is IInsert insert) return OnBuildInsertCommand(insert);
-			if (Query is ISelectIdentity selectIdentity) return OnBuildSelectIdentityCommand(selectIdentity);
 			if (Query is ICreateTable createTable) return OnBuildCreateTableCommand(createTable);
 			if (Query is ICreateRelation createRelation) return OnBuildCreateRelationCommand(createRelation);
 			if (Query is ICreateColumn createColumn) return OnBuildCreateColumnCommand(createColumn);

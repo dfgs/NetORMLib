@@ -110,6 +110,7 @@
     <Compile Include="Tables\IJoinedTables.cs" />
     <Compile Include="Tables\ISingleTable.cs" />
     <Compile Include="Tables\ITable.cs" />
+    <Compile Include="Tables\Table.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

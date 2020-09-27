@@ -1,5 +1,6 @@
 ﻿using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace NetORMLib.Queries
 		{
 			get;
 		}
+		ISelect<T> From(ITable Table);
 		ISelect<T> Where(params IFilter<T>[] Filters);
 		ISelect<T> OrderBy(params IColumn<T>[] Columns);
 		ISelect<T> OrderBy(OrderModes OrderMode,params IColumn<T>[] Columns);

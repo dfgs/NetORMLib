@@ -2,6 +2,7 @@
 using NetORMLib.CommandBuilders;
 using NetORMLib.Filters;
 using NetORMLib.Queries;
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -14,10 +15,15 @@ namespace NetORMLib.Sql.CommandBuilders
 {
 	public class SqlCommandBuilder : CommandBuilder
 	{
-		protected override string OnFormatTableName(string Table)
+		protected override string OnFormatTableName(ITable Table)
 		{
-			return $"[{Table}]";
+			switch(Table)
+			{
+				case ISingleTable singleTable:return $"[{singleTable.Name}]";
+				default: throw (new NotImplementedException("Invalid table type"));
+			}
 		}
+
 		protected override string OnFormatColumnName(IColumn Column,bool FullName=true)
 		{
 			return FullName?$"[{Column.Table}].[{Column.Name}]": $"[{Column.Name}]";
@@ -275,7 +281,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append(OnFormatTableName(Query.Table));
 			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table}_{Query.ForeignColumn.Name}_{Query.PrimaryColumn.Table}]");
 			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
-			sql.Append($" REFERENCES {OnFormatTableName(Query.PrimaryColumn.Table)} ({OnFormatColumnName(Query.PrimaryColumn,false)})");
+			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table}] ({OnFormatColumnName(Query.PrimaryColumn,false)})");
 
 
 			command = new SqlCommand(sql.ToString());

@@ -20,7 +20,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			IQuery query;
 			ICommandBuilder builder;
 
-			query = new Update<PersonnTable>();
+			query = new Update<PersonnTable>(TestDB.PersonnTable);
 			builder = new SqlCommandBuilder();
 			Assert.ThrowsException<InvalidOperationException>( () => builder.BuildCommand(query));
 			
@@ -33,7 +33,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName,"John").Set(PersonnTable.LastName,"Doe").Set(PersonnTable.SecureCode,3);
+			query = new Update<PersonnTable>(TestDB.PersonnTable).Set(PersonnTable.FirstName,"John").Set(PersonnTable.LastName,"Doe").Set(PersonnTable.SecureCode,3);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1, [Personn].[SecureCode]=@SecureCode2", command.CommandText);
@@ -53,7 +53,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode, null);
+			query = new Update<PersonnTable>(TestDB.PersonnTable).Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Set(PersonnTable.SecureCode, null);
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1, [Personn].[SecureCode]=@SecureCode2", command.CommandText);
@@ -73,7 +73,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Where(PersonnTable.FirstName.IsEqualTo("Homer"));
+			query = new Update<PersonnTable>(TestDB.PersonnTable).Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Where(PersonnTable.FirstName.IsEqualTo("Homer"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1 WHERE [Personn].[FirstName]=@FirstName2", command.CommandText);
@@ -93,7 +93,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new Update<PersonnTable>().Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Where(PersonnTable.FirstName.IsEqualTo("Homer"),PersonnTable.LastName.IsEqualTo("Simpson"));
+			query = new Update<PersonnTable>(TestDB.PersonnTable).Set(PersonnTable.FirstName, "John").Set(PersonnTable.LastName, "Doe").Where(PersonnTable.FirstName.IsEqualTo("Homer"),PersonnTable.LastName.IsEqualTo("Simpson"));
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("UPDATE [Personn] SET [Personn].[FirstName]=@FirstName0, [Personn].[LastName]=@LastName1 WHERE [Personn].[FirstName]=@FirstName2 AND [Personn].[LastName]=@LastName3", command.CommandText);

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using NetORMLib.Columns;
 
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
 	public class Update<T> : IUpdate<T>
 	{
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 		private List<IFilter<T>> filters;
 		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
@@ -21,8 +23,9 @@ namespace NetORMLib.Queries
 		IEnumerable<ISetter> IUpdate.Setters => setters;
 		public IEnumerable<ISetter<T>> Setters => setters;
 
-		public Update()
+		public Update(ITable Table)
 		{
+			this.table = Table;
 			filters = new List<IFilter<T>>();
 			setters = new List<ISetter<T>>();
 			

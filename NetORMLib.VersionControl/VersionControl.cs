@@ -11,6 +11,7 @@ namespace NetORMLib.VersionControl
 	public abstract class VersionControl : IVersionControl
 	{
 		private IDatabase database;
+		private static UpgradeLog upgradeLog=new UpgradeLog();
 
 		public VersionControl(IDatabase Database)
 		{
@@ -45,7 +46,7 @@ namespace NetORMLib.VersionControl
 			current = GetCurrentRevision();
 			if (current==-1)
 			{
-				database.Execute(new CreateTable<UpgradeLogTable>(UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
+				database.Execute(new CreateTable<UpgradeLogTable>(upgradeLog, UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
 				current = 0;
 			}
 

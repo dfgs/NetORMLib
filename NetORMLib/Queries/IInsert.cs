@@ -1,6 +1,7 @@
 ﻿using NetORMLib.Columns;
 
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace NetORMLib.Queries
 		{
 			get;
 		}
+		IInsert<T> Into(ITable Table);
 
 		IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
 			where TVal : struct;

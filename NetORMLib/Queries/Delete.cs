@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
 	public class Delete<T> : IDelete<T>
 	{
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 		private List<IFilter<T>> filters;
 		IEnumerable<IFilter> IFilterableQuery.Filters => filters;
@@ -20,8 +22,12 @@ namespace NetORMLib.Queries
 		{
 			filters = new List<IFilter<T>>();
 		}
+		public IDelete<T> From(ITable Table)
+		{
+			table = Table;
+			return this;
+		}
 
-		
 
 		public IDelete<T> Where(params IFilter<T>[] Filters)
 		{

@@ -23,7 +23,7 @@ namespace NetORMLibUnitTest.CommandBuilders
 			ICommandBuilder builder;
 			DbCommand command;
 
-			query = new SelectIdentity<PersonnTable>();
+			query = new SelectIdentity();
 			builder = new SqlCommandBuilder();
 			command = builder.BuildCommand(query);
 			Assert.AreEqual("SELECT @@IDENTITY", command.CommandText);

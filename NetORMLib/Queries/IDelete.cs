@@ -1,5 +1,6 @@
 ﻿using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace NetORMLib.Queries
 	}
 	public interface IDelete<T>:IDelete,IFilterableQuery<T>
 	{
+		IDelete<T> From(ITable Table);
 		IDelete<T> Where(params IFilter<T>[] Filters);
 
 	}

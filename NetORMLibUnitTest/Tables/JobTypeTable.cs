@@ -1,6 +1,6 @@
 ﻿using NetORMLib;
 using NetORMLib.Columns;
-
+using NetORMLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLibUnitTest.Tables
 {
-	public class JobTypeTable
+	public class JobTypeTable : Table
 	{
 		public static readonly IColumn<JobTypeTable, int> JobTypeID = new Column<JobTypeTable, int>() { IsPrimaryKey=true };
 		public static readonly IColumn<JobTypeTable, string> Name = new Column<JobTypeTable, string>();

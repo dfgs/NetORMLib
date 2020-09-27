@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
-	public class SelectIdentity<T> : ISelectIdentity<T>
+	public class SelectIdentity : ISelectIdentity
 	{
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 		public Action<object> ResultCallBack
 		{
@@ -20,6 +22,7 @@ namespace NetORMLib.Queries
 
 		public SelectIdentity(Action<object> ResultCallBack=null)
 		{
+			this.table = null;
 			this.ResultCallBack = ResultCallBack;
 		}
 

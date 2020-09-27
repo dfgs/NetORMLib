@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using NetORMLib.Columns;
 
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
 	public class Insert<T> : IInsert<T>
 	{
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 
 		private List<ISetter<T>> setters;
@@ -23,7 +25,11 @@ namespace NetORMLib.Queries
 			setters = new List<ISetter<T>>();
 		}
 
-		
+		public IInsert<T> Into(ITable Table)
+		{
+			table = Table;
+			return this;
+		}
 		public IInsert<T> Set<TVal>(IColumn<T, TVal> Column, TVal? Value)
 			where TVal:struct
 		{

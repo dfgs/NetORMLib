@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Columns;
 using NetORMLib.Filters;
+using NetORMLib.Tables;
 
 namespace NetORMLib.Queries
 {
 	public class CreateTable<T> : ICreateTable<T>
 	{
-		public string Table => TableDefinition<T>.Name;
+		private ITable table;
+		public ITable Table => table;
 
 		private List<IColumn<T>> columns;
 		IEnumerable<IColumn> ICreateTable.Columns => columns;
@@ -18,8 +20,10 @@ namespace NetORMLib.Queries
 
 
 
-		public CreateTable(params IColumn<T>[] Columns)
+		public CreateTable(ITable Table, params IColumn<T>[] Columns)
 		{
+			if (Table==null) throw new ArgumentNullException("Table");
+			this.table = Table;
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
 			columns = new List<IColumn<T>>();
 			columns.AddRange(Columns);
