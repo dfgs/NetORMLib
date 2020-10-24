@@ -79,11 +79,12 @@ namespace NetORMLib.Sql.CommandBuilders
 			Type type, underlyingType;
 
 			
-			if (Column.DataType.IsEnum) return "int";
 
 			underlyingType = Nullable.GetUnderlyingType(Column.DataType);
 			if (underlyingType != null) type = underlyingType;
 			else type = Column.DataType;
+
+			if (type.IsEnum) return "int";
 
 			switch (type.Name)
 			{

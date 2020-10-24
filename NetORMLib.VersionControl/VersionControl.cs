@@ -11,7 +11,7 @@ namespace NetORMLib.VersionControl
 	public abstract class VersionControl : IVersionControl
 	{
 		private IDatabase database;
-		private static UpgradeLog upgradeLog=new UpgradeLog();
+		private static UpgradeLogTable upgradeLogTable=new UpgradeLogTable();
 
 		public VersionControl(IDatabase Database)
 		{
@@ -46,14 +46,14 @@ namespace NetORMLib.VersionControl
 			current = GetCurrentRevision();
 			if (current==-1)
 			{
-				database.Execute(new CreateTable(upgradeLog, UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
+				database.Execute(new CreateTable(upgradeLogTable, UpgradeLogTable.UpgradeLogID,UpgradeLogTable.Revision,UpgradeLogTable.Date));
 				current = 0;
 			}
 
 			while(current<target)
 			{
 				current ++;
-				upgradeLogInsert = new Insert().Into(upgradeLog).Set(UpgradeLogTable.Revision, current).Set(UpgradeLogTable.Date, DateTime.Now);
+				upgradeLogInsert = new Insert().Into(upgradeLogTable).Set(UpgradeLogTable.Revision, current).Set(UpgradeLogTable.Date, DateTime.Now);
 				database.Execute(OnUpgradeTo(current).Union( new IQuery[] { upgradeLogInsert} ));
 					
 			}

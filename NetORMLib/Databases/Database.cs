@@ -44,7 +44,7 @@ namespace NetORMLib.Databases
 			DbDataReader reader;
 			IColumn[] columns;
 			TRow row;
-			//PropertyDescriptorCollection pdcs;
+			Type type, underlyingType;
 
 			//pdcs=TypeDescriptor.GetProperties(typeof(T));
 
@@ -84,7 +84,21 @@ namespace NetORMLib.Databases
 						{
 							value = reader[t];
 							// cannot convert DBNull to Nullable<>
-							if (value == DBNull.Value) value = null;
+							if (value == DBNull.Value)
+							{
+								value = null;
+							}
+							else
+							{
+								type = pdcs[columns[t].Name].PropertyType;
+								underlyingType = Nullable.GetUnderlyingType(type);
+								if (underlyingType != null) type = underlyingType;
+
+								if (type.IsEnum)
+								{
+									value = Enum.ToObject(type, value);
+								}
+							}
 							pdcs[columns[t].Name].SetValue(row, value);
 						}
 						yield return row;

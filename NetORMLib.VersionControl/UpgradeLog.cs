@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetORMLib.VersionControl
 {
-	public class UpgradeLog:Table
+	public class UpgradeLog
 	{
 		public int UpgradeLogID { get; set; }
 		public DateTime Date { get; set; }
