@@ -15,6 +15,7 @@ namespace NetORMLib.Filters
 		}
 		string Format(IEnumerable<string> FormattedMembers);
 
+		void Add(IFilter Filter);
 	}
 
 	

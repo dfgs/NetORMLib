@@ -21,6 +21,7 @@ namespace NetORMLib.Filters
 		}
 
 		string Format(string FormattedColumn, string FormattedParameter);
+
 	}
 
 	
@@ -34,6 +35,8 @@ namespace NetORMLib.Filters
 		{
 			get;
 		}
+
+		
 	}
 
 	

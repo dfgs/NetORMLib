@@ -19,6 +19,33 @@ namespace NetORMLib.Filters
 			return $"({String.Join(" AND ", FormattedMembers)})";
 		}
 
+		public override IAndFilter And(IFilter Filter)
+		{
+			if (Filter is IAndFilter other)
+			{
+				foreach (IFilter item in other.Members) Add(item);
+				return this;
+			}
+			else
+			{
+				Add(Filter);
+				return this;
+			}
+		}
+
+		public override IOrFilter Or(IFilter Filter)
+		{
+			if (Filter is IOrFilter other)
+			{
+				other.Add(this);
+				return other;
+			}
+			else
+			{
+				return new OrFilter(this, Filter);
+			}
+		}
+
 
 	}
 }

@@ -55,6 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnUnitTest.cs" />
+    <Compile Include="Filters\OrFilterUnitTest.cs" />
+    <Compile Include="Filters\IsGreaterThanFilterUnitTest.cs" />
+    <Compile Include="Filters\IsGreaterOrEqualToFilterUnitTest.cs" />
+    <Compile Include="Filters\IsLowerOrEqualToFilterUnitTest.cs" />
+    <Compile Include="Filters\IsNotNullFilterUnitTest.cs" />
+    <Compile Include="Filters\AndFilterUnitTest.cs" />
+    <Compile Include="Filters\IsNullFilterUnitTest.cs" />
+    <Compile Include="Filters\IsLowerThanFilterUnitTest.cs" />
+    <Compile Include="Filters\NotEqualToFilterUnitTest.cs" />
+    <Compile Include="Filters\EqualToFilterUnitTest.cs" />
     <Compile Include="Queries\CreateColumnUnitTest.cs" />
     <Compile Include="Queries\CreateRelationUnitTest.cs" />
     <Compile Include="Queries\CreateTableUnitTest.cs" />

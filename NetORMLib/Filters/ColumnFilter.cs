@@ -25,8 +25,31 @@ namespace NetORMLib.Filters
 		}
 
 		public abstract string Format(string FormattedColumn, string FormattedParameter);
-		
 
-		
+		public IAndFilter And(IFilter Filter)
+		{
+			if (Filter is IAndFilter other)
+			{
+				other.Add(this);
+				return other;
+			}
+			else
+			{
+				return new AndFilter(this, Filter);
+			}
+		}
+
+		public IOrFilter Or(IFilter Filter)
+		{
+			if (Filter is IOrFilter other)
+			{
+				other.Add(this);
+				return other;
+			}
+			else
+			{
+				return new OrFilter(this, Filter);
+			}
+		}
 	}
 }

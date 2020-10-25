@@ -9,9 +9,12 @@ namespace NetORMLib.Filters
 {
 	public interface IFilter
 	{
+		IAndFilter And(IFilter Filter);
+		IOrFilter Or(IFilter Filter);
+
 	}
 
-	
+
 
 
 }
