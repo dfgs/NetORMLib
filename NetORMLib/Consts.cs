@@ -7,4 +7,5 @@ using System.Threading.Tasks;
 namespace NetORMLib
 {
 	public enum OrderModes {ASC,DESC	};
+	public enum ColumnConstraints { None,PrimaryKey,Unique};
 }

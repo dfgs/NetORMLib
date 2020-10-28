@@ -26,7 +26,7 @@ namespace NetORMLib.Columns
 			set;
 		}
 
-		public bool IsPrimaryKey
+		public ColumnConstraints Constraint
 		{
 			get;
 			set;

@@ -13,7 +13,7 @@ namespace NetORMLibUnitTest.Tables
 {
 	public class PersonnTable : Table
 	{
-		public static readonly IColumn<int> PersonnID = new Column<int>() { IsPrimaryKey=true,IsIdentity=true };
+		public static readonly IColumn<int> PersonnID = new Column<int>() { Constraint = ColumnConstraints.PrimaryKey, IsIdentity=true };
 		public static readonly IColumn<string> FirstName = new Column<string>();
 		public static readonly IColumn<string> LastName = new Column<string>();
 		public static readonly IColumn<int> SecureCode = new Column<int>() { IsNullable=true};

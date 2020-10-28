@@ -11,7 +11,7 @@ namespace NetORMLib.VersionControl
 	public class UpgradeLogTable:Table
 	{
 
-		public static readonly Column<int> UpgradeLogID = new Column<int>() { IsPrimaryKey = true, IsIdentity = true };
+		public static readonly Column<int> UpgradeLogID = new Column<int>() { Constraint = ColumnConstraints.PrimaryKey, IsIdentity = true };
 		public static readonly Column<DateTime> Date = new Column<DateTime>();
 		public static readonly Column<int> Revision = new Column<int>();
 	

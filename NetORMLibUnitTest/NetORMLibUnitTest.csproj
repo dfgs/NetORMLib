@@ -81,6 +81,7 @@
     <Compile Include="CommandBuilders\SqlSelectIdentityCommandBuilderUnitTest.cs" />
     <Compile Include="Queries\UpdateUnitTest.cs" />
     <Compile Include="TestTables\ChildTable.cs" />
+    <Compile Include="TestTables\EnumTable.cs" />
     <Compile Include="TestTables\PersonnTestName.cs" />
     <Compile Include="TestTables\PersonnTable.cs" />
     <Compile Include="TestTables\PersonnExplicitName.cs" />

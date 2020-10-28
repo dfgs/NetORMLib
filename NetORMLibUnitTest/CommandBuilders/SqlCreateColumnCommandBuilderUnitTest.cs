@@ -56,7 +56,19 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
-		
+		[TestMethod]
+		public void ShouldBuildCreateColumnWithUniqueConstraint()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
+
+			query = new CreateColumn(TestDB.EnumTable, EnumTable.Description);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("ALTER TABLE [Enum] ADD [Description] nvarchar(MAX) NOT NULL UNIQUE", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
 
 
 	}

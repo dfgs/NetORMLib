@@ -12,6 +12,7 @@ namespace NetORMLibUnitTest.Tables
 		public static JobTypeTable JobTypeTable = new JobTypeTable();
 		public static PersonnExplicitName PersonnExplicitName = new PersonnExplicitName();
 		public static PersonnTable PersonnTable = new PersonnTable();
+		public static EnumTable EnumTable= new EnumTable();
 		public static PersonnTestName PersonnTestName = new PersonnTestName();
 		public static ChildTable ChildTable = new ChildTable();
 	}

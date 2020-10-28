@@ -75,7 +75,19 @@ namespace NetORMLibUnitTest.CommandBuilders
 			Assert.AreEqual(0, command.Parameters.Count);
 		}
 
+		[TestMethod]
+		public void ShouldBuildCreateTableWithUniqueConstraint()
+		{
+			IQuery query;
+			ICommandBuilder builder;
+			DbCommand command;
 
+			query = new CreateTable(TestDB.EnumTable, EnumTable.EnumID, EnumTable.Description);
+			builder = new SqlCommandBuilder();
+			command = builder.BuildCommand(query);
+			Assert.AreEqual("CREATE TABLE [Enum] ([EnumID] int NOT NULL, [Description] nvarchar(MAX) NOT NULL UNIQUE)", command.CommandText);
+			Assert.AreEqual(0, command.Parameters.Count);
+		}
 
 
 

@@ -253,18 +253,30 @@ namespace NetORMLib.Sql.CommandBuilders
 			
 		}
 
+		private string GetConstraint(IColumn Column)
+		{
+			switch(Column.Constraint)
+			{
+				case ColumnConstraints.None:return "";
+				case ColumnConstraints.PrimaryKey: return " PRIMARY KEY";
+				case ColumnConstraints.Unique: return " UNIQUE";
+				default:throw (new NotImplementedException("Invalid constraint"));
+			}
+		}
 		
 		protected override DbCommand OnBuildCreateTableCommand(ICreateTable Query)
 		{
 			SqlCommand command;
 			StringBuilder sql;
 
+			
+
 			sql = new StringBuilder();
 			sql.Append("CREATE TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
 
 			sql.Append(" (");
-			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{(item.IsPrimaryKey ? " PRIMARY KEY" : "")}" )   ) );
+			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{GetConstraint(item)}" )   ) );
 			sql.Append(")");
 
 			command = new SqlCommand(sql.ToString());
@@ -301,7 +313,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql = new StringBuilder();
 			sql.Append("ALTER TABLE ");
 			sql.Append(OnFormatTableName(Query.Table));
-			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{(Query.Column.IsPrimaryKey ? " PRIMARY KEY" : "")}");
+			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{GetConstraint(Query.Column)}");
 
 			command = new SqlCommand(sql.ToString());
 			return command;
