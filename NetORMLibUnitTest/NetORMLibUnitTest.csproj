@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnUnitTest.cs" />
+    <Compile Include="CommandBuilders\SqlCreateConstraintCommandBuilderUnitTest.cs" />
     <Compile Include="Filters\OrFilterUnitTest.cs" />
     <Compile Include="Filters\IsGreaterThanFilterUnitTest.cs" />
     <Compile Include="Filters\IsGreaterOrEqualToFilterUnitTest.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Filters\NotEqualToFilterUnitTest.cs" />
     <Compile Include="Filters\EqualToFilterUnitTest.cs" />
     <Compile Include="Queries\CreateColumnUnitTest.cs" />
+    <Compile Include="Queries\CreateConstraintUnitTest.cs" />
     <Compile Include="Queries\CreateRelationUnitTest.cs" />
     <Compile Include="Queries\CreateTableUnitTest.cs" />
     <Compile Include="Tables\JoinedTablesUnitTest.cs" />

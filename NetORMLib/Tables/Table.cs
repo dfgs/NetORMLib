@@ -66,6 +66,10 @@ namespace NetORMLib.Tables
 			return new Join(this, FirstColumn, SecondColumn);
 		}
 
+		public override string ToString()
+		{
+			return Name;
+		}
 
 
 	}

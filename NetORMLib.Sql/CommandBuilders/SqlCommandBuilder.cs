@@ -296,8 +296,33 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append(OnFormatTableName(Query.Table));
 			sql.Append($" WITH CHECK ADD CONSTRAINT [FK_{Query.ForeignColumn.Table.Name}_{Query.ForeignColumn.Name}_{Query.PrimaryColumn.Table.Name}]");
 			sql.Append($" FOREIGN KEY ({OnFormatColumnName(Query.ForeignColumn, false)})");
-			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table.Name}] ({OnFormatColumnName(Query.PrimaryColumn,false)})");
+			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table.Name}] ({OnFormatColumnName(Query.PrimaryColumn, false)})");
 
+
+			command = new SqlCommand(sql.ToString());
+
+			return command;
+		}
+		protected override DbCommand OnBuildCreateConstraintCommand(ICreateConstraint Query)
+		{
+			SqlCommand command;
+			StringBuilder sql;
+
+			sql = new StringBuilder();
+			sql.Append("ALTER TABLE ");
+			sql.Append(OnFormatTableName(Query.Table));
+			sql.Append($" ADD CONSTRAINT [AK_{Query.Table}_{string.Join("_",Query.Columns.Select(item=>item.Name))}]");
+			
+			switch(Query.Constraint)
+			{
+				case ColumnConstraints.PrimaryKey:
+					sql.Append($" PRIMARY KEY ({string.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item, false)))})");
+					break;
+				case ColumnConstraints.Unique:
+					sql.Append($" UNIQUE ({string.Join(", ", Query.Columns.Select(item => OnFormatColumnName(item,false)))})");
+					break;
+				default: throw new NotImplementedException("Invalid constraint");
+			}
 
 			command = new SqlCommand(sql.ToString());
 
