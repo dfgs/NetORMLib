@@ -34,7 +34,7 @@ namespace NetORMLib.Queries
 		{
 			if (Table == null) throw new ArgumentNullException("Table");
 			if (Columns == null) throw new ArgumentNullException("Columns");
-			this.table = Table;
+			this.table=Table;
 			this.Constraint = Constraint;this.columns = Columns;
 		}
 

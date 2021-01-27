@@ -89,31 +89,31 @@ namespace NetORMLib.Sql.CommandBuilders
 			switch (type.Name)
 			{
 				case "String":
-					result = "nvarchar(MAX)";
+					result="nvarchar(MAX)";
 					break;
 				case "Byte":
-					result = "tinyint";
+					result="tinyint";
 					break;
 				case "Int32":
-					result = "int";
+					result="int";
 					break;
 				case "UInt32":
-					result = "int";
+					result="int";
 					break;
 				case "Int64":
-					result = "bigint";
+					result="bigint";
 					break;
 				case "Boolean":
-					result = "bit";
+					result="bit";
 					break;
 				case "DateTime":
-					result = "DateTime";
+					result="DateTime";
 					break;
 				case "TimeSpan":
-					result = "Time(7)";
+					result="Time(7)";
 					break;
 				case "Byte[]":
-					result = "varbinary(max)";
+					result="varbinary(max)";
 					break;
 				default:
 					throw (new NotImplementedException("Cannot convert CLR type " + Column.DataType.Name));
@@ -152,7 +152,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			}
 
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 			index = 0;
 			OnBuildParameters(command, Query.Filters,ref index);
 
@@ -194,12 +194,12 @@ namespace NetORMLib.Sql.CommandBuilders
 
 			if (!Query.Setters.Any()) throw (new InvalidOperationException("Update query must specify at least one setter"));
 
-			sql = new StringBuilder();
+			sql=new StringBuilder();
 			sql.Append("UPDATE ");
 			sql.Append(OnFormatTableName(Query.Table));
 
 			sql.Append(" SET ");
-			index = 0;
+			index=0;
 			sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatSetter(item, ref index))));
 
 			if (Query.Filters.Any())
@@ -234,12 +234,12 @@ namespace NetORMLib.Sql.CommandBuilders
 				sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatColumnName(item.Column))));
 				sql.Append(") VALUES (");
 
-				index = 0;
+				index=0;
 				sql.Append(String.Join(", ", Query.Setters.Select(item => OnFormatParameterName(item.Column.Name, ref index))));
 				sql.Append(")");
 			}
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 			index = 0;
 			OnBuildParameters(command, Query.Setters, ref index);
 			
@@ -279,7 +279,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append(String.Join(", ", Query.Columns.Select( item=>  $"{OnFormatColumnName(item,false)} {GetTypeName(item)} {(item.IsNullable ? "NULL" : "NOT NULL")}{GetConstraint(item)}" )   ) );
 			sql.Append(")");
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 			
 
 			return command;
@@ -299,7 +299,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append($" REFERENCES [{Query.PrimaryColumn.Table.Name}] ({OnFormatColumnName(Query.PrimaryColumn, false)})");
 
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 
 			return command;
 		}
@@ -324,7 +324,7 @@ namespace NetORMLib.Sql.CommandBuilders
 				default: throw new NotImplementedException("Invalid constraint");
 			}
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 
 			return command;
 		}
@@ -340,7 +340,7 @@ namespace NetORMLib.Sql.CommandBuilders
 			sql.Append(OnFormatTableName(Query.Table));
 			sql.Append($" ADD {OnFormatColumnName(Query.Column, false)} {GetTypeName(Query.Column)} {(Query.Column.IsNullable ? "NULL" : "NOT NULL")}{GetConstraint(Query.Column)}");
 
-			command = new SqlCommand(sql.ToString());
+			command=new SqlCommand(sql.ToString());
 			return command;
 
 		

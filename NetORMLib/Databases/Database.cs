@@ -67,7 +67,7 @@ namespace NetORMLib.Databases
 
 				try
 				{
-					reader = command.ExecuteReader();
+					reader=command.ExecuteReader();
 				}
 				catch (Exception ex)
 				{
@@ -133,7 +133,7 @@ namespace NetORMLib.Databases
 				using (reader)
 				{
 					if (!reader.Read()) throw new ORMException(command, new Exception("No identity value returned"));
-					result = reader[0];
+					result=reader[0];
 					if (Query.ResultCallBack != null) Query.ResultCallBack(result);
 				}
 			}

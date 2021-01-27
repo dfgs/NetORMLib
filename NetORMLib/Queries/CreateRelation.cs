@@ -30,7 +30,7 @@ namespace NetORMLib.Queries
 			if (Table == null) throw new ArgumentNullException("Table");
 			if (PrimaryColumn == null) throw new ArgumentNullException("PrimaryColumn");
 			if (ForeignColumn == null) throw new ArgumentNullException("ForeignColumn");
-			this.table = Table;
+			this.table=Table;
 			this.primaryColumn = PrimaryColumn;
 			this.foreignColumn = ForeignColumn;
 		}
@@ -57,7 +57,7 @@ namespace NetORMLib.Queries
 			if (Table == null) throw new ArgumentNullException("Table");
 			if (PrimaryColumn == null) throw new ArgumentNullException("PrimaryColumn");
 			if (ForeignColumn == null) throw new ArgumentNullException("ForeignColumn");
-			this.table = Table;
+			this.table=Table;
 			this.primaryColumn = PrimaryColumn;
 			this.foreignColumn = ForeignColumn;
 		}

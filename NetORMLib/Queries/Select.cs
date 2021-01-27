@@ -39,7 +39,7 @@ namespace NetORMLib.Queries
 		public Select(params IColumn[] Columns)
 		{
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
-			Limit = -1;
+			Limit=-1;
 			columns = new List<IColumn>();
 			filters = new List<IFilter>();
 			orders = new List<IColumn>();

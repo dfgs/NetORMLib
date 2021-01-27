@@ -21,9 +21,9 @@ namespace NetORMLib.Queries
 		public CreateColumn(ITable Table, IColumn Column)
 		{
 			if (Column == null) throw new ArgumentNullException("Column");
-			this.column = Column;
+			this.column=Column;
 			if (Table == null) throw new ArgumentNullException("Table");
-			this.table = Table;
+			this.table=Table;
 		}
 
 

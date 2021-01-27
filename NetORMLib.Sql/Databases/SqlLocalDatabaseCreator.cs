@@ -51,7 +51,7 @@ namespace NetORMLib.Sql.Databases
 			using (connection = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB"))
 			{
 				connection.Open();
-				command = new SqlCommand($"CREATE DATABASE [{DatabaseName}] ON PRIMARY (Name={DatabaseName}_data, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}.mdf') LOG ON (Name={DatabaseName}_log, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}_log.ldf')", connection);
+				command=new SqlCommand($"CREATE DATABASE [{DatabaseName}] ON PRIMARY (Name={DatabaseName}_data, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}.mdf') LOG ON (Name={DatabaseName}_log, FILENAME='{System.IO.Path.Combine(path, DatabaseName)}_log.ldf')", connection);
 				command.ExecuteNonQuery();
 			}
 		}
@@ -65,7 +65,7 @@ namespace NetORMLib.Sql.Databases
 			using (connection = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB"))
 			{
 				connection.Open();
-				command = new SqlCommand( $@"DROP DATABASE [{DatabaseName}]",connection);
+				command=new SqlCommand( $@"DROP DATABASE [{DatabaseName}]",connection);
 				command.ExecuteNonQuery();
 			}
 		}

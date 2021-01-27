@@ -14,7 +14,7 @@ namespace NetORMLib.Filters
 		public BooleanFilter(params IFilter[] Members)
 		{
 			if (Members.Length < 2) throw new ArgumentException("Boolean filter must constain at least 2 members");
-			this.members = new List<IFilter>(Members);
+			this.members=new List<IFilter>(Members);
 		}
 
 		public abstract string Format(IEnumerable<string> FormattedMembers);

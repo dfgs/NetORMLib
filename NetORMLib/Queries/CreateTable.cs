@@ -22,9 +22,9 @@ namespace NetORMLib.Queries
 		public CreateTable(ITable Table, params IColumn[] Columns)
 		{
 			if (Table==null) throw new ArgumentNullException("Table");
-			this.table = Table;
+			this.table=Table;
 			if ((Columns == null) || (Columns.Length == 0)) throw new ArgumentNullException("Columns");
-			columns = new List<IColumn>();
+			columns=new List<IColumn>();
 			columns.AddRange(Columns);
 		}
 

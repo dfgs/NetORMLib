@@ -26,7 +26,7 @@ namespace NetORMLib.Sql.Databases
 			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
 			{
 				connection.Open();
-				command = new SqlCommand($"SELECT Name FROM master.dbo.sysdatabases where (Name=@Name)", connection);
+				command=new SqlCommand($"SELECT Name FROM master.dbo.sysdatabases where (Name=@Name)", connection);
 				command.Parameters.AddWithValue("@Name", DatabaseName);
 				reader = command.ExecuteReader();
 				return reader.HasRows;
@@ -42,7 +42,7 @@ namespace NetORMLib.Sql.Databases
 			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
 			{
 				connection.Open();
-				command = new SqlCommand($"CREATE DATABASE {DatabaseName}", connection);
+				command=new SqlCommand($"CREATE DATABASE {DatabaseName}", connection);
 				command.ExecuteNonQuery();
 			}
 		}
@@ -54,7 +54,7 @@ namespace NetORMLib.Sql.Databases
 			using (connection = new SqlConnection($@"Server={server};Trusted_Connection=True;Connect Timeout=30"))
 			{
 				connection.Open();
-				command = new SqlCommand($"DROP DATABASE {DatabaseName}", connection);
+				command=new SqlCommand($"DROP DATABASE {DatabaseName}", connection);
 				command.ExecuteNonQuery();
 			}
 		}
